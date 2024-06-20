@@ -64,10 +64,11 @@ void	execute_redirection(char **args);
 /* Built-in commands */
 int		is_builtin(char **args);
 void	execute_builtin(char **args);
+void	builtin_echo(char **args);
 void	builtin_cd(char **args);
-void	builtin_pwd(char **args);
+void	builtin_pwd(char **args); // c kom si ct fait
+void	builtin_env(char **args); // c kom si ct fait
 void	builtin_exit(char **args);
-void	builtin_env(char **args);
 void	builtin_export(char **args);
 void	builtin_unsetenv(char **args);
 
