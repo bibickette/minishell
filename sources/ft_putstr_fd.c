@@ -6,11 +6,9 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:40:02 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 19:41:10 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:22:30 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../minishell.h"
 
 /*
 	Affiche la chaine de caractère s sur le file descriptor fd

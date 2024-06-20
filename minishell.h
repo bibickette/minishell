@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 19:47:38 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:21:33 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@
 # include <string.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
+# include <wait.h>
 # include <signal.h>
 # include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,

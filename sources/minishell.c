@@ -6,11 +6,9 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 19:31:31 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:22:18 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../minishell.h"
 
 /*
 	Le main de notre minishell, qui va afficher le prompt et 
