@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 17:15:23 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:44:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,32 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* conventions d'erreur ?
+/* code d'erreur ?
 	1 pour les erreurs de syntaxe,
 	2 pour les erreurs de commandes
 	3 pour les erreurs de fichiers, etc...
 
-	BAD LONG
+	BAD LONG...................ou pas :)
 */
 
 
-/*
-suggestion des dipositions des fichiers:
+/* suggestion des dipositions des fichiers:
 
 minishell/
-├── Makefile
-├── minishell.c
-├── minishell.h
-├── command.c
-├── builtin.c
-├── signal.c
-├── utils.c
 └── README.md
-*/
+├── Makefile
+├── minishell.h
+├── sources/
+	├── minishell.c
+	├── command.c
+	├── builtin.c
+	├── signal.c
+	├── error.c
+	└── etc...
 
-/* Prompt (exemple: "minishell>> 'commands'") */
-void	display_prompt(void);
+   les noms des fichiers sont des suggestions,
+	tu peux les renommer si tu veux c'est juste pour la forme
+*/
 
 /* Read and parse command */
 char	*read_command(void);
@@ -77,12 +78,22 @@ void	builtin_unsetenv(char **args);
 /* Signal handling */
 void	handle_signals(void);
 
-/* Print errors */
+/* Print */
+void	ft_putstr_fd(const char *str, int fd);
+void	display_prompt(void);
 void	print_error(const char *msg);
+
+/* Longueur :) */
+int		ft_strlen(const char *str);
 
 /* Utilities */
 void	free_args(char **args);
 void	free_commands(char ***commands);
 void	error_exit(const char *msg);
 
+
+/* Pas mal le franglish hein :) ?
+	il y aura peut etre tout en anglais sauf si ca ne te perturbe pas,
+	je trouve juste que "fonction integre" et "lecture et analyse" sonne bizarement
+*/
 #endif
