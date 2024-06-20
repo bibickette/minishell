@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 19:44:23 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:47:38 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	builtin_unsetenv(char **args);
 /* Signal handling */
 void	handle_signals(void);
 
-/* Print */
+/* Prout */
 void	ft_putstr_fd(const char *str, int fd);
 void	display_prompt(void);
 void	print_error(const char *msg);
