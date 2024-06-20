@@ -6,12 +6,14 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 16:56:13 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:15:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/* peut etre des includes en trop :) */
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -27,7 +29,19 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/*minishell/
+/* conventions d'erreur ?
+	1 pour les erreurs de syntaxe,
+	2 pour les erreurs de commandes
+	3 pour les erreurs de fichiers, etc...
+
+	BAD LONG
+*/
+
+
+/*
+suggestion des dipositions des fichiers:
+
+minishell/
 ├── Makefile
 ├── minishell.c
 ├── minishell.h
@@ -62,6 +76,9 @@ void	builtin_unsetenv(char **args);
 
 /* Signal handling */
 void	handle_signals(void);
+
+/* Print errors */
+void	print_error(const char *msg);
 
 /* Utilities */
 void	free_args(char **args);
