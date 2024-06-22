@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/20 21:21:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 00:18:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* peut etre des includes en trop :) */
 
+# include "LIBFT/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -76,21 +77,21 @@ void	builtin_unsetenv(char **args);
 void	handle_signals(void);
 
 /* Prout */
-void	ft_putstr_fd(const char *str, int fd);
 void	display_prompt(void);
 void	print_error(const char *msg);
 
 /* Longueur :) */
-int		ft_strlen(const char *str);
+// libft :D
 
-/* Utilities */
+/* Auto destruction minishell*/
+void	apocalypse(void);
 void	free_args(char **args);
 void	free_commands(char ***commands);
 void	error_exit(const char *msg);
 
 
 /* Pas mal le franglish hein :) ?
-	il y aura peut etre tout en anglais sauf si ca ne te perturbe pas,
-	je trouve juste que "fonction integre" et "lecture et analyse" sonne bizarement
+	jadore tkt :D
 */
+
 #endif
