@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_prompt.c                                     :+:      :+:    :+:   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 20:53:05 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 23:16:43 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/23 22:29:15 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/23 22:52:50 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**split_prompt(char *prompt)
+/*
+void	execute_command(char **splited_prompt)
 {
-	char	**split_prompt;
-
-	if (!prompt)
-	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
-	}
-	split_prompt = ft_split(prompt, ' ');
-	if (!split_prompt)
-	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
-	}
-	return (split_prompt);
 }
+*/

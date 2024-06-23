@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 21:05:43 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 21:06:28 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 23:19:54 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(char *command)
 {
+	if (!command)
+		return (0);
 	if (ft_strcmp(command, "echo") == 0)
 		return (1);
 	if (ft_strcmp(command, "cd") == 0)

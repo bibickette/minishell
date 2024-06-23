@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_prompt.c                                     :+:      :+:    :+:   */
+/*   print_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 20:53:05 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 23:16:43 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/23 23:12:13 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/23 23:27:27 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**split_prompt(char *prompt)
+void	print_tokens(char **tokens)
 {
-	char	**split_prompt;
+	int	i;
 
-	if (!prompt)
+	if (!tokens)
 	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
+		ft_putstr_fd("Error: print_tokens failed\n", 2);
+		return ;
 	}
-	split_prompt = ft_split(prompt, ' ');
-	if (!split_prompt)
+	i = 0;
+	while (tokens[i])
 	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
+		printf("Token [%d] = %s\n", i, tokens[i]);
+		i++;
 	}
-	return (split_prompt);
 }

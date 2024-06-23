@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_prompt.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 20:53:05 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 23:16:43 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/23 22:05:39 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/23 23:21:31 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**split_prompt(char *prompt)
-{
-	char	**split_prompt;
+/* 	Cette fonction compare les deux chaines de caractères s1 et s2.
+	Elle renvoie un entier négatif, nul, ou positif si s1 est respectivement
+	inférieure, égale ou supérieure à s2.
+*/
 
-	if (!prompt)
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
 	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
+		s1++;
+		s2++;
 	}
-	split_prompt = ft_split(prompt, ' ');
-	if (!split_prompt)
-	{
-		ft_putstr_fd("Error: split_prompt failed\n", 2);
-		return (NULL);
-	}
-	return (split_prompt);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
