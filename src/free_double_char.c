@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   free_double_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 20:56:31 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/23 21:00:40 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/23 21:00:51 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parsing_prompt(char *prompt)
+void	free_double_char(char **array)
 {
-	char	**split_prompt;
+	int	i;
 
-	check_and_handle_null_prompt(prompt);
-	check_and_handle_exit_input(prompt);
-	split_prompt = split_prompt(prompt);
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

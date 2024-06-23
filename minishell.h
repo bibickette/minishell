@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 15:40:53 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:06:21 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ minishell/
 	tu peux les renommer si tu veux c'est juste pour la forme
 */
 
-void	prompt(void);
-
 /* Read and parse command */
-char	*read_command(void);
-char	**parse_command(char *command);
+void	prompt(void);
 void	parsing_prompt(char *prompt);
+char	**split_prompt(char *prompt);
 
 /* Execution */
 void	execute_command(char **args);
@@ -66,7 +64,7 @@ void	execute_pipeline(char ***commands);
 void	execute_redirection(char **args);
 
 /* Built-in commands */
-int		is_builtin(char **args);
+int		is_builtin(char *command);
 void	execute_builtin(char **args);
 void	builtin_echo(char **args);
 void	builtin_cd(char **args);
@@ -100,6 +98,7 @@ char	*get_prompt(void);
 void	apocalypse(void);
 void	free_args(char **args);
 void	free_commands(char ***commands);
+void	free_double_char(char **array)
 void	error_exit(const char *msg);
 
 /* Pas mal le franglish hein :) ?
