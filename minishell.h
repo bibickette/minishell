@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 15:31:09 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:40:53 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ minishell/
 	tu peux les renommer si tu veux c'est juste pour la forme
 */
 
+void	prompt(void);
+
 /* Read and parse command */
 char	*read_command(void);
 char	**parse_command(char *command);
+void	parsing_prompt(char *prompt);
 
 /* Execution */
 void	execute_command(char **args);
@@ -77,6 +80,7 @@ void	builtin_unsetenv(char **args);
 void	handle_signals(void);
 
 /* Prout */
+void	display_intro(void);
 void	display_prompt(void);
 void	print_error(const char *msg);
 
@@ -91,8 +95,6 @@ void	check_and_handle_exit_input(char *prompt);
 /* get */
 char	*get_prompt(void);
 
-/* parsing */
-void	parsing_prompt(char *prompt);
 
 /* Auto destruction minishell*/
 void	apocalypse(void);

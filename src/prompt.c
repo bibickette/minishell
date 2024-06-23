@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 15:11:27 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:34:11 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	prompt(void)
 	char	*prompt;
 
 	prompt = NULL;
+	display_intro();
 	while (1)
 	{
 		display_prompt();

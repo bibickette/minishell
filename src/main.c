@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 14:26:55 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:38:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (check_args(argc, argv) != 0)
 		return (1);
-	display_prompt();
+	prompt();
 	return (0);
 }
