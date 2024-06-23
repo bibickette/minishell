@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 00:18:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/06/23 15:31:09 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <wait.h>
+# include <stddef.h>
 # include <signal.h>
 # include <errno.h>
 
@@ -33,7 +34,6 @@
 
 	BAD LONG...................ou pas :)
 */
-
 
 /* suggestion des dipositions des fichiers:
 
@@ -81,7 +81,18 @@ void	display_prompt(void);
 void	print_error(const char *msg);
 
 /* Longueur :) */
-// libft :D
+/* libft :D */
+
+/* check */
+int		check_args(int argc, char **argv);
+void	check_and_handle_null_prompt(char *prompt);
+void	check_and_handle_exit_input(char *prompt);
+
+/* get */
+char	*get_prompt(void);
+
+/* parsing */
+void	parsing_prompt(char *prompt);
 
 /* Auto destruction minishell*/
 void	apocalypse(void);
@@ -89,9 +100,7 @@ void	free_args(char **args);
 void	free_commands(char ***commands);
 void	error_exit(const char *msg);
 
-
 /* Pas mal le franglish hein :) ?
 	jadore tkt :D
 */
-
 #endif

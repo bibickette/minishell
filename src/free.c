@@ -6,13 +6,16 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/06/23 00:18:54 by phwang           ###   ########.fr       */
+/*   Updated: 2024/06/23 14:26:32 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-void apocalypse(void)
+#include "minishell.h"
+/*
+	que fait cette fonction ?
+*/
+void	apocalypse(void)
 {
 	get_next_line(STDIN_FILENO, 1);
+	return ;
 }

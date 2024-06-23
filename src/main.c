@@ -6,12 +6,11 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 00:12:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/06/23 14:26:55 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
+#include "minishell.h"
 /*
 	Le main de notre minishell, qui va afficher le prompt et 
 	etre en attente de commande d'utilisateur
@@ -23,13 +22,10 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	if (argc != 1) // jsp on est censé faire quoi
-	{
-		ft_putstr_fd("Error: too many arguments\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
+	(void)env;
+	(void)argv;
+	if (check_args(argc, argv) != 0)
+		return (1);
 	display_prompt();
 	return (0);
 }
-
-// DSL POUR LES INCLUDES MANUEL JARRIVE PAS A INCLUDE LE HEADER DANS LE MAKEFILE
