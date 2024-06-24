@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/24 14:54:08 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/24 16:23:56 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	print_tokens(char **tokens);
 /* check */
 int		check_args(int argc, char **argv);
 int		ft_strcmp(const char *s1, const char *s2);
+int		check_operator(char *str);
 char	**check_and_split_prompt(char *prompt);
 void	check_and_handle_null_prompt(char *prompt);
 void	check_and_handle_exit_input(char *prompt);
