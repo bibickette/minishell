@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/24 14:54:16 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/24 14:55:39 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	s'occuper de la commande pour le mettre avant la tokenisation	*/
-char	***parsing_prompt(char *prompt)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	char	**splited_prompt;
-	char	***commands;
+	void	*new_ptr;
 
-	if (!prompt)
+	if (!ptr)
+		return (malloc(size));
+	new_ptr = malloc(size);
+	if (!new_ptr)
 	{
-		ft_putstr_fd("Error: parsing_prompt failed\n", 2);
+		free(ptr);
 		return (NULL);
 	}
-	commands = NULL;
-	splited_prompt = NULL;
-	splited_prompt = check_and_split_prompt(prompt);
-	commands = split_commands(splited_prompt);
-	commands = tokenize_commands(commands);
-	return (tokens);
+	ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	return (new_ptr);
 }

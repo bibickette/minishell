@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/24 14:54:16 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/24 12:34:23 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/24 14:54:47 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	s'occuper de la commande pour le mettre avant la tokenisation	*/
-char	***parsing_prompt(char *prompt)
+/* FINIR cette fonction */
+/* BESOIN DE FAIRE FT_REALLOC */
+char	***split_commands(char **splited_prompt)
 {
-	char	**splited_prompt;
 	char	***commands;
-
-	if (!prompt)
+	
+	if (!splited_prompt)
 	{
-		ft_putstr_fd("Error: parsing_prompt failed\n", 2);
+		ft_putstr_fd("Error: split_commands failed\n", 2);
 		return (NULL);
 	}
 	commands = NULL;
-	splited_prompt = NULL;
-	splited_prompt = check_and_split_prompt(prompt);
-	commands = split_commands(splited_prompt);
-	commands = tokenize_commands(commands);
-	return (tokens);
+	while (*splited_prompt)
+	{
+		if (ft_strcmp(*splited_prompt, ">") == 0)
+	}
 }
