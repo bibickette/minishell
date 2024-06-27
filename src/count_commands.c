@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   count_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 11:27:12 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/27 17:36:01 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/27 17:39:18 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	fonction probablement inutile */
-char	***parsing_prompt(char *prompt)
+int	count_commands(char **splited_prompt)
 {
-	char	**splited_prompt;
-	char	***commands;
+	int	i;
+	int	count;
 
-	if (!prompt)
+	i = 0;
+	count = 0;
+	while (splited_prompt[i])
 	{
-		ft_putstr_fd("Error: parsing_prompt failed\n", 2);
-		return (NULL);
+		if (is_operator(splited_prompt[i]))
+			count++;
+		i++;
 	}
-	commands = NULL;
-	splited_prompt = NULL;
-	splited_prompt = check_and_split_prompt(prompt);
-	commands = split_commands(splited_prompt);
-	commands = tokenize_commands(commands);
-	return (tokens);
+	return (count + 1);
 }

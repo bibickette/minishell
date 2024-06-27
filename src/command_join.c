@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   command_join.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 11:27:12 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/27 16:36:35 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/27 17:55:03 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	fonction probablement inutile */
-char	***parsing_prompt(char *prompt)
+char	*command_join(char *commands, char *splited_prompt_char)
 {
-	char	**splited_prompt;
-	char	***commands;
+	char	*new_command;
 
-	if (!prompt)
+	if (!command || !str2)
 	{
-		ft_putstr_fd("Error: parsing_prompt failed\n", 2);
+		ft_putstr_fd("Error: command_join failed\n", 2);
 		return (NULL);
 	}
-	commands = NULL;
-	splited_prompt = NULL;
-	splited_prompt = check_and_split_prompt(prompt);
-	commands = split_commands(splited_prompt);
-	commands = tokenize_commands(commands);
-	return (tokens);
+	new_command = ft_strjoin(command, splited_prompt_char);
+	if (!new_command)
+	{
+		ft_putstr_fd("Error: command_join failed\n", 2);
+		return (NULL);
+	}
+	free(commands);
+	return (new_command);
 }

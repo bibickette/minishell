@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_prompt.c                                   :+:      :+:    :+:   */
+/*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:52:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 11:27:12 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/27 11:49:57 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/27 11:50:15 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	fonction probablement inutile */
-char	***parsing_prompt(char *prompt)
+int	is_operator(char *str)
 {
-	char	**splited_prompt;
-	char	***commands;
-
-	if (!prompt)
-	{
-		ft_putstr_fd("Error: parsing_prompt failed\n", 2);
-		return (NULL);
-	}
-	commands = NULL;
-	splited_prompt = NULL;
-	splited_prompt = check_and_split_prompt(prompt);
-	commands = split_commands(splited_prompt);
-	commands = tokenize_commands(commands);
-	return (tokens);
+	if (!str)
+		return (0);
+	if (ft_strncmp(str, ">", 2) == 0)
+		return (1);
+	if (ft_strncmp(str, ">>", 3) == 0)
+		return (1);
+	if (ft_strncmp(str, "<", 2) == 0)
+		return (1);
+	if (ft_strncmp(str, "<<", 3) == 0)
+		return (1);
+	if (ft_strncmp(str, "|", 2) == 0)
+		return (1);
+	return (0);
 }
