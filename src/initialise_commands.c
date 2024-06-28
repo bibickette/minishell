@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_op.c                                        :+:      :+:    :+:   */
+/*   initialise_commands.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:22:36 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 19:57:18 by yantoine         ###   ########.fr       */
+/*   Created: 2024/06/27 20:00:44 by yantoine          #+#    #+#             */
+/*   Updated: 2024/06/27 20:02:25 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_op(char *splited_prompt_char)
+char	**initialise_commands(char **splited_prompt)
 {
-	char	*command;
+	char	**commands;
 
-	if (!splited_prompt_char)
-	{
-		ft_putstr_fd("Error: handle_op failed\n", 2);
-		return (NULL);
-	}
-	command = ft_strdup(splited_prompt_char);
-	if (!commands)
-	{
-		ft_putstr_fd("Error: handle_op failed\n", 2);
-		return (NULL);
-	}
-	return (command);
+	commands = malloc(sizeof(char *) * (count_commands(splited_prompt) + 1));
+	commands[0] = ft_strdup(splited_prompt[0]);
 }
