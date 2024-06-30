@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/30 18:32:40 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:06:14 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	prompt(void)
 	{
 		display_prompt();
 		prompt = get_prompt();
+		split_prompt_arg(prompt);
 		free(prompt);
 	}
 }
