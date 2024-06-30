@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 16:52:04 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:51:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ void	print_tokens(char **tokens);
 /* libft :D */
 
 /* str */
-char	*command_join(char *commands, char *str2, int *index);
+char	*command_join(char *commands, char *splited_prompt_char);
 /* check */
+int		count_commands(char **splited_prompt);
 int		check_args(int argc, char **argv);
 int		ft_strcmp(const char *s1, const char *s2);
 int		check_operator(char *str);

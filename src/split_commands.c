@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:34:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 20:02:47 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:42:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*		 S'IL y a un leak cela viens peut etre du fait que le splited_prompt
 		 ne reviens pas a son addr de base a la fin de la fonction
 */
+
 static int	check_error(char **splited_prompt)
 {
 	if (!splited_prompt)
@@ -50,4 +51,5 @@ char	**split_commands(char **splited_prompt)
 			i++;
 		}
 	}
+	return (commands);
 }

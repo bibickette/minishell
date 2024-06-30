@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 20:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/27 20:02:25 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:47:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ char	**initialise_commands(char **splited_prompt)
 
 	commands = malloc(sizeof(char *) * (count_commands(splited_prompt) + 1));
 	commands[0] = ft_strdup(splited_prompt[0]);
+	return (commands);
 }
