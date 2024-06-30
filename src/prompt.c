@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/30 16:53:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:32:40 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	prompt(void)
 {
-	char	***commands;
 	char	*prompt;
 
 	prompt = NULL;
@@ -23,8 +22,6 @@ void	prompt(void)
 	{
 		display_prompt();
 		prompt = get_prompt();
-		commands = parsing_prompt(prompt);
-		free_double_char(commands);
 		free(prompt);
 	}
 }
