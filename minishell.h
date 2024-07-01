@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/30 18:35:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:06:24 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <signal.h>
 # include <errno.h>
 
+# define OK 1
+
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
 	2 pour les erreurs de commandes
@@ -35,23 +37,17 @@
 	BAD LONG...................ou pas :)
 */
 
-/* suggestion des dipositions des fichiers:
+typedef struct s_element
+{
+	int					index_command;
+	char				*word;
+	struct s_element	*next;
+}	t_element;
 
-minishell/
-└── README.md
-├── Makefile
-├── minishell.h
-├── sources/
-	├── minishell.c
-	├── command.c
-	├── builtin.c
-	├── signal.c
-	├── error.c
-	└── etc...
-
-   les noms des fichiers sont des suggestions,
-	tu peux les renommer si tu veux c'est juste pour la forme
-*/
+typedef struct s_minishell
+{
+	struct s_element	*premier;
+}	t_data;
 
 /* Read and parse command */
 void	prompt(void);
