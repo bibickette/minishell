@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   cpy_twin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 13:38:11 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/02 15:49:01 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/04 15:43:51 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+char	*cpy_twin(char *prompt_loop, char buffer[BSIZE])
 {
-	void	*new_ptr;
+	int			i;
+	char	occurence;
 
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
+	i = 0;
+	occurence = *prompt_loop;
+	while (*prompt_loop != occurence)
 	{
-		free(ptr);
-		return (NULL);
+		buffer[i] = *prompt_loop;
+		i++;
+		prompt_loop++;
 	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	return (buffer);
 }

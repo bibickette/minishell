@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_lst_new_custom.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 13:38:11 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/04 16:11:51 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/04 17:12:29 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+t_list	*ft_lstnew_custom(char buffer[BSIZE])
 {
-	void	*new_ptr;
+	char		*dyna_buffer;
+	t_data	*data;
+	t_list	*new;
 
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		free(ptr);
+	dyna_buffer = ft_strdup(buffer);
+	data = ft_calloc(1, sizeof(t_data));
+	if (!dyna_buffer || !data)
 		return (NULL);
+	data->word = dyna_buffer;
+	data->index = 0;
+	new = ft_lstnew_libft(data);
+	if (!new)
+	{
+		free(dyna_buffer);
+		free(data);
 	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	return (new);
 }

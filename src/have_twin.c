@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_prompt_arg.c                                 :+:      :+:    :+:   */
+/*   have_twin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/01 20:11:29 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/02 10:59:17 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/02 11:27:21 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	split_prompt_arg(char *prompt, t_data *minishell)
+int	have_twin(char *prompt)
 {
-	int	i;
+	int		i;
+	char	twin;
 
-	i = 0;
+	i = 1;
+	twin = prompt[0];
 	while (prompt[i])
 	{
-		if (prompt[i] == ' ')
-			i++;
-		else if (prompt[i] == 34 || prompt [i] == 44)
-		{
-			if (have_twin(prompt, i, prompt[i], minishell) == OK)
-				i += cpy_twin(prompt, i, prompt[i], minishell);
-			else
-				i += cpy_till_end(prompt, i, minishell);
-		}
-		else
-			i += cpy_till_end(prompt, i, minishell);
+		if (prompt[i] == twin)
+			return (OK);
+		i++;
 	}
+	return (KO);
 }

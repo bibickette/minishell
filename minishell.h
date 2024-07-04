@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/01 20:06:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:25:40 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@
 # include <signal.h>
 # include <errno.h>
 
+# define KO 0
 # define OK 1
+# define BUFF_OVERFLOW 2
+# define BSIZE 4096
 
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
@@ -39,18 +42,16 @@
 
 typedef struct s_element
 {
-	int					index_command;
+	int					index;
 	char				*word;
-	struct s_element	*next;
-}	t_element;
-
-typedef struct s_minishell
-{
-	struct s_element	*premier;
 }	t_data;
 
+/* liste chainée */
+void	add_element(t_list *minishell, char buffer[BSIZE]);
+t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
-void	prompt(void);
+void	prompt(t_list *minishell);
+int		tokenize(char *prompt, t_list *minishell);
 
 /* Execution */
 
@@ -73,14 +74,16 @@ void	display_intro(void);
 void	display_prompt(void);
 void	print_error(const char *msg);
 
-/* Longueur :) */
-/* libft :D */
+/* memory */
+void	*ft_realloc(void *ptr, size_t size);
 
 /* str */
-char	*command_join(char *commands, char *splited_prompt_char);
+char		*cpy_twin(char *src, char buffer[BSIZE]);
+void	handle_quote(char *prompt_loop, t_list *minishell, char buffer[BSIZE]);
 /* check */
 int		check_args(int argc, char **argv);
 int		ft_strcmp(const char *s1, const char *s2);
+int		have_twin(char *prompt);
 
 /* get */
 char	*get_prompt(void);
@@ -91,6 +94,8 @@ void	free_args(char **args);
 void	free_commands(char ***commands);
 void	free_double_char(char **array);
 void	error_exit(const char *msg);
+void	handle_error(int error_code, char *prompt);
+void	free_data(void *data);
 
 /* Pas mal le franglish hein :) ?
 	jadore tkt :D

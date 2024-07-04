@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 13:38:11 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/04 16:58:02 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/04 16:58:09 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	free_data(void *data)
 {
-	void	*new_ptr;
+	t_data	*tmp;
 
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	tmp = (t_data *)data;
+	free(tmp->word);
+	free(tmp);
 }

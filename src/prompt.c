@@ -6,14 +6,15 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/01 20:10:36 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:21:38 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(t_data	*minishell)
+void	prompt(t_list *minishell)
 {
+	int		ret;
 	char	*prompt;
 
 	prompt = NULL;
@@ -22,7 +23,9 @@ void	prompt(t_data	*minishell)
 	{
 		display_prompt();
 		prompt = get_prompt();
-		split_prompt_arg(prompt, minishell);
+		ret = tokenize(prompt, minishell);
+		if (ret != OK)
+			handle_error(ret, prompt);
 		free(prompt);
 	}
 }

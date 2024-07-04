@@ -4,7 +4,6 @@ LIBFT = -L./LIBFT -lft
 
 CC = cc
 
-# jenleve werror pour linstant pcq il casase les couilles (REGLE , suppr quand c vu)
 
 INCLUDE = -I. -I./LIBFT
 CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -g3 
@@ -19,16 +18,9 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 
 .PHONY: all clean fclean re
 
-# je suis dsl je sais pas comment on include le header
-# jai mis manuellement pour linstant si tu peux maider XD stp
-		#FAIT SUPPR QUAAND C VU
-
-#J'AIME BIEN l'ANIMATION DE LA COMPILATION
 
 all: $(NAME)
 
-# c pour faire un dossier plus propre en triant les obj
-			#NOICE
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
