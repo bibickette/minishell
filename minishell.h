@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 17:25:40 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/04 23:45:20 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_element
 
 /* liste chainée */
 void	add_element(t_list *minishell, char buffer[BSIZE]);
+void	ft_lstclear_custom(t_list **lst, void (*del)(void*));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
 void	prompt(t_list *minishell);

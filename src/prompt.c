@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 17:21:38 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/04 23:49:55 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,18 @@ void	prompt(t_list *minishell)
 	{
 		display_prompt();
 		prompt = get_prompt();
+		if (ft_strcmp(prompt, "exit\n") == 0)
+		{
+			free(prompt);
+			return ;
+		}
 		ret = tokenize(prompt, minishell);
 		if (ret != OK)
 			handle_error(ret, prompt);
 		free(prompt);
+		ft_lstclear_custom(&minishell, free);
 	}
+	free(prompt);
 }
 /* ceci est juste un test
 
