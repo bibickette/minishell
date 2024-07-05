@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:30:57 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 17:33:16 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:02:15 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ void	handle_quote(char *prompt_loop, t_list **minishell, char buffer[BSIZE])
 	if (have_twin(prompt_loop) == OK)
 	{
 		buffer = cpy_twin(prompt_loop, buffer);
-		if ((*minishell)->content == NULL)
+		if (*minishell == NULL)
 			*minishell = ft_lstnew_custom(buffer);
 		else
 			ft_lstadd_back_libft(minishell, ft_lstnew_custom(buffer));
 	}
 	else
 		prompt_loop++;
-	ft_bzero(buffer, BSIZE);
 }

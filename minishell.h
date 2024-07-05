@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 17:32:55 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:08:20 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@
 typedef struct s_element
 {
 	int					index;
-	char				*word;
-}	t_data;
+	char				*str;
+}	t_token;
 
 /* liste chainée */
 void	add_element(t_list *minishell, char buffer[BSIZE]);
@@ -73,6 +73,7 @@ void	handle_signals(void);
 /* Prout */
 void	display_intro(void);
 void	display_prompt(void);
+void	print_token(void *content);
 void	print_error(const char *msg);
 
 /* memory */
@@ -96,7 +97,7 @@ void	free_commands(char ***commands);
 void	free_double_char(char **array);
 void	error_exit(const char *msg);
 void	handle_error(int error_code, char *prompt);
-void	free_data(void *data);
+void	free_token(void *token);
 
 /* Pas mal le franglish hein :) ?
 	jadore tkt :D
