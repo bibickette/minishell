@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 19:00:52 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:19:35 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	prompt(t_list *minishell)
 		{
 			free(prompt);
 			free(minishell);
+			get_next_line(0, 1);
 			return ;
 		}
 		ret = tokenize(prompt, &minishell);
