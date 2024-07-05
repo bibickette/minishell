@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:30:57 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 19:02:15 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:16:10 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_quote(char *prompt_loop, t_list **minishell, char buffer[BSIZE])
 {
 	if (ft_strlen(buffer) > 0)
 	{
-		if ((*minishell)->content == NULL)
+		if (*minishell == NULL)
 			*minishell = ft_lstnew_custom(buffer);
 		else
 			ft_lstadd_back_libft(minishell, ft_lstnew_custom(buffer));
@@ -29,6 +29,7 @@ void	handle_quote(char *prompt_loop, t_list **minishell, char buffer[BSIZE])
 			*minishell = ft_lstnew_custom(buffer);
 		else
 			ft_lstadd_back_libft(minishell, ft_lstnew_custom(buffer));
+		ft_bzero(buffer, BSIZE);
 	}
 	else
 		prompt_loop++;
