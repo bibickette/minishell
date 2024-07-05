@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:59:17 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/02 11:27:21 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:38:53 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	have_twin(char *prompt)
 	while (prompt[i])
 	{
 		if (prompt[i] == twin)
-			return (OK);
+			if (prompt[i - 1] != twin)
+				return (OK);
 		i++;
 	}
 	return (KO);

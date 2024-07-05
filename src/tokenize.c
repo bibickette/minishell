@@ -6,13 +6,13 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/04 23:49:36 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:33:46 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenize(char *prompt, t_list *minishell)
+int	tokenize(char *prompt, t_list **minishell)
 {
 	int			i;
 	char	*prompt_loop;
@@ -26,10 +26,10 @@ int	tokenize(char *prompt, t_list *minishell)
 		if (i == BSIZE)
 		{
 			printf("Error: buffer overflow\n");
-			ft_lstclear_custom(&minishell, free);
+			ft_lstclear_custom(minishell, free);
 			return (BUFF_OVERFLOW);
 		}
-		if (*prompt_loop == 34 || *prompt_loop == 44)
+		if (*prompt_loop == 34 || *prompt_loop == 39)
 			handle_quote(prompt_loop, minishell, buffer);
 		buffer[i] = *prompt_loop;
 		i++;
@@ -37,12 +37,12 @@ int	tokenize(char *prompt, t_list *minishell)
 	}
 	if (ft_strlen(buffer) > 0)
 	{
-		if (minishell == NULL)
+		if ((*minishell)->content == NULL)
 		{
-			minishell = ft_lstnew_custom(buffer);
+			*minishell = ft_lstnew_custom(buffer);
 		}
 		else
-			ft_lstadd_back_libft(&minishell, ft_lstnew_custom(buffer));
+			ft_lstadd_back_libft(minishell, ft_lstnew_custom(buffer));
 	}
 	return (OK);
 }
