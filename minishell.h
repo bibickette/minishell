@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 18:08:20 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:30:34 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	print_error(const char *msg);
 void	*ft_realloc(void *ptr, size_t size);
 
 /* str */
-char		*cpy_twin(char *src, char buffer[BSIZE]);
-void	handle_quote(char *prompt_loop, t_list **minishell, char buffer[BSIZE]);
+char		*cpy_twin(char **src, char buffer[BSIZE]);
+void	handle_quote(char **prompt_loop, t_list **minishell, char buffer[BSIZE]);
 /* check */
 int		check_args(int argc, char **argv);
 int		ft_strcmp(const char *s1, const char *s2);

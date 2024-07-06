@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 19:01:57 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:51:08 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@ int	tokenize(char *prompt, t_list **minishell)
 			ft_lstclear_custom(minishell, free);
 			return (BUFF_OVERFLOW);
 		}
-		if (*prompt_loop == 34 || *prompt_loop == 39)
-			handle_quote(prompt_loop, minishell, buffer);
+		else if (*prompt_loop == 34 || *prompt_loop == 39)
+		{
+			handle_quote(&prompt_loop, minishell, buffer);
+			i = 0;
+		}
 		else
+		{
 			buffer[i] = *prompt_loop;
-		i++;
-		prompt_loop++;
+			i++;
+			prompt_loop++;
+		}
 	}
 	if (ft_strlen(buffer) > 0)
 	{
