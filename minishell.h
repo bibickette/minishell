@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/06 18:30:34 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:47:05 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <string.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include <wait.h>
 # include <stddef.h>
 # include <signal.h>
 # include <errno.h>

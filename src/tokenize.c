@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/06 18:51:08 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:31:33 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	tokenize(char *prompt, t_list **minishell)
 {
 	int			i;
-	char	*prompt_loop;
-	char	buffer[BSIZE];
+	char		*prompt_loop;
+	char		buffer[BSIZE];
 
 	i = 0;
 	ft_bzero(buffer, BSIZE);
