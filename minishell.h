@@ -45,6 +45,12 @@ typedef struct s_element
 	char				*str;
 }	t_token;
 
+typedef struct s_minishell
+{
+	t_list *token;
+	
+} t_data;
+
 /* liste chainée */
 void	add_element(t_list *token, char buffer[BSIZE]);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void*));

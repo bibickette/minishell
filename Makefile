@@ -6,7 +6,7 @@ CC = cc
 
 
 INCLUDE = -I. -I./LIBFT
-CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -g3 
+CFLAGS = $(INCLUDE) -Wall -Wextra -g3 
 
 SRC_DIR = src
 OBJ_DIR = obj
