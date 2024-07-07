@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 18:39:23 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/07 16:55:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_list	*minishell;
+	t_list	*token;
 
 	(void)env;
-	minishell = NULL;
+	token = NULL;
 	if (check_args(argc, argv) != 0)
 		return (1);
-	prompt(minishell);
+	prompt(token);
 	return (0);
 }

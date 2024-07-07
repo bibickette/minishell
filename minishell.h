@@ -46,12 +46,12 @@ typedef struct s_element
 }	t_token;
 
 /* liste chainée */
-void	add_element(t_list *minishell, char buffer[BSIZE]);
+void	add_element(t_list *token, char buffer[BSIZE]);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void*));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
-void	prompt(t_list *minishell);
-int		tokenize(char *prompt, t_list **minishell);
+void	prompt(t_list *token);
+int		tokenize(char *prompt, t_list **token);
 
 /* Execution */
 
@@ -80,7 +80,7 @@ void	*ft_realloc(void *ptr, size_t size);
 
 /* str */
 char		*cpy_twin(char **src, char buffer[BSIZE]);
-void	handle_quote(char **prompt_loop, t_list **minishell, char buffer[BSIZE]);
+void	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 /* check */
 int		check_args(int argc, char **argv);
 int		ft_strcmp(const char *s1, const char *s2);
