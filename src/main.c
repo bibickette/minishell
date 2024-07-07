@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/07 17:34:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/07 17:50:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	main(int argc, char **argv, char **env)
 	minishell = ft_calloc(1, sizeof(t_data));
 	if (check_args(argc, argv) != 0)
 		return (1);
-	prompt(minishell->token);
+	prompt(minishell->token, minishell);
 	return (0);
 }

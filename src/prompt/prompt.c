@@ -6,13 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/07 17:28:54 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/07 18:37:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(t_list *token)
+void	prompt(t_list *token, t_data *minishell)
 {
 	int		ret;
 	char	*prompt;

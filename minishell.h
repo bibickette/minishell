@@ -38,6 +38,15 @@
 
 	BAD LONG...................ou pas :)
 */
+typedef struct s_minishell t_data;;
+typedef struct s_element t_token;
+typedef struct s_builtin t_builtin;
+
+typedef struct s_minishell
+{
+	t_list *token;
+	t_builtin *builtins;
+} t_data;
 
 typedef struct s_element
 {
@@ -45,18 +54,19 @@ typedef struct s_element
 	char				*str;
 }	t_token;
 
-typedef struct s_minishell
+typedef struct s_builtin
 {
-	t_list *token;
-	
-} t_data;
+	char **envp;
+	char *pwd;
+} t_builtin;
+
 
 /* liste chainée */
 void	add_element(t_list *token, char buffer[BSIZE]);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void*));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
-void	prompt(t_list *token);
+void	prompt(t_list *token, t_data *minishell);
 int		tokenize(char *prompt, t_list **token);
 
 /* Execution */
@@ -67,6 +77,7 @@ void	execute_builtin(char **args);
 void	builtin_echo(char **args);
 void	builtin_cd(char **args);
 void	builtin_pwd(char **args); // c kom si ct fait
+// void get_env(void);
 void	builtin_env(char **args); // c kom si ct fait
 void	builtin_exit(char **args);
 void	builtin_export(char **args);

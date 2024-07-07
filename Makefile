@@ -6,26 +6,25 @@ CC = cc
 
 
 INCLUDE = -I. -I./LIBFT
-CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -g3 
+CFLAGS = $(INCLUDE) -Wall -Wextra -g3 
 
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.c)
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
-
+OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 .PHONY: all clean fclean re
 
 
 all: $(NAME)
 
-
 $(OBJ_DIR):
-	@mkdir $(OBJ_DIR)
+	mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ -c $< 
 
 $(NAME) : $(OBJ_DIR) $(OBJ)
