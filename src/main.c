@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/07 17:50:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/09 17:24:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	*minishell;
 
-	(void)env;
-	minishell = ft_calloc(1, sizeof(t_data));
+	if(init_minishell(&minishell) == KO)
+		apocalypse(minishell);
 	if (check_args(argc, argv) != 0)
 		return (1);
+	get_env(minishell, env);
 	prompt(minishell->token, minishell);
 	return (0);
 }

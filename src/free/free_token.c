@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:58:02 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 18:04:01 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:19:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	free_token(void *token)
 	tmp = (t_token *)token;
 	free(tmp->str);
 	free(tmp);
+	tmp = 0;
 }

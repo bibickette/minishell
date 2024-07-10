@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_double_char.c                                 :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 21:00:40 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/08 17:49:20 by phwang           ###   ########.fr       */
+/*   Created: 2024/07/07 21:03:33 by phwang            #+#    #+#             */
+/*   Updated: 2024/07/07 21:11:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_double_char(char **array)
+int	init_minishell(t_data **minishell)
 {
-	int	i;
-
-	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
-	{
-		free(array[i]);
-		array[i] = 0;
-		i++;
-	}
-	free(array);
-	array = 0;
+	*minishell = ft_calloc(1, sizeof(t_data));
+	if (!minishell)
+		return (KO);
+	(*minishell)->builtins = ft_calloc(1, sizeof(t_builtin));
+	if (!(*minishell)->builtins)
+		return (KO);
+	return (OK);
 }

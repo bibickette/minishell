@@ -25,11 +25,22 @@
 # include <stddef.h>
 # include <signal.h>
 # include <errno.h>
+# include <sys/wait.h>
 
 # define KO 0
 # define OK 1
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
+
+# define FORK_ERR "Minishell Error : Fork\n"
+# define STATUS_ERR "A process hasn't ended well\n"
+
+# define STRJOIN_ERR "Minishell Error : Malloc problem with strjoin\n"
+# define ERR_ENV "Minishell Error : Couldn't get the environment\n"
+# define NO_PATH_ENV "Minishell Error : Couldn't find any path for the env cmd\n"
+# define FILE_ENV ".envp"
+
+# define EXIT_JSP -1
 
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
@@ -46,6 +57,9 @@ typedef struct s_minishell
 {
 	t_list *token;
 	t_builtin *builtins;
+
+	char **path;
+	char **envp;
 } t_data;
 
 typedef struct s_element
@@ -60,6 +74,7 @@ typedef struct s_builtin
 	char *pwd;
 } t_builtin;
 
+int init_minishell(t_data **minishell);
 
 /* liste chainée */
 void	add_element(t_list *token, char buffer[BSIZE]);
@@ -73,11 +88,14 @@ int		tokenize(char *prompt, t_list **token);
 
 /* Built-in commands */
 int		is_builtin(char *command);
+void get_env(t_data *minishell, char **env);
+char *trim_end(char *path_env);
+void execve_one_cmd(char *cmd_path, char **envp, int fd_dest, int *ret);
+
 void	execute_builtin(char **args);
 void	builtin_echo(char **args);
 void	builtin_cd(char **args);
 void	builtin_pwd(char **args); // c kom si ct fait
-// void get_env(void);
 void	builtin_env(char **args); // c kom si ct fait
 void	builtin_exit(char **args);
 void	builtin_export(char **args);
@@ -107,7 +125,7 @@ int		have_twin(char *prompt);
 char	*get_prompt(void);
 
 /* Auto destruction minishell*/
-void	apocalypse(void);
+void	apocalypse(t_data *minishell);
 void	free_args(char **args);
 void	free_commands(char ***commands);
 void	free_double_char(char **array);
