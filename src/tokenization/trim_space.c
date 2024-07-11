@@ -6,13 +6,13 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:53:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 17:32:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:48:56 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int ft_is_space(char c)
+static int	ft_is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }
