@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/07 14:47:05 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:07:10 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void	ft_lstclear_custom(t_list **lst, void (*del)(void*));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
+void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
+void	add_token(t_list **token, char *buffer);
 int		tokenize(char *prompt, t_list **token);
+int		handle_buffer_overflow(t_list **token);
 
 /* Execution */
 

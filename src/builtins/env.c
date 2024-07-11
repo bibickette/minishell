@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/09 18:09:54 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/11 13:09:13 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ void manual_env_load(t_data *minishell, char **env)
 		apocalypse(minishell);
 		exit(errno);
 	}
-	int i = 0;
+	//int i = 0;
 	// while(env[i])
 	// {
 	// 	__builtin_printf("%s", env[i]);
 	// 	i++;
 	// }
-	char *other;
+	//char *other;
 	// other = getenv("PATH");
 	// printf("%s\n", other);
 	// printf("env display end\n");
