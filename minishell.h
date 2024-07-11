@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 13:07:10 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:32:25 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
 void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
-void	add_token(t_list **token, char *buffer);
+void	add_token(t_list **token, char buffer[BSIZE]);
+void	trim_space(char buffer[BSIZE]);
+void		handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 int		tokenize(char *prompt, t_list **token);
 int		handle_buffer_overflow(t_list **token);
+int		check_operator(char *str);
 
 /* Execution */
 

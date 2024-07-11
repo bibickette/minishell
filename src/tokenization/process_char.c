@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:00:26 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 13:02:15 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:02:14 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 	else if (**prompt_loop == 34 || **prompt_loop == 39)
 	{
 		handle_quote(prompt_loop, token, buffer);
+		*i = 0;
+	}
+	else if (check_operator(*prompt_loop) == 1)
+	{
+		handle_operator(prompt_loop, token, buffer);
 		*i = 0;
 	}
 	else

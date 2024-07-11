@@ -1,23 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_token.c                                        :+:      :+:    :+:   */
+/*   trim_space.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 13:03:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 17:31:26 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/11 13:53:23 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/11 17:32:06 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_token(t_list **token, char buffer[BSIZE])
+static	int ft_is_space(char c)
 {
-	trim_space(buffer);
-	if (*token == NULL)
-		*token = ft_lstnew_custom(buffer);
-	else
-		ft_lstadd_back_libft(token, ft_lstnew_custom(buffer));
+	return (c == ' ' || c == '\t' || c == '\n');
 }
 
+void	trim_space(char buffer[BSIZE])
+{
+	int		i;
+	int		j;
+	char	tmp[BSIZE];
+
+	i = 0;
+	j = 0;
+	bzero(tmp, BSIZE);
+	while (buffer[i] && ft_is_space(buffer[i]))
+		i++;
+	while (buffer[i])
+	{
+		tmp[j] = buffer[i];
+		i++;
+		j++;
+	}
+	j--;
+	while (j >= 0 && ft_is_space(tmp[j]))
+	{
+		tmp[j] = '\0';
+		j--;
+	}
+	bzero(buffer, BSIZE);
+	ft_strlcpy(buffer, tmp, BSIZE);
+}
