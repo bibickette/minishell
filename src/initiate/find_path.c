@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_sig.c                                       :+:      :+:    :+:   */
+/*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 15:21:02 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 20:12:46 by phwang           ###   ########.fr       */
+/*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
+/*   Updated: 2024/07/12 21:08:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint(int sig)
+char	*find_path(char *cmd, char **path)
 {
-	(void)sig;
-	ft_putstr_fd("\n", STDIN_FILENO);
-	display_prompt();
-}
+	char	*path_cmd;
+	int		i;
 
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-}
-
-void	handle_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	i = -1;
+	while (path[++i])
+	{
+		path_cmd = ft_strjoin(path[i], cmd);
+		if (!path_cmd)
+		{
+			ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO);
+			return (NULL);
+		}
+		if (access(path_cmd, F_OK | X_OK) == 0)
+			return (path_cmd);
+		free(path_cmd);
+	}
+	ft_putstr_fd(NO_PATH_ENV, STDERR_FILENO);
+	path_cmd = ft_strdup("");
+	return (path_cmd);
 }
