@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 21:49:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/12 22:10:31 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@
 # define HANDLE_ERROR "Minishell Error Code :"
 
 /* environment errors */
+# define ORIGINEL_ENV "/etc/environment"
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"
 # define ERR_ENV "Minishell Error : Couldn't get the environment\n"
 # define NO_PATH_ENV \
-	"Minishell Error : Couldn't find any path \
-						for the env cmd\n"
-# define ORIGINEL_ENV "/etc/environment"
+	"Minishell Error : Couldn't find any path for the env cmd\n"
 
 /* malloc errors */
 # define MALLOC_ERR "Minishell Error : Malloc\n"

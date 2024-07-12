@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 17:22:14 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 22:05:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/12 22:09:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	handle_error(int ret, char *prompt)
 	ft_putstr_fd(HANDLE_ERROR, STDERR_FILENO);
 	ft_putstr_fd(ret_nb, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
-	free_double_char(ret);
+	free(ret_nb);
 }
