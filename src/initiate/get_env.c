@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/12 23:58:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:09:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	no_environment(t_data *minishell)
 	char	*path_env;
 
 	path_env = NULL;
-	env_fd = open(ORIGINEL_ENV, O_RDONLY);
+	env_fd = open(ROOT_ENV, O_RDONLY);
 	if (env_fd == -1)
 		return (ft_putstr_fd(ERR_ENV, STDERR_FILENO), KO);
 	path_env = get_next_line(env_fd, 0);
@@ -47,17 +47,17 @@ int	load_env(t_data *minishell, char **env)
 	env_size = 0;
 	while (env[env_size])
 		env_size++;
-	minishell->env = ft_calloc(env_size + 1, sizeof(char *));
-	if (!minishell->env)
+	minishell->builtins->env = ft_calloc(env_size + 1, sizeof(char *));
+	if (!minishell->builtins->env)
 		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	i = -1;
 	while (++i < env_size)
 	{
-		minishell->env[i] = ft_strdup(env[i]);
-		if (!minishell->env[i])
+		minishell->builtins->env[i] = ft_strdup(env[i]);
+		if (!minishell->builtins->env[i])
 			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	}
-	minishell->env[i] = 0;
+	minishell->builtins->env[i] = 0;
 	return (load_path(minishell, 1));
 }
 

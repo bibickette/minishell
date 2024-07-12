@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 23:23:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:09:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define STATUS_ERR "A process hasn't ended well\n"
 
 /* environment errors */
-# define ORIGINEL_ENV "/etc/environment"
+# define ROOT_ENV "/etc/environment"
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"
 # define ERR_ENV "Minishell Error : Couldn't get the environment\n"
 
@@ -74,7 +74,6 @@ typedef struct s_minishell
 	t_builtin				*builtins;
 
 	char					**path;
-	char					**env;
 }							t_data;
 
 typedef struct s_element
@@ -85,6 +84,7 @@ typedef struct s_element
 
 typedef struct s_builtin
 {
+	char					**env;
 	char					*pwd;
 }							t_builtin;
 

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 15:27:51 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 00:04:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ void	prompt(t_list *token, t_data *minishell)
 		free(prompt);
 	}
 }
-/* ceci est juste un test
-
- on a besoin que si on recoit signal 2 SIGINT = ctrl C
- ca doit free tout le programme 
-
- le flag 1 de gnl sert a free le buffer, le flag 0 fait rien
- pour linstant ctrl D ne fait aucun leak
-
- exit doit exit un status
+/* 
+exit doit exit un status
 */

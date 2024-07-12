@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   apocalypse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/12 20:50:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:08:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	apocalypse(t_data *minishell)
 	if (minishell->path)
 		free_double_char(minishell->path);
 	minishell->path = 0;
-	if (minishell->env)
-		free_double_char(minishell->env);
-	minishell->env = 0;
+	if (minishell->builtins->env)
+		free_double_char(minishell->builtins->env);
+	minishell->builtins->env = 0;
 	if (minishell->token)
 		free(minishell->token);
 	minishell->token = 0;

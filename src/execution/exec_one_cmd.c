@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/12 21:39:03 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:08:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	execve_one_cmd(char *cmd_path, t_data *minishell, int fd_dest)
 	{
 		if (dup2(fd_dest, STDOUT_FILENO) == -1)
 			exit(errno);
-		if (execve(cmd_path, arg, minishell->env) == -1)
+		if (execve(cmd_path, arg, minishell->builtins->env) == -1)
 		{
 			close(fd_dest);
 			exit(errno);
