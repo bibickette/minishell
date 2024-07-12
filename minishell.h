@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 21:39:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/12 21:49:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 
 # define FORK_ERR "Minishell Error : Fork\n"
 # define STATUS_ERR "A process hasn't ended well\n"
+
+# define HANDLE_ERROR "Minishell Error Code :"
 
 /* environment errors */
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 15:35:38 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 15:35:47 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:44:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	display_prompt(void)
 {
-	ft_putstr_fd("minishell$ ", 1);
+	ft_putstr_fd("minishell$ ", STDOUT_FILENO);
 }
