@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_path.c                                        :+:      :+:    :+:   */
+/*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/12 23:12:39 by phwang           ###   ########.fr       */
+/*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
+/*   Updated: 2024/07/12 23:58:00 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_path(char *cmd, char **path)
+void dollar_expansion(char *var, int quote_type, t_data *minishell)
 {
-	char	*path_cmd;
-	int		i;
-
-	i = -1;
-	if (!path || !path[0])
-		return (NULL);
-	while (path[++i])
+	int i;
+	
+	if(!(var[0] == '$'))
+		return ;
+	if (quote_type == S_QUOTE)
+		printf("%s", var);
+	else
 	{
-		path_cmd = ft_strjoin(path[i], cmd);
-		if (!path_cmd)
+		var++;
+		i = -1;
+		while(minishell->env[++i])
 		{
-			ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO);
-			return (NULL);
+			if (ft_strncmp(minishell->env[i], var, ft_strlen(var)) == 0
+			&& minishell->env[i][ft_strlen(var)] == '=') 
+			{
+				ft_putstr_fd(minishell->env[i] + ft_strlen(var) + 1, STDOUT_FILENO);
+				break;
+			}
 		}
-		if (access(path_cmd, F_OK | X_OK) == 0)
-			return (path_cmd);
-		free(path_cmd);
 	}
-	path_cmd = ft_strdup("");
-	return (path_cmd);
 }

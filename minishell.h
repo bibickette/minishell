@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 22:13:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/12 23:23:55 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,18 @@
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
+# define N_QUOTE 0
+# define S_QUOTE 1
+# define D_QUOTE 2
+
 # define EXIT_JSP -1
 
+# define HANDLE_ERROR "Minishell Error Code :"
+
+
+/* prcess */
 # define FORK_ERR "Minishell Error : Fork\n"
 # define STATUS_ERR "A process hasn't ended well\n"
-
-# define HANDLE_ERROR "Minishell Error Code :"
 
 /* environment errors */
 # define ORIGINEL_ENV "/etc/environment"
@@ -149,6 +155,7 @@ int							have_twin(char *prompt);
 
 /* get */
 char						*get_prompt(void);
+void dollar_expansion(char *var, int quote_type, t_data *minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);
