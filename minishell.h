@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 17:32:25 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:24:46 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	builtin_unsetenv(char **args);
 
 /* Signal handling */
 void	handle_signals(void);
+void	handle_sigquit(int sig);
+void	handle_sigint(int sig);
 
 /* Prout */
 void	display_intro(void);
@@ -137,6 +139,7 @@ void	free_commands(char ***commands);
 void	free_double_char(char **array);
 void	error_exit(const char *msg);
 void	handle_error(int error_code, char *prompt);
+void	handle_exit(t_data *minishell, char *prompt, t_list *token);
 void	free_token(void *token);
 
 /* Pas mal le franglish hein :) ?
