@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 00:09:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:13:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define EXIT_JSP -1
 
 # define HANDLE_ERROR "Minishell Error Code :"
-
 
 /* prcess */
 # define FORK_ERR "Minishell Error : Fork\n"
@@ -155,7 +154,8 @@ int							have_twin(char *prompt);
 
 /* get */
 char						*get_prompt(void);
-void dollar_expansion(char *var, int quote_type, t_data *minishell);
+void						dollar_expansion(char *var, int quote_type,
+								t_data *minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);

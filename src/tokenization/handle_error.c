@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 17:22:14 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 22:09:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:13:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_error(int ret, char *prompt)
 {
-	char *ret_nb;
+	char	*ret_nb;
 
 	(void)prompt;
 	ret_nb = ft_itoa(ret);
