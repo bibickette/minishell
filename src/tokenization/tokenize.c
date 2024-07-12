@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 14:10:11 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:02:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	tokenize(char *prompt, t_list **token)
 {
-	int	i;
+	int		i;
 	char	*prompt_loop;
 	char	buffer[BSIZE];
 
@@ -27,4 +27,3 @@ int	tokenize(char *prompt, t_list **token)
 		add_token(token, buffer);
 	return (OK);
 }
-

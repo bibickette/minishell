@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:49:01 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/06 18:32:18 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:00:46 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*cpy_twin(char **prompt_loop, char buffer[BSIZE])
 {
-	int			i;
+	int		i;
 	char	occurence;
 
 	i = 0;

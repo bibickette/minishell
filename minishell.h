@@ -1,4 +1,4 @@
-
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 15:24:46 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:14:45 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@
 
 	BAD LONG...................ou pas :)
 */
-typedef struct s_minishell t_data;;
-typedef struct s_element t_token;
-typedef struct s_builtin t_builtin;
+typedef struct s_minishell	t_data;
+typedef struct s_element	t_token;
+typedef struct s_builtin	t_builtin;
 
-typedef struct s_minishell
+typedef struct	s_minishell
 {
-	t_list *token;
-	t_builtin *builtins;
+	t_list		*token;
+	t_builtin	*builtins;
 
-	char **path;
-	char **envp;
-} t_data;
+	char	**path;
+	char	**envp;
+}	t_data;
 
 typedef struct s_element
 {
@@ -70,11 +70,11 @@ typedef struct s_element
 
 typedef struct s_builtin
 {
-	char **envp;
-	char *pwd;
-} t_builtin;
+	char	**envp;
+	char	*pwd;
+}	t_builtin;
 
-int init_minishell(t_data **minishell);
+int		init_minishell(t_data **minishell);
 
 /* liste chainée */
 void	add_element(t_list *token, char buffer[BSIZE]);
@@ -85,7 +85,8 @@ void	prompt(t_list *token, t_data *minishell);
 void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
 void	add_token(t_list **token, char buffer[BSIZE]);
 void	trim_space(char buffer[BSIZE]);
-void		handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE]);
+void	handle_operator(char **prompt_loop, t_list **token, \
+			char buffer[BSIZE]);
 int		tokenize(char *prompt, t_list **token);
 int		handle_buffer_overflow(t_list **token);
 int		check_operator(char *str);
@@ -94,9 +95,9 @@ int		check_operator(char *str);
 
 /* Built-in commands */
 int		is_builtin(char *command);
-void get_env(t_data *minishell, char **env);
-char *trim_end(char *path_env);
-void execve_one_cmd(char *cmd_path, char **envp, int fd_dest, int *ret);
+void	get_env(t_data *minishell, char **env);
+char	*trim_end(char *path_env);
+void	execve_one_cmd(char *cmd_path, char **envp, int fd_dest, int *ret);
 
 void	execute_builtin(char **args);
 void	builtin_echo(char **args);
@@ -122,7 +123,7 @@ void	print_error(const char *msg);
 void	*ft_realloc(void *ptr, size_t size);
 
 /* str */
-char		*cpy_twin(char **src, char buffer[BSIZE]);
+char	*cpy_twin(char **src, char buffer[BSIZE]);
 void	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 /* check */
 int		check_args(int argc, char **argv);

@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:11:51 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 18:06:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:00:13 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_list	*ft_lstnew_custom(char buffer[BSIZE])
 {
 	char		*dyna_buffer;
-	t_token	*token;
-	t_list	*new;
+	t_token		*token;
+	t_list		*new;
 
 	dyna_buffer = ft_strdup(buffer);
 	token = ft_calloc(1, sizeof(t_token));

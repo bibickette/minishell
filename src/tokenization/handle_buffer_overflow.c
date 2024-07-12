@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:02:51 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 13:03:08 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:00:30 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	handle_buffer_overflow(t_list **token)
 	ft_lstclear_custom(token, free);
 	return (BUFF_OVERFLOW);
 }
-

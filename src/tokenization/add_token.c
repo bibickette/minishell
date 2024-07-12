@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:03:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 17:31:26 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:03:16 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,3 @@ void	add_token(t_list **token, char buffer[BSIZE])
 	else
 		ft_lstadd_back_libft(token, ft_lstnew_custom(buffer));
 }
-

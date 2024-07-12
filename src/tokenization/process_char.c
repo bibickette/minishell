@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:00:26 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/11 14:02:14 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:59:25 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 	if (*i == BSIZE)
 	{
 		if (handle_buffer_overflow(token) != OK)
-			return;
+			return ;
 		*i = 0;
 	}
 	else if (**prompt_loop == 34 || **prompt_loop == 39)
@@ -37,4 +37,3 @@ void	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 		(*prompt_loop)++;
 	}
 }
-
