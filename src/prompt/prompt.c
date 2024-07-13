@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 16:57:54 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:50:48 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	prompt(t_list *token, t_data *minishell)
 	display_intro();
 	while (1)
 	{
-		display_prompt();
 		prompt = get_prompt(&minishell);
 		if (ft_strcmp(prompt, "exit\n") == 0)
 			handle_exit(minishell, prompt, token);

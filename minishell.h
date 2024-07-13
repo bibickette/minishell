@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 16:59:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:59:32 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <stddef.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -100,7 +102,7 @@ int							execve_one_cmd(char *cmd_path, t_data *minishell,
 
 /* liste chainée */
 void						display_history(t_data *minishell);
-void						clear_history(t_data **minishell);
+void						clear__history(t_data **minishell);
 void						add_to_history(t_data **minishell, char *command);
 void						add_element(t_list *token, char buffer[BSIZE]);
 void						ft_lstclear_custom(t_list **lst,
@@ -139,8 +141,8 @@ void						handle_sigquit(int sig);
 void						handle_sigint(int sig);
 
 /* Prout */
-void						display_intro(void);
 void						display_prompt(void);
+void						display_intro(void);
 void						print_token(void *content);
 void						print_error(const char *msg);
 
