@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 20:32:55 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:56:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ typedef struct s_minishell
 	t_list					*history;
 	t_list					*actual_history;
 	t_builtin				*builtins;
+
 	char					**path;
+	int						status;
 }							t_data;
 
 typedef struct s_element
@@ -159,7 +161,7 @@ int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
 char						*get_prompt(t_data **minishell);
-void						dollar_expansion(char *var, int quote_type,
+char						*dollar_expansion(char *var, int quote_type,
 								t_data *minishell);
 
 /* Auto destruction minishell*/

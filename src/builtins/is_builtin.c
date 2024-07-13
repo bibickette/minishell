@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 21:05:43 by yantoine          #+#    #+#             */
-/*   Updated: 2024/06/23 23:19:54 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:54:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	is_builtin(char *command)
 	if (ft_strcmp(command, "env") == 0)
 		return (1);
 	if (ft_strcmp(command, "exit") == 0)
+		return (1);
+	if (ft_strcmp(command, "history") == 0)
 		return (1);
 	return (0);
 }
