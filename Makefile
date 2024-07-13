@@ -29,7 +29,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 
 $(NAME) : $(OBJ_DIR) $(OBJ)
 	make -s -C LIBFT
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME) 
 
 
 clean:
