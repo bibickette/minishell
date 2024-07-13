@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 02:55:11 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 16:59:24 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,13 @@ typedef struct s_minishell	t_data;
 typedef struct s_element	t_token;
 typedef struct s_builtin	t_builtin;
 
+/* structure pour gerer l'historique des commandes */
+
 typedef struct s_minishell
 {
 	t_list					*token;
+	t_list					*history;
+	t_list					*actual_history;
 	t_builtin				*builtins;
 	char					**path;
 }							t_data;
@@ -95,6 +99,9 @@ int							execve_one_cmd(char *cmd_path, t_data *minishell,
 								int fd_dest);
 
 /* liste chainée */
+void						display_history(t_data *minishell);
+void						clear_history(t_data **minishell);
+void						add_to_history(t_data **minishell, char *command);
 void						add_element(t_list *token, char buffer[BSIZE]);
 void						ft_lstclear_custom(t_list **lst,
 								void (*del)(void *));
@@ -149,7 +156,7 @@ int							check_args(int argc, char **argv);
 int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
-char						*get_prompt(void);
+char						*get_prompt(t_data **minishell);
 void						dollar_expansion(char *var, int quote_type,
 								t_data *minishell);
 

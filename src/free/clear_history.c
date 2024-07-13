@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt.c                                       :+:      :+:    :+:   */
+/*   clear_history.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:40:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 16:35:00 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/13 16:20:47 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/13 16:42:05 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	met le prompt dans la variable prompt
-*/
-
-char	*get_prompt(t_data **minishell)
+void	clear_history(t_data **minishell)
 {
-	char	*prompt;
+	t_list	*actual;
+	t_list	*next;
 
-	prompt = NULL;
-	prompt = get_next_line(STDIN_FILENO, 0);
-	if (!prompt)
+	actual = (*minishell)->history;
+	while (actual)
 	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(0);
+		next = actual->next;
+		if (actual->content)
+			free(actual->content);
+		free(actual);
+		actual = next;
 	}
-	add_to_history(minishell, prompt);
-	return (prompt);
 }
