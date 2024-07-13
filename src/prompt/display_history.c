@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:58:45 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 17:04:11 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:16:35 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ void	display_history(t_data *minishell)
 	i = 0;
 	while (actual)
 	{
-		if (strcmp((char *)actual->content, "history\n") != 0)
-		{
-			printf("%d %s\n", i, (char *)actual->content);
-			i++;
-		}
+		printf("%d %s", i, (char *)actual->content);
+		i++;
 		actual = actual->next;
 	}
 }
