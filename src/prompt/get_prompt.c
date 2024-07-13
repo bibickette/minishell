@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:40:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 02:34:13 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 02:52:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	met le prompt dans la variable prompt
 */
 
-char	*get_prompt(t_data **minishell)
+char	*get_prompt(void)
 {
 	char	*prompt;
 

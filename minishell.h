@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 02:43:59 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/13 02:55:11 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,20 @@
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
-# define EXIT_JSP -1
+# define N_QUOTE 0
+# define S_QUOTE 1
+# define D_QUOTE 2
 
-# define FORK_ERR "Minishell Error : Fork\n"
-# define STATUS_ERR "A process hasn't ended well\n"
+# define EXIT_JSP -1
 
 # define HANDLE_ERROR "Minishell Error Code :"
 
+/* prcess */
+# define FORK_ERR "Minishell Error : Fork\n"
+# define STATUS_ERR "A process hasn't ended well\n"
+
 /* environment errors */
-# define ORIGINEL_ENV "/etc/environment"
+# define ROOT_ENV "/etc/environment"
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"
 # define ERR_ENV "Minishell Error : Couldn't get the environment\n"
 
@@ -60,20 +65,11 @@ typedef struct s_minishell	t_data;
 typedef struct s_element	t_token;
 typedef struct s_builtin	t_builtin;
 
-typedef struct s_history
-{
-	int						n_cmd;
-	int						last_cmd;
-	char						*actual_cmd;
-	char						history[BSIZE][BSIZE];
-}							t_history;
 typedef struct s_minishell
 {
 	t_list					*token;
 	t_builtin				*builtins;
-	t_history				*history;
 	char					**path;
-	char					**env;
 }							t_data;
 
 typedef struct s_element
@@ -84,6 +80,7 @@ typedef struct s_element
 
 typedef struct s_builtin
 {
+	char					**env;
 	char					*pwd;
 }							t_builtin;
 
@@ -152,8 +149,9 @@ int							check_args(int argc, char **argv);
 int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
-/* get */
-char						*get_prompt(t_data **minishell);
+char						*get_prompt(void);
+void						dollar_expansion(char *var, int quote_type,
+								t_data *minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);

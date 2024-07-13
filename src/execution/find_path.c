@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/12 21:44:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/12 23:12:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*find_path(char *cmd, char **path)
 			return (path_cmd);
 		free(path_cmd);
 	}
-	ft_putstr_fd(NO_PATH_ENV, STDERR_FILENO);
 	path_cmd = ft_strdup("");
 	return (path_cmd);
 }
