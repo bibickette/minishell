@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/12 22:13:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/13 02:43:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stddef.h>
 # include <stdio.h>
@@ -62,11 +60,18 @@ typedef struct s_minishell	t_data;
 typedef struct s_element	t_token;
 typedef struct s_builtin	t_builtin;
 
+typedef struct s_history
+{
+	int						n_cmd;
+	int						last_cmd;
+	char						*actual_cmd;
+	char						history[BSIZE][BSIZE];
+}							t_history;
 typedef struct s_minishell
 {
 	t_list					*token;
 	t_builtin				*builtins;
-
+	t_history				*history;
 	char					**path;
 	char					**env;
 }							t_data;
@@ -148,7 +153,7 @@ int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
 /* get */
-char						*get_prompt(void);
+char						*get_prompt(t_data **minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);
