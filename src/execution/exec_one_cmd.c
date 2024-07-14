@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/14 23:20:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/14 23:22:48 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	execve_one_cmd(t_data *minishell, char *cmd_arg, int fd_dest)
 		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO), errno);
 	if (pid == 0)
 	{
-		arg = ft_split(cmd_arg, ' ');
 		if (dup2(fd_dest, STDOUT_FILENO) < 0)
 			exit(errno);
 		close_one_fd(fd_dest);
+		arg = ft_split(cmd_arg, ' ');
 		path = find_path(arg[0], minishell->path);
 		if (execve(path, arg, minishell->builtins->env) == KO)
 		{
