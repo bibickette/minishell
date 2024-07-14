@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/14 23:20:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/14 23:24:24 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,8 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 	{
 		var++;
 		i = -1;
-		if (*var == '?')
-		{
-			expanded = ft_itoa(minishell->last_status);
-			return (expanded);
-		}
+		if (*var == '?' && *var + 1 == '\0')
+			return (ft_itoa(minishell->last_status));
 		while (minishell->builtins->env[++i])
 			if (ft_strncmp(minishell->builtins->env[i], var,
 					ft_strlen(var)) == 0
