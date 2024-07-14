@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/14 00:56:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/14 23:20:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stddef.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define KO 0
-# define OK 1
+# define KO -1
+# define OK 0
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
@@ -43,8 +43,11 @@
 # define HANDLE_ERROR "Minishell Error Code :"
 
 /* prcess */
-# define FORK_ERR "Minishell Error : Fork\n"
 # define STATUS_ERR "A process hasn't ended well\n"
+# define FORK_ERR "Minishell Error : Fork"
+# define DUP_ERR "Minishell Error : Dup2"
+# define EXECVE_ERR "Minishell Error : Execve"
+# define CMD_NOT_FOUND "Minishell Error : Command not found\n"
 
 /* environment errors */
 # define ROOT_ENV "/etc/environment"
@@ -77,7 +80,7 @@ typedef struct s_minishell
 	t_builtin				*builtins;
 
 	char					**path;
-	int						status;
+	int						last_status;
 }							t_data;
 
 typedef struct s_element
@@ -99,8 +102,6 @@ int							no_environment(t_data *minishell);
 int							load_env(t_data *minishell, char **env);
 int							load_path(t_data *minishell, int flag);
 char						*trim_end(char *path_env);
-int							execve_one_cmd(char *cmd_path, t_data *minishell,
-								int fd_dest);
 
 /* liste chainée */
 void						display_history(t_data *minishell);
@@ -123,6 +124,13 @@ int							handle_buffer_overflow(t_list **token);
 int							check_operator(char *str);
 
 /* Execution */
+char						*find_path(char *cmd, char **path);
+int							redirection_dup(int fd_in, int fd_out);
+int							execve_one_cmd(t_data *minishell, char *cmd_path,
+								int fd_dest);
+int							get_status_process(t_data *minishell, int status);
+
+void						close_one_fd(int fd);
 
 /* Built-in commands */
 int							is_builtin(char *command);
