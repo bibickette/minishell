@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 20:32:55 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:24:38 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_minishell
 typedef struct s_element
 {
 	int						index;
+	int						type;
 	char					*str;
 }							t_token;
 
@@ -112,7 +113,7 @@ t_list						*ft_lstnew_custom(char buffer[BSIZE]);
 void						prompt(t_list *token, t_data *minishell);
 void						process_char(char **prompt_loop, t_list **token,
 								char *buffer, int *i);
-void						add_token(t_list **token, char buffer[BSIZE]);
+void						add_token(t_list **token, char buffer[BSIZE], int type);
 void						trim_space(char buffer[BSIZE]);
 void						handle_operator(char **prompt_loop, t_list **token,
 								char buffer[BSIZE]);
@@ -155,6 +156,7 @@ void						handle_quote(char **prompt_loop, t_list **token,
 								char buffer[BSIZE]);
 /* check */
 int							check_args(int argc, char **argv);
+int							check_type(char **prompt_loop);
 int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 

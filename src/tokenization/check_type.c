@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_operator.c                                  :+:      :+:    :+:   */
+/*   check_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 13:59:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/15 15:31:49 by yantoine         ###   ########.fr       */
+/*   Created: 2024/07/15 15:17:02 by yantoine          #+#    #+#             */
+/*   Updated: 2024/07/15 15:18:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE])
+int	check_type(char **prompt_loop)
 {
-	if (ft_strlen(buffer) > 0)
-	{
-		add_token(token, buffer, N_QUOTE);
-		ft_bzero(buffer, BSIZE);
-	}
-	buffer[0] = **prompt_loop;
-	(*prompt_loop)++;
-	if (**prompt_loop == buffer[0])
-	{
-		buffer[1] = **prompt_loop;
-		(*prompt_loop)++;
-	}
-	add_token(token, buffer, N_QUOTE);
-	ft_bzero(buffer, BSIZE);
+	if (**prompt_loop == 34)
+		return (D_QUOTE);
+	else if (**prompt_loop == 39)
+		return (S_QUOTE);
+	return (0);
 }
