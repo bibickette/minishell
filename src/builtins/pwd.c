@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 18:40:09 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/27 21:43:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 21:53:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	pwd_cmd(t_builtin *builtins)
 {
+	if (builtins->pwd)
+		free(builtins->pwd);
 	builtins->pwd = getcwd(NULL, 0);
 	if (!builtins->pwd)
 	{

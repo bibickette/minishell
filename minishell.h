@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/27 21:41:54 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 23:10:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@
 # define S_QUOTE 1
 # define D_QUOTE 2
 
-# define EXIT_JSP -1
-
 # define HANDLE_ERROR "Minishell Error Code :"
 
 # define ERR_PWD "Minishell Error : Pwd"
 
-/* prcess */
+/* process */
 # define STATUS_ERR "A process hasn't ended well\n"
 # define FORK_ERR "Minishell Error : Fork"
 # define DUP_ERR "Minishell Error : Dup2"
@@ -58,9 +56,9 @@
 
 /* malloc errors */
 # define MALLOC_ERR "Minishell Error : Malloc\n"
-# define SPLIT_ERR "Minishell Error : Split\n"
-# define STRJOIN_ERR "Minishell Error : Malloc problem with strjoin\n"
-# define STRDUP_ERR "Minishell Error : Malloc problem with strdup\n"
+# define SPLIT_ERR "Minishell Error : Malloc Split\n"
+# define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
+# define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
@@ -114,6 +112,7 @@ void						add_element(t_list *token, char buffer[BSIZE]);
 void						ft_lstclear_custom(t_list **lst,
 								void (*del)(void *));
 t_list						*ft_lstnew_custom(char buffer[BSIZE]);
+
 /* Read and parse command */
 void						prompt(t_list *token, t_data *minishell);
 void						process_char(char **prompt_loop, t_list **token,
@@ -133,21 +132,19 @@ int							execve_one_cmd(t_data *minishell, char *cmd_path,
 								int fd_dest);
 void						execve_error(t_data *minishell, char *path,
 								char **arg, int fd_dest);
-int							get_status_process(t_data *minishell, int status);
+int							get_status_process(t_data *minishell, int status,
+								pid_t pid, int fd_dest);
 void						close_one_fd(int fd);
 void						split_n_path(t_data *minishell, char *cmd_arg,
-								char **arg, char *path);
+								char ***arg, char **path);
 
 /* Built-in commands */
 int							is_builtin(char *command);
 void						env_cmd(char **env);
 void						pwd_cmd(t_builtin *builtins);
 
-void						execute_builtin(char **args);
 void						builtin_echo(char **args);
 void						builtin_cd(char **args);
-void						builtin_pwd(char **args);
-void						builtin_env(char **args);
 void						builtin_exit(char **args);
 void						builtin_export(char **args);
 void						builtin_unsetenv(char **args);
@@ -161,7 +158,6 @@ void						handle_sigint(int sig);
 void						display_prompt(void);
 void						display_intro(void);
 void						print_token(void *content);
-void						print_error(const char *msg);
 
 /* memory */
 void						*ft_realloc(void *ptr, size_t size);
@@ -178,6 +174,10 @@ int							have_twin(char *prompt);
 char						*get_prompt(t_data **minishell);
 char						*dollar_expansion(char *var, int quote_type,
 								t_data *minishell);
+char						*expansion_no_surround(char *var,
+								t_data *minishell);
+char						*expansion_parentheses(char *var,
+								t_data *minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);
@@ -190,7 +190,4 @@ void						handle_exit(t_data *minishell, char *prompt,
 								t_list *token);
 void						free_token(void *token);
 
-/* Pas mal le franglish hein :) ?
-	jadore tkt :D
-*/
 #endif
