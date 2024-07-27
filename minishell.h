@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/27 23:10:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 23:35:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 
+# define HERE_DOC_MSG "heredoc>"
+# define HERE_DOC ".here_doc"
+# define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
+# define INFILE_ERROR_FD "Couldn't open the infile\n"
+
+
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
 	2 pour les erreurs de commandes
@@ -82,6 +88,7 @@ typedef struct s_minishell
 
 	char					**path;
 	int						last_status;
+	int here_doc;
 }							t_data;
 
 typedef struct s_element
@@ -137,6 +144,9 @@ int							get_status_process(t_data *minishell, int status,
 void						close_one_fd(int fd);
 void						split_n_path(t_data *minishell, char *cmd_arg,
 								char ***arg, char **path);
+/* redirection */
+void	heredoc_create(t_data *minishell, char *limiter);
+int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 
 /* Built-in commands */
 int							is_builtin(char *command);
