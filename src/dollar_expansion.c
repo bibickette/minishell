@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/15 12:50:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 18:57:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 }
 
 /* recoit la variable a etendre et la cherche dans env
-malloc et renvoie un char * pour manipuler a la guise lexpansion */
+malloc et renvoie un char * pour manipuler a la guise lexpansion
+
+ne gere pas () et {} */

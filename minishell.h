@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/14 23:20:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 21:41:54 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 
 # define HANDLE_ERROR "Minishell Error Code :"
 
+# define ERR_PWD "Minishell Error : Pwd"
+
 /* prcess */
 # define STATUS_ERR "A process hasn't ended well\n"
 # define FORK_ERR "Minishell Error : Fork"
@@ -56,6 +58,7 @@
 
 /* malloc errors */
 # define MALLOC_ERR "Minishell Error : Malloc\n"
+# define SPLIT_ERR "Minishell Error : Split\n"
 # define STRJOIN_ERR "Minishell Error : Malloc problem with strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc problem with strdup\n"
 
@@ -128,13 +131,17 @@ char						*find_path(char *cmd, char **path);
 int							redirection_dup(int fd_in, int fd_out);
 int							execve_one_cmd(t_data *minishell, char *cmd_path,
 								int fd_dest);
+void						execve_error(t_data *minishell, char *path,
+								char **arg, int fd_dest);
 int							get_status_process(t_data *minishell, int status);
-
 void						close_one_fd(int fd);
+void						split_n_path(t_data *minishell, char *cmd_arg,
+								char **arg, char *path);
 
 /* Built-in commands */
 int							is_builtin(char *command);
 void						env_cmd(char **env);
+void						pwd_cmd(t_builtin *builtins);
 
 void						execute_builtin(char **args);
 void						builtin_echo(char **args);
@@ -174,8 +181,8 @@ char						*dollar_expansion(char *var, int quote_type,
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);
-void						free_args(char **args);
-void						free_commands(char ***commands);
+void						free_builtins(t_builtin *builtins);
+void						free_lists(t_data *minishell);
 void						free_double_char(char **array);
 void						error_exit(const char *msg);
 void						handle_error(int error_code, char *prompt);

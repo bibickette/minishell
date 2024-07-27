@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_path.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/27 19:22:39 by phwang           ###   ########.fr       */
+/*   Created: 2024/07/27 18:40:09 by phwang            #+#    #+#             */
+/*   Updated: 2024/07/27 21:43:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_path(char *cmd, char **path)
+void	pwd_cmd(t_builtin *builtins)
 {
-	char	*path_cmd;
-	int		i;
-
-	i = -1;
-	path_cmd = NULL;
-	if (!path || !path[0])
-		return (path_cmd);
-	while (path[++i])
+	builtins->pwd = getcwd(NULL, 0);
+	if (!builtins->pwd)
 	{
-		path_cmd = ft_strjoin(path[i], cmd);
-		if (!path_cmd)
-		{
-			ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO);
-			return (NULL);
-		}
-		if (access(path_cmd, F_OK | X_OK) == 0)
-			return (path_cmd);
-		free(path_cmd);
+		perror(ERR_PWD);
+		return ;
 	}
-	return (path_cmd);
+	ft_putstr_fd(builtins->pwd, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 }
+
+/* 
+marche avec env -i ./minishell, est independant de l'env 
+*/
