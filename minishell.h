@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 11:41:25 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:17:53 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void						ft_lstclear_custom(t_list **lst,
 t_list						*ft_lstnew_custom(char buffer[BSIZE]);
 /* Read and parse command */
 void						prompt(t_list *token, t_data *minishell);
-void						process_char(char **prompt_loop, t_list **token,
+int							process_char(char **prompt_loop, t_list **token,
 								char *buffer, int *i);
 void						add_token(t_list **token, char buffer[BSIZE]);
 void						trim_space(char buffer[BSIZE]);
@@ -152,7 +152,7 @@ void						*ft_realloc(void *ptr, size_t size);
 
 /* str */
 char						*cpy_twin(char **src, char buffer[BSIZE]);
-void						handle_quote(char **prompt_loop, t_list **token,
+int							handle_quote(char **prompt_loop, t_list **token,
 								char buffer[BSIZE]);
 void						handle_space(char **prompt_loop, t_list **token,
 								char buffer[BSIZE]);
