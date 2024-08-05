@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 23:26:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:40:00 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+/* code erreurs */
+/* 127 : exit status for command not found */
+/* 126 : exit status for command found but not executable*/
 # define KO -1
 # define OK 0
 # define BUFF_OVERFLOW 2
@@ -60,18 +63,16 @@
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 
+/* file errors */
 # define HERE_DOC_MSG "heredoc>"
 # define HERE_DOC ".here_doc"
 # define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
 # define INFILE_ERROR_FD "Couldn't open the infile\n"
 
-/* code d'erreur ?
-	1 pour les erreurs de syntaxe,
-	2 pour les erreurs de commandes
-	3 pour les erreurs de fichiers, etc...
+/* parsing error */
+# define QUOTE_ERR "Minishell Error : Single quote\n"
+# define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 
-	BAD LONG...................ou pas :)
-*/
 typedef struct s_minishell	t_data;
 typedef struct s_element	t_token;
 typedef struct s_builtin	t_builtin;

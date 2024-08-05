@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/04 21:52:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:40:22 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	heredoc_create(t_data *minishell, char *limiter)
 	minishell->here_doc = OK;
 	line = 0;
 	limiter_tmp = ft_strjoin(limiter, "\n");
-	if(!limiter_tmp)
+	if (!limiter_tmp)
 		return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO));
 	while (1)
 	{

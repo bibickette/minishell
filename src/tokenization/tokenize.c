@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 12:22:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:54 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	tokenize(char *prompt, t_list **token)
 			ft_lstclear_custom(token, free);
 			return (KO);
 		}
-		
 	}
 	if (ft_strlen(buffer) > 0)
 		add_token(token, buffer);

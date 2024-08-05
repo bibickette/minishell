@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/04 21:51:49 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:40:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*expansion_parentheses(char *var, t_data *minishell)
 	free(trimmed);
 	trimmed = 0;
 	trimmed = ft_strdup("");
-	if(!trimmed)
+	if (!trimmed)
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 	return (trimmed);
 }

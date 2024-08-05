@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:30:57 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 12:28:15 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:35:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE])
 {
 	int		type;
-	t_list		*last;
-	t_token		*content;
+	t_list	*last;
+	t_token	*content;
 
 	type = 0;
 	if (ft_strlen(buffer) > 0)
@@ -35,9 +35,6 @@ int	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE])
 		ft_bzero(buffer, BSIZE);
 	}
 	else
-	{
-		ft_putstr_fd("error single quote\n", STDERR_FILENO);
-		return (KO);
-	}
+		return (ft_putstr_fd(QUOTE_ERR, STDERR_FILENO), KO);
 	return (OK);
 }
