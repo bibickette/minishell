@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/27 23:11:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/04 21:58:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	split_n_path(t_data *minishell, char *cmd_arg, char ***arg, char **path)
 			free(cmd_arg);
 		free_double_char(*arg);
 		apocalypse(minishell);
-		exit(EXIT_FAILURE);
+		exit(127); // exit status for command not found
 	}
 }
 
@@ -75,7 +75,7 @@ void	execve_error(t_data *minishell, char *path, char **arg, int fd_dest)
 	if (path)
 		free(path);
 	apocalypse(minishell);
-	exit(errno);
+	exit(126); // exit status for command found but not executable
 }
 
 int	get_status_process(t_data *minishell, int status, pid_t pid, int fd_dest)
