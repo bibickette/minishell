@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/04 21:46:10 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:26:29 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_minishell
 typedef struct s_element
 {
 	int						index;
+	int						type;
 	char					*str;
 }							t_token;
 
@@ -121,7 +122,7 @@ t_list						*ft_lstnew_custom(char buffer[BSIZE]);
 
 /* Read and parse command */
 void						prompt(t_list *token, t_data *minishell);
-void						process_char(char **prompt_loop, t_list **token,
+int							process_char(char **prompt_loop, t_list **token,
 								char *buffer, int *i);
 void						add_token(t_list **token, char buffer[BSIZE]);
 void						trim_space(char buffer[BSIZE]);
@@ -174,10 +175,13 @@ void						*ft_realloc(void *ptr, size_t size);
 
 /* str */
 char						*cpy_twin(char **src, char buffer[BSIZE]);
-void						handle_quote(char **prompt_loop, t_list **token,
+int							handle_quote(char **prompt_loop, t_list **token,
+								char buffer[BSIZE]);
+void						handle_space(char **prompt_loop, t_list **token,
 								char buffer[BSIZE]);
 /* check */
 int							check_args(int argc, char **argv);
+int							check_type(char **prompt_loop);
 int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
