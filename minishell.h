@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 20:32:55 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/04 21:46:10 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stddef.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define KO 0
-# define OK 1
+# define KO -1
+# define OK 0
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
@@ -38,13 +38,16 @@
 # define S_QUOTE 1
 # define D_QUOTE 2
 
-# define EXIT_JSP -1
-
 # define HANDLE_ERROR "Minishell Error Code :"
 
-/* prcess */
-# define FORK_ERR "Minishell Error : Fork\n"
+# define ERR_PWD "Minishell Error : Pwd"
+
+/* process */
 # define STATUS_ERR "A process hasn't ended well\n"
+# define FORK_ERR "Minishell Error : Fork"
+# define DUP_ERR "Minishell Error : Dup2"
+# define EXECVE_ERR "Minishell Error : Execve"
+# define CMD_NOT_FOUND "Minishell Error : Command not found\n"
 
 /* environment errors */
 # define ROOT_ENV "/etc/environment"
@@ -53,8 +56,14 @@
 
 /* malloc errors */
 # define MALLOC_ERR "Minishell Error : Malloc\n"
-# define STRJOIN_ERR "Minishell Error : Malloc problem with strjoin\n"
-# define STRDUP_ERR "Minishell Error : Malloc problem with strdup\n"
+# define SPLIT_ERR "Minishell Error : Malloc Split\n"
+# define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
+# define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
+
+# define HERE_DOC_MSG "heredoc>"
+# define HERE_DOC ".here_doc"
+# define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
+# define INFILE_ERROR_FD "Couldn't open the infile\n"
 
 /* code d'erreur ?
 	1 pour les erreurs de syntaxe,
@@ -75,7 +84,10 @@ typedef struct s_minishell
 	t_list					*history;
 	t_list					*actual_history;
 	t_builtin				*builtins;
+
 	char					**path;
+	int						last_status;
+	int						here_doc;
 }							t_data;
 
 typedef struct s_element
@@ -97,8 +109,6 @@ int							no_environment(t_data *minishell);
 int							load_env(t_data *minishell, char **env);
 int							load_path(t_data *minishell, int flag);
 char						*trim_end(char *path_env);
-int							execve_one_cmd(char *cmd_path, t_data *minishell,
-								int fd_dest);
 
 /* liste chainée */
 void						display_history(t_data *minishell);
@@ -108,6 +118,7 @@ void						add_element(t_list *token, char buffer[BSIZE]);
 void						ft_lstclear_custom(t_list **lst,
 								void (*del)(void *));
 t_list						*ft_lstnew_custom(char buffer[BSIZE]);
+
 /* Read and parse command */
 void						prompt(t_list *token, t_data *minishell);
 void						process_char(char **prompt_loop, t_list **token,
@@ -121,16 +132,29 @@ int							handle_buffer_overflow(t_list **token);
 int							check_operator(char *str);
 
 /* Execution */
+char						*find_path(char *cmd, char **path);
+int							redirection_dup(int fd_in, int fd_out);
+int							execve_one_cmd(t_data *minishell, char *cmd_path,
+								int fd_dest);
+void						execve_error(t_data *minishell, char *path,
+								char **arg, int fd_dest);
+int							get_status_process(t_data *minishell, int status,
+								pid_t pid, int fd_dest);
+void						close_one_fd(int fd);
+void						split_n_path(t_data *minishell, char *cmd_arg,
+								char ***arg, char **path);
+/* redirection */
+void						heredoc_create(t_data *minishell, char *limiter);
+int							heredoc_next(char *line, char *limiter_tmp,
+								int fd_heredoc);
 
 /* Built-in commands */
 int							is_builtin(char *command);
 void						env_cmd(char **env);
+void						pwd_cmd(t_builtin *builtins);
 
-void						execute_builtin(char **args);
 void						builtin_echo(char **args);
 void						builtin_cd(char **args);
-void						builtin_pwd(char **args);
-void						builtin_env(char **args);
 void						builtin_exit(char **args);
 void						builtin_export(char **args);
 void						builtin_unsetenv(char **args);
@@ -144,7 +168,6 @@ void						handle_sigint(int sig);
 void						display_prompt(void);
 void						display_intro(void);
 void						print_token(void *content);
-void						print_error(const char *msg);
 
 /* memory */
 void						*ft_realloc(void *ptr, size_t size);
@@ -159,13 +182,17 @@ int							ft_strcmp(const char *s1, const char *s2);
 int							have_twin(char *prompt);
 
 char						*get_prompt(t_data **minishell);
-void						dollar_expansion(char *var, int quote_type,
+char						*dollar_expansion(char *var, int quote_type,
+								t_data *minishell);
+char						*expansion_no_surround(char *var,
+								t_data *minishell);
+char						*expansion_parentheses(char *var,
 								t_data *minishell);
 
 /* Auto destruction minishell*/
 void						apocalypse(t_data *minishell);
-void						free_args(char **args);
-void						free_commands(char ***commands);
+void						free_builtins(t_builtin *builtins);
+void						free_lists(t_data *minishell);
 void						free_double_char(char **array);
 void						error_exit(const char *msg);
 void						handle_error(int error_code, char *prompt);
@@ -173,7 +200,4 @@ void						handle_exit(t_data *minishell, char *prompt,
 								t_list *token);
 void						free_token(void *token);
 
-/* Pas mal le franglish hein :) ?
-	jadore tkt :D
-*/
 #endif

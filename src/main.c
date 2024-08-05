@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/13 00:02:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/07/27 23:40:04 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	main(int argc, char **argv, char **env)
 
 	if (check_args(argc, argv) != 0)
 		return (1);
-	if (init_minishell(&minishell) == KO
-		|| get_env(minishell, env) == KO)
-		apocalypse(minishell);
+	if (init_minishell(&minishell) == KO || get_env(minishell, env) == KO)
+		return (apocalypse(minishell), 1);
 	prompt(minishell->token, minishell);
 	return (0);
 }
