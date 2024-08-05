@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/15 15:32:42 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:33:29 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	tokenize(char *prompt, t_list **token)
 	while (*prompt_loop)
 		process_char(&prompt_loop, token, buffer, &i);
 	if (ft_strlen(buffer) > 0)
-		add_token(token, buffer, 0);
+		add_token(token, buffer);
 	return (OK);
 }

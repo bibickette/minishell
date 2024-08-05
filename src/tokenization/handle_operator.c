@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:59:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/15 15:31:49 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:27:15 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE])
 {
 	if (ft_strlen(buffer) > 0)
 	{
-		add_token(token, buffer, N_QUOTE);
+		add_token(token, buffer);
 		ft_bzero(buffer, BSIZE);
 	}
 	buffer[0] = **prompt_loop;
@@ -26,6 +26,6 @@ void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE])
 		buffer[1] = **prompt_loop;
 		(*prompt_loop)++;
 	}
-	add_token(token, buffer, N_QUOTE);
+	add_token(token, buffer);
 	ft_bzero(buffer, BSIZE);
 }
