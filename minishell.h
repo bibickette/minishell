@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 21:02:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 21:22:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Single quote\n"
+# define SPECIAL_CHAR_ERR "Minishell Error : Special character\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 
 /* process */
@@ -195,6 +196,7 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
+int				check_special_char(char *prompt);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);

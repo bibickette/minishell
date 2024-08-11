@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 20:50:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 21:13:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	prompt(t_list *token, t_data *minishell)
 		if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
 		tokenize(prompt, &token);
-		set_token_type(token);
 		ft_lstiter(token, print_token);
 		ft_lstclear_custom(&token, free);
 		free(prompt);
