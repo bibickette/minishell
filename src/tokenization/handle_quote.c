@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:30:57 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 23:35:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 15:21:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE])
 {
-	int		type;
+	int		quote;
 	t_list	*last;
 	t_token	*content;
 
-	type = 0;
+	quote = 0;
 	if (ft_strlen(buffer) > 0)
 	{
 		add_token(token, buffer);
@@ -26,12 +26,12 @@ int	handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE])
 	}
 	if (have_twin(*prompt_loop) == OK)
 	{
-		type = check_type(prompt_loop);
+		quote = check_quote_type(prompt_loop);
 		buffer = cpy_twin(prompt_loop, buffer);
 		add_token(token, buffer);
 		last = ft_lstlast(*token);
 		content = last->content;
-		content->type = type;
+		content->quote = quote;
 		ft_bzero(buffer, BSIZE);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 17:57:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/15 14:54:31 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/11 19:08:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,10 @@ void	print_token(void *content)
 	t_token	*token;
 
 	token = (t_token *)content;
-	printf("Token str: %s\nToken type: %d\n", token->str, token->type);
+	printf("Token: %d\n", token->index);
+	printf("      str: %s\n", token->str);
+	if (token->quote != N_QUOTE)
+		printf("      quote: %d\n", token->quote);
+	printf("      type: %d\n", token->type);
+	printf("\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:00:26 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 12:16:20 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/11 19:14:24 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 			return (KO);
 		*i = 0;
 	}
-	else if (check_operator(*prompt_loop) == 1)
+	else if (check_operator(*prompt_loop) == OK)
 	{
 		handle_operator(prompt_loop, token, buffer);
 		*i = 0;
