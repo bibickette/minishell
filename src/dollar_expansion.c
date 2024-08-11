@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/05 23:40:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 21:38:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 		var++;
 		if (ft_strcmp(var, "?") == 0)
 			return (ft_itoa(minishell->last_status));
-		if (*var != '(' && *var != '{')
+		else
 			return (expansion_no_surround(var, minishell));
-		else if (*var == '(')
-			return (expansion_parentheses(var, minishell));
 	}
 	return (NULL);
 }
@@ -53,28 +51,5 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 	return (NULL);
 }
 
-char	*expansion_parentheses(char *var, t_data *minishell)
-{
-	char	*trimmed;
-
-	trimmed = NULL;
-	if (var[ft_strlen(var) - 1] != ')')
-		return (NULL);
-	trimmed = ft_strtrim(var, "()");
-	if (!trimmed)
-		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), NULL);
-	execve_one_cmd(minishell, trimmed, STDOUT_FILENO);
-	free(trimmed);
-	trimmed = 0;
-	trimmed = ft_strdup("");
-	if (!trimmed)
-		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
-	return (trimmed);
-}
-
 /* recoit la variable a etendre vecv le $ et la cherche dans env
-malloc et renvoie un char * pour manipuler a la guise lexpansion
-
-prend en compte $(CMD), renvoie "" et execute la cmd, a voir si cest le bon fd
-
-ne gere pas {} */
+malloc et renvoie un char * pour manipuler a la guise lexpansion */

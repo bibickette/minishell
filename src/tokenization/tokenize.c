@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 21:21:14 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 21:34:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,8 @@ int	tokenize(char *prompt, t_list **token)
 	ft_bzero(buffer, BSIZE);
 	prompt_loop = prompt;
 	while (*prompt_loop)
-	{
 		if (process_char(&prompt_loop, token, buffer, &i) == KO)
-		{
-			ft_lstclear_custom(token, free);
-			return (KO);
-		}
-	}
+			return (ft_lstclear_custom(token, free), KO);
 	if (ft_strlen(buffer) > 0)
 		add_token(token, buffer);
 	set_token_type(*token);
@@ -49,7 +44,8 @@ int	check_special_char(char *prompt)
 		if (prompt[i] == '~' || prompt[i] == '&' || prompt[i] == '`'
 			|| prompt[i] == '[' || prompt[i] == ']' || prompt[i] == '{'
 			|| prompt[i] == '}' || prompt[i] == '*' || prompt[i] == ';'
-			|| prompt[i] == ':')
+			|| prompt[i] == ':' || prompt[i] == '\\' || prompt[i] == '('
+			|| prompt[i] == ')' )
 			return (ft_putstr_fd(SPECIAL_CHAR_ERR, STDERR_FILENO), KO);
 	}
 	return (OK);

@@ -7,7 +7,7 @@ CC = cc
 #penser a retirer le -g3 et remplacer le wildcard
 
 INCLUDE = -I. -I./LIBFT
-CFLAGS = -Wall -Wextra -g3 $(INCLUDE)
+CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDE)
 
 SRC_DIR = src
 OBJ_DIR = obj

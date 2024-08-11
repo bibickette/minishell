@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 21:22:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/11 21:47:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@
 /*************************************/
 /*            Codes errors           */
 /*************************************/
-/* 127 : exit status for command not found */
-/* 126 : exit status for command found but not executable*/
+/* 126 : exit status for command not found*/
+/* 127 : exit status for command found but not executable */
 
 # define KO -1
 # define OK 0
