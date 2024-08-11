@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 21:47:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/12 01:52:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,11 @@
 /*************************************/
 
 # define HANDLE_ERROR "Minishell Error Code :"
-# define ERR_PWD "Minishell Error : Pwd"
+# define PWD_ERR "Minishell Error : Pwd"
+# define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 
 /* parsing error */
-# define QUOTE_ERR "Minishell Error : Single quote\n"
+# define QUOTE_ERR "Minishell Error : Free quote\n"
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 
@@ -147,6 +148,8 @@ typedef struct s_builtin
 {
 	char		**env;
 	char		*pwd;
+	t_list		*export;
+
 }				t_builtin;
 
 typedef struct s_minishell
@@ -185,10 +188,12 @@ void			prompt(t_list *token, t_data *minishell);
 char			*get_prompt(t_data **minishell);
 void			ft_lstclear_custom(t_list **lst, void (*del)(void *));
 t_list			*ft_lstnew_custom(char buffer[BSIZE]);
+void			ft_lstclear_custom_bis(t_list *head);
 
 /* tokenization */
 int				process_char(char **prompt_loop, t_list **token, char *buffer,
 					int *i);
+void			make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int				tokenize(char *prompt, t_list **token);
 void			add_token(t_list **token, char buffer[BSIZE]);
 void			trim_space(char buffer[BSIZE]);
@@ -228,8 +233,15 @@ int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 
 /* Built-in commands */
 int				is_builtin(char *command);
-void			env_cmd(char **env);
 void			pwd_cmd(t_builtin *builtins);
+int				export_cmd(t_list **export_head, char *var);
+int				has_equal(char *var);
+
+void			env_cmd(char **env, t_list *export);
+void			env_cmd_check_export(t_list *export);
+
+void			unset_cmd(t_builtin *builtins, char *var);
+void			unset_cmd_check_export(t_builtin *builtins, char *var);
 
 /* Execution */
 char			*find_path(char *cmd, char **path);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 21:34:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/12 01:50:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_special_char(char *prompt)
 	i = -1;
 	while (prompt[++i])
 	{
-		if (prompt[i - 1] && prompt[i - 1] != '$' && prompt[i] == '?')
+		if (i > 0 && prompt[i - 1] && prompt[i - 1] != '$' && prompt[i] == '?')
 			return (ft_putstr_fd(SPECIAL_CHAR_ERR, STDERR_FILENO), KO);
 		if (prompt[i] == '~' || prompt[i] == '&' || prompt[i] == '`'
 			|| prompt[i] == '[' || prompt[i] == ']' || prompt[i] == '{'

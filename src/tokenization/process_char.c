@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:00:26 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/11 19:14:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/12 01:52:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ int	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 		*i = 0;
 	}
 	else
-	{
-		buffer[*i] = **prompt_loop;
-		(*i)++;
-		(*prompt_loop)++;
-	}
+		make_theim_increment(prompt_loop, buffer, i);
 	return (OK);
+}
+
+void	make_theim_increment(char **prompt_loop, char *buffer, int *i)
+{
+	buffer[*i] = **prompt_loop;
+	(*i)++;
+	(*prompt_loop)++;
 }
