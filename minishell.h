@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 01:52:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/12 15:48:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,8 @@ int				is_builtin(char *command);
 void			pwd_cmd(t_builtin *builtins);
 int				export_cmd(t_list **export_head, char *var);
 int				has_equal(char *var);
+
+int	echo_cmd(t_list *token);
 
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
