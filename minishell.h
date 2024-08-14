@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 15:48:57 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:45:39 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ typedef struct s_minishell
 	t_builtin	*builtins;
 
 	char		**path;
+	char		**command;
 	int			last_status;
 	int			here_doc;
 }				t_data;
@@ -237,7 +238,7 @@ void			pwd_cmd(t_builtin *builtins);
 int				export_cmd(t_list **export_head, char *var);
 int				has_equal(char *var);
 
-int	echo_cmd(t_list *token);
+int	echo_cmd(t_list *token, int fd_dest);
 
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
@@ -277,6 +278,8 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
+void			command_listing(t_list *token, t_data *data);
+void			display_command(t_data *data);
 /* check */
 int				check_args(int argc, char **argv);
 int				check_quote_type(char **prompt_loop);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 15:41:11 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:11:00 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	prompt(t_list *token, t_data *minishell)
 		if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
 		tokenize(prompt, &token);
+		command_listing(token, minishell);
+		display_command(minishell);
 		ft_lstiter(token, print_token);
 		ft_lstclear_custom(&token, free);
+		free_double_char(minishell->command);
 		free(prompt);
 	}
 }
