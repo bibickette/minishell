@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 01:52:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/15 16:01:48 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,13 @@
 /*************************************/
 
 # define HANDLE_ERROR "Minishell Error Code :"
+
+/* builtins error */
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
+# define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
+# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
+
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -122,6 +127,7 @@
 # define SPLIT_ERR "Minishell Error : Malloc Split\n"
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
+# define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
 
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"
@@ -234,7 +240,19 @@ int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 /* Built-in commands */
 int				is_builtin(char *command);
 void			pwd_cmd(t_builtin *builtins);
-int				export_cmd(t_list **export_head, char *var);
+int	export_cmd(t_list **export_head, char *var, t_data *minishell);
+int exporting(char **tmp, char *var, char **exported, t_data *minishell);
+int export_check(char **tmp, char *var);
+int export_no_quote(char **exported, char *var, char *tmp);
+int export_single_quote(char **exported, char *var, char *tmp);
+int export_double_quote(t_data *minishell, char **exported, char *tmp, char *var);
+int build_the_export(char **exported, char **expanded_exported, char *var, char *tmp);
+
+
+int free_export_malloc(char **expanded_exported, char *tmp, char *exported);
+int expansion_exist(t_data *minishell, char *var);
+int expansion_replacement(t_data *minishell, char *var, char **exported);
+int has_dollar(char *var);
 int				has_equal(char *var);
 
 void			env_cmd(char **env, t_list *export);

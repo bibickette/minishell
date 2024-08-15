@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/11 21:38:40 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/15 01:19:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,29 @@
 
 char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 {
+	char	*expanded;
+
 	if (!(var[0] == '$'))
 		return (NULL);
 	if (quote_type == S_QUOTE)
-		return (ft_strdup(var));
+	{
+		expanded = ft_strdup(var);
+		if(!expanded)
+			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+	}
 	else
 	{
 		var++;
 		if (ft_strcmp(var, "?") == 0)
-			return (ft_itoa(minishell->last_status));
+		{
+			expanded = ft_itoa(minishell->last_status);
+			if(!expanded)
+				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+		}
 		else
 			return (expansion_no_surround(var, minishell));
 	}
-	return (NULL);
+	return (expanded);
 }
 
 char	*expansion_no_surround(char *var, t_data *minishell)
@@ -48,7 +58,27 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 			return (expanded);
 		}
 	}
-	return (NULL);
+	i = -1;
+	t_list *tmp;
+	tmp = minishell->builtins->export;
+	while(tmp)
+	{
+		if(ft_strncmp((char *)tmp->content, var, ft_strlen(var)) == 0
+			&& ((char *)tmp->content)[ft_strlen(var)] == '=')
+		{
+			expanded = ft_strdup((char *)tmp->content + ft_strlen(var) + 1);
+			if (!expanded)
+				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+			return (expanded);
+		}
+		if(tmp->next == NULL)
+			break;
+		tmp = tmp->next;
+	}
+	expanded = ft_strdup("");
+	if (!expanded)
+				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+	return (expanded);
 }
 
 /* recoit la variable a etendre vecv le $ et la cherche dans env

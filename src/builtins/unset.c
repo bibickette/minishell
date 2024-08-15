@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:55:56 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/12 01:20:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:17:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ void	unset_cmd_check_export(t_builtin *builtins, char *var)
 			if (ft_strncmp(tmp2, var, ft_strlen(var)) == 0
 				&& tmp2[ft_strlen(var)] == '=')
 			{
+				if (tmp->content)
+					free(tmp->content);
 				tmp->content = 0;
 				return ;
 			}
 		}
 		if (tmp->next == NULL)
-			break ;
+			return ;
 		tmp = tmp->next;
 	}
 }
