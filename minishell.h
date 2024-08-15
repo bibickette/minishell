@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/15 16:01:48 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/15 17:57:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
-
+# define DOLLAR_EXPANSION_ERR \
+	"Minishell Error : Malloc in function Dollar Expansion\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -219,7 +219,7 @@ void			current_is_word(t_token *current, t_token *before);
 /* dollar expansion */
 char			*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char			*expansion_no_surround(char *var, t_data *minishell);
-char			*expansion_parentheses(char *var, t_data *minishell);
+char			*expansion_no_surround_list(char *var, t_data *minishell);
 
 /* history */
 void			display_history(t_data *minishell);
@@ -239,25 +239,36 @@ int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 
 /* Built-in commands */
 int				is_builtin(char *command);
-void			pwd_cmd(t_builtin *builtins);
-int	export_cmd(t_list **export_head, char *var, t_data *minishell);
-int exporting(char **tmp, char *var, char **exported, t_data *minishell);
-int export_check(char **tmp, char *var);
-int export_no_quote(char **exported, char *var, char *tmp);
-int export_single_quote(char **exported, char *var, char *tmp);
-int export_double_quote(t_data *minishell, char **exported, char *tmp, char *var);
-int build_the_export(char **exported, char **expanded_exported, char *var, char *tmp);
 
-
-int free_export_malloc(char **expanded_exported, char *tmp, char *exported);
-int expansion_exist(t_data *minishell, char *var);
-int expansion_replacement(t_data *minishell, char *var, char **exported);
-int has_dollar(char *var);
+/* built-in export*/
+int				export_cmd(t_list **export_head, char *var, t_data *minishell);
+int				exporting(char **tmp, char *var, char **exported,
+					t_data *minishell);
+int				export_check(char **tmp, char *var);
+int				export_no_quote(char **exported, char *var, char *tmp);
+int				export_single_quote(char **exported, char *var, char *tmp);
+int				export_double_quote(t_data *minishell, char **exported,
+					char *tmp, char *var);
+int				export_handle_dollar(t_data *minishell,
+					char ***expanded_exported, char *tmp, char **exported);
+int				export_dollar_in_str(t_data *minishell,
+					char **expanded_exported, char *tmp, char **exported);
+int				build_the_export(char **exported, char **expanded_exported,
+					char *var, char *tmp);
+int				export_replacement(t_data *minishell, t_list *export_head,
+					char *var, char **exported);
+int				export_replacement_list(t_list *export_head, char **exported,
+					char *tmp_var);
+int				free_export_malloc(char **expanded_exported, char *tmp,
+					char *exported);
+int				has_dollar(char *var);
 int				has_equal(char *var);
-
+/* builtin pwd*/
+void			pwd_cmd(t_builtin *builtins);
+/* built-in env */
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
-
+/* built-in unset*/
 void			unset_cmd(t_builtin *builtins, char *var);
 void			unset_cmd_check_export(t_builtin *builtins, char *var);
 

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/15 01:19:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/15 17:46:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 	if (quote_type == S_QUOTE)
 	{
 		expanded = ft_strdup(var);
-		if(!expanded)
+		if (!expanded)
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 	}
 	else
@@ -30,7 +30,7 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 		if (ft_strcmp(var, "?") == 0)
 		{
 			expanded = ft_itoa(minishell->last_status);
-			if(!expanded)
+			if (!expanded)
 				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 		}
 		else
@@ -58,12 +58,18 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 			return (expanded);
 		}
 	}
-	i = -1;
-	t_list *tmp;
+	return (expansion_no_surround_list(var, minishell));
+}
+
+char	*expansion_no_surround_list(char *var, t_data *minishell)
+{
+	t_list	*tmp;
+	char	*expanded;
+
 	tmp = minishell->builtins->export;
-	while(tmp)
+	while (tmp)
 	{
-		if(ft_strncmp((char *)tmp->content, var, ft_strlen(var)) == 0
+		if (ft_strncmp((char *)tmp->content, var, ft_strlen(var)) == 0
 			&& ((char *)tmp->content)[ft_strlen(var)] == '=')
 		{
 			expanded = ft_strdup((char *)tmp->content + ft_strlen(var) + 1);
@@ -71,13 +77,13 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 			return (expanded);
 		}
-		if(tmp->next == NULL)
-			break;
+		if (tmp->next == NULL)
+			break ;
 		tmp = tmp->next;
 	}
 	expanded = ft_strdup("");
 	if (!expanded)
-				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 	return (expanded);
 }
 

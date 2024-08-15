@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/15 16:02:10 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/15 17:55:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,21 @@ int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 	t_list	*new_export;
 	char	*exported;
 	char	*tmp;
+
 	exported = NULL;
 	new_export = NULL;
 	tmp = NULL;
-	if(exporting(&tmp, var, &exported, minishell) == KO)
+	if (exporting(&tmp, var, &exported, minishell) == KO)
 		return (KO);
 	printf("tmp: %s\n", tmp);
 	printf("exported: %s\n", exported);
 	if (tmp)
 		free(tmp);
-	// if
-	// verifier si la variable existe, si elle existe, remplacer le content par ce nouveau content
-	// else
-	if (expansion_exist(minishell, var) == OK)
-		return (expansion_replacement(minishell, var, &exported));
+	if (export_replacement(minishell, minishell->builtins->export, var,
+			&exported) == OK)
+		return (OK);
 	else
-	{	
+	{
 		new_export = ft_lstnew_libft(exported);
 		if (!new_export)
 			return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
@@ -40,157 +39,41 @@ int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 	}
 	return (OK);
 }
-/*
-need dollar expansion handling
-string quote handling
 
-si no quote : il faut juste envoyer tout ce quil y a de coller apres =
-si single quote : renvoyer tout le contenu du single quote SANS les quotes
-si double quote  : renvoyer le contenu sans les quotes avec les $expanded
-
-si la var existe deja alors faut remplacer la suite -> pas fait encore
-
-*/
-int expansion_exist(t_data *minishell, char *var)
+int	exporting(char **tmp, char *var, char **exported, t_data *minishell)
 {
-	t_list *tmp;
-	char *tmp_var;
-	int i;
+	int	i;
 
-	i = -1;
-	
-	tmp_var = ft_strdup(var);
-	while (tmp_var[++i])
-		if (tmp_var[i] == '=')
-			break ;
-	tmp_var[i + 1] = '\0';
-	i = -1;
-	while (minishell->builtins->env[++i])
-		if (ft_strncmp(minishell->builtins->env[i], tmp_var, ft_strlen(tmp_var)) == 0
-			&& minishell->builtins->env[i][ft_strlen(tmp_var) - 1] == '=')
-			return(free(tmp_var), OK);
-	tmp = minishell->builtins->export;
-	while(tmp)
-	{
-		if(ft_strncmp((char *)tmp->content, tmp_var, ft_strlen(tmp_var)) == 0
-			&& ((char *)tmp->content)[ft_strlen(tmp_var) - 1] == '=')
-			return(free(tmp_var), OK);
-		if(tmp->next == NULL)
-			break;
-		tmp = tmp->next;
-	}
-	free(tmp_var);
-	return (KO);
-}
-
-int expansion_replacement(t_data *minishell, char *var, char **exported)
-{
-	t_list *tmp;
-	char *tmp_var;
-	int i;
-
-	i = -1;
-	tmp_var = ft_strdup(var);
-	while (tmp_var[++i])
-		if (tmp_var[i] == '=')
-			break ;
-	tmp_var[i + 1] = '\0';
-	i = -1;
-	while (minishell->builtins->env[++i])
-	{
-		if (ft_strncmp(minishell->builtins->env[i], tmp_var, ft_strlen(tmp_var)) == 0
-			&& minishell->builtins->env[i][ft_strlen(tmp_var) - 1] == '=')
-		{
-			free(minishell->builtins->env[i]);
-			minishell->builtins->env[i] = *exported;
-			if (!minishell->builtins->env[i])
-				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-		}
-	}
-	// exp_tmp = NULL;
-	tmp = minishell->builtins->export;
-	while(tmp)
-	{
-		// *exp_tmp = ((char *)tmp->content);
-		if(ft_strncmp((char *)tmp->content, tmp_var, ft_strlen(tmp_var)) == 0
-			&& ((char *)tmp->content)[ft_strlen(tmp_var) - 1] == '=')
-		{
-			free(tmp->content);
-			tmp->content = (void *)*exported;
-		}
-		if(tmp->next == NULL)
-			break;
-		tmp = tmp->next;
-	}
-	free(tmp_var);
-	return (OK);
-}
-
-int exporting(char **tmp, char *var, char **exported, t_data *minishell)
-{
-	int i;
-	
 	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
-	if(export_check(tmp, var) == KO)
+	if (export_check(tmp, var) == KO)
 		return (KO);
-	if (var[++i] == 39) // single quote
+	if (var[++i] == 39)
 	{
 		if (export_single_quote(exported, var, *tmp) == KO)
 			return (KO);
 	}
-	else if (var[i] == 34) // double quote
+	else if (var[i] == 34)
 	{
 		if (export_double_quote(minishell, exported, *tmp, var) == KO)
 			return (KO);
 	}
-	else // no quote
-	{
-		if(export_no_quote(exported, var, *tmp) == KO)
-			return (KO);
-	}
-	return (OK);
-}
-
-int export_check(char **tmp, char *var)
-{
-	int i;
-	
-	if (has_equal(var) == KO)
+	else if (export_no_quote(exported, var, *tmp) == KO)
 		return (KO);
-	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			break ;
-	if (var[++i] == 34 || var[i] == 39)
-		if (var[ft_strlen(var) - 1] != var[i])
-			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
-	if (var[i] == 34 || var[i] == 39)
-	{
-		*tmp = ft_strdup(var + i + 1);
-		if (!*tmp)
-			return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-		(*tmp)[ft_strlen(*tmp) - 1] = '\0';
-	}
-	else
-	{
-		*tmp = ft_strdup(var + i);
-		if (!*tmp)
-			return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-	}
 	return (OK);
 }
 /*
-check for format with =
-check for no free quote, rm the last quote if there is
-dup the string after =
+choisi lun des trois export dispo :
+no quote
+single quote
+double quote
 */
 
-int export_no_quote(char **exported, char *var, char *tmp)
+int	export_no_quote(char **exported, char *var, char *tmp)
 {
-	int y;
+	int	y;
 
 	*exported = ft_strdup(var);
 	if (!*exported)
@@ -204,12 +87,15 @@ int export_no_quote(char **exported, char *var, char *tmp)
 			(*exported)[y] = '\0';
 	return (OK);
 }
+/*
+build lexport de no quote
+*/
 
-int export_single_quote(char **exported, char *var, char *tmp)
+int	export_single_quote(char **exported, char *var, char *tmp)
 {
-	int i;
-	int y;
-	
+	int	i;
+	int	y;
+
 	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
@@ -229,131 +115,48 @@ int export_single_quote(char **exported, char *var, char *tmp)
 	(*exported)[y + i] = '\0';
 	return (OK);
 }
+/*
+build lexoport de single quote
+*/
 
-int	export_double_quote(t_data *minishell, char **exported, char *tmp,
-		char *var)
-{
-	char	**expanded_exported;
-	char *dollar;
-	int y;
+/*
+builtin export :
+3 facons de le recevoir :
+variable=value prout			NO QUOTE | out = variable=value
+variable="value prout $USER"	SG QUOTE | out = variable=value prout paulinette
+variable='value prout $USER'	DB QUOTE | out = variable=value prout $USER
 
-	expanded_exported = NULL;
-	*exported = ft_strdup(tmp);
-	if (!*exported)
-		return (free_export_malloc(expanded_exported, tmp, *exported));
-	expanded_exported = ft_split(*exported, ' ');
-	if (!expanded_exported)
-		return (free_export_malloc(expanded_exported, tmp, *exported));
-	y = -1;
-	while (expanded_exported[++y])
-	{
-		if (expanded_exported[y][0] == '$') // look just for $
-		{
-			dollar = ft_strdup(expanded_exported[y]);
-			if (!dollar)
-				return (free_export_malloc(expanded_exported, tmp, *exported));
-			free(expanded_exported[y]);
-			expanded_exported[y] = dollar_expansion(dollar, D_QUOTE, minishell);
-			free(dollar);
-			if (!expanded_exported[y])
-				free_export_malloc(expanded_exported, tmp, *exported);
-		}
-		else if (has_dollar(expanded_exported[y]) == OK)
-		{
-			int i;
-			char *dup;
-			i = -1;
-		// looking for $ in the string 
-			while(expanded_exported[y][++i])
-				if(expanded_exported[y][i] == '$')
-					break ;
-			dup = ft_strdup(expanded_exported[y] + i);
-			if (!dup)
-				return (free_export_malloc(expanded_exported, tmp, *exported));
-			dollar = dollar_expansion(dup, D_QUOTE, minishell);
-			free(dup);
-			if (!dollar)
-				return (free_export_malloc(expanded_exported, tmp, *exported));
-			if(dollar[0])
-			{
-				expanded_exported[y][i] = '\0';
-				expanded_exported[y] = strjoin_wfree(expanded_exported[y], dollar);
-			}
-			free(dollar);
-			if (!expanded_exported[y])
-				return (free_export_malloc(expanded_exported, tmp, *exported));
-		}
-	}
-	free(*exported);
-	*exported = NULL;
-	y = -1;
-	while (expanded_exported[++y])
-	{
-		expanded_exported[y] = strjoin_wfree(expanded_exported[y], " ");
-		if (!expanded_exported[y])
-			return (free_export_malloc(expanded_exported, tmp, *exported));
-	}
-	return(build_the_export(exported, expanded_exported, var, tmp));
-}
+si la variable existe deja, la value est remplacée par la nouvelle entrée
+sinon, elle est ajoutée a la liste des exports
+la recherche de la variable se fait dabord dans env, puis dans export
 
-int build_the_export(char **exported, char **expanded_exported, char *var, char *tmp)
-{
-	int i;
-	int y;
 
-	y = -1;
-	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			break ;
-	*exported = ft_calloc(++i + 1, sizeof(char));
-	if (!*exported)
-		return (free_export_malloc(expanded_exported, tmp, *exported));
-	while (++y < i)
-		(*exported)[y] = var[y];
-	(*exported)[y] = '\0';
-	i = -1;
-	while (expanded_exported[++i])
-	{
-		*exported = strjoin_wfree(*exported, expanded_exported[i]);
-		if (!*exported)
-			return (free_export_malloc(expanded_exported, tmp, *exported));
-	}
-	free_double_char(expanded_exported);
-	if ((*exported)[ft_strlen(*exported) - 1] == ' ')
-		(*exported)[ft_strlen(*exported) - 1] = '\0';
-	return (OK);
-}
+export_cmd : main cmd, is the builtin
+ - check le format, renvoie erreur si ! des trois types
+ - build la variable a export
+ - check si la variable a export existe deja
+ - si oui, la remplace
+ - sinon, lajoute a la liste export
 
-int	free_export_malloc(char **expanded_exported, char *tmp, char *exported)
-{
-	if (expanded_exported)
-		free_double_char(expanded_exported);
-	if (tmp)
-		free(tmp);
-	if (exported)
-		free(exported);
-	return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-}
+exporting : fait le lien entre le check du formatage de la variable a export
+	et le choix de lexport a faire
 
-int has_dollar(char *var)
-{
-	int i;
+export_check : check le format de la variable a export
+	- check si la variable a un =
+	- check si la variable a un quote, et si oui, si le quote est bien fermé
+	
+export_no_quote : build lexport de no quote
 
-	i = -1;
-	while (var[++i])
-		if (var[i] == '$')
-			return (OK);
-	return (KO);
-}
+export_single_quote : build lexport de single quote
 
-int	has_equal(char *var)
-{
-	int	i;
+export_double_quote : build lexport de double quote
+export_handle_dollar : gere les $ expansions
+export_dollar_in_str : gere les $ expansions dans une string
+build_the_export : build lexport final de double quote
 
-	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			return (OK);
-	return (KO);
-}
+export_replacement : check si la variable a export existe deja
+	et la remplace par la nouvelle valeur
+export_replacement_list : check si la variable a export existe deja
+	et la remplace par la nouvelle valeur dans la liste export
+
+*/
