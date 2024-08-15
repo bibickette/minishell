@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/14 18:45:39 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:11:21 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,22 @@ typedef struct s_builtin
 
 }				t_builtin;
 
+typedef struct s_command
+{
+	char		command[50];
+	char		option[50][5];
+	char		arg[50][30];
+	char		output[50];
+	int			pipe;
+	char			redirection[1];
+}				t_command;
+
 typedef struct s_minishell
 {
 	t_list		*token;
 	t_list		*history;
 	t_list		*actual_history;
+	t_list		*command_list;
 	t_builtin	*builtins;
 
 	char		**path;
@@ -278,8 +289,7 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
-void			command_listing(t_list *token, t_data *data);
-void			display_command(t_data *data);
+t_list			*command_listing(t_list *token);
 /* check */
 int				check_args(int argc, char **argv);
 int				check_quote_type(char **prompt_loop);
