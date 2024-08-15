@@ -6,7 +6,11 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/08/15 17:57:44 by phwang           ###   ########.fr       */
+=======
+/*   Updated: 2024/08/14 18:45:39 by yantoine         ###   ########.fr       */
+>>>>>>> hexplor
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +170,7 @@ typedef struct s_minishell
 	t_builtin	*builtins;
 
 	char		**path;
+	char		**command;
 	int			last_status;
 	int			here_doc;
 }				t_data;
@@ -240,6 +245,7 @@ int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 /* Built-in commands */
 int				is_builtin(char *command);
 
+<<<<<<< HEAD
 /* built-in export*/
 int				export_cmd(t_list **export_head, char *var, t_data *minishell);
 int				exporting(char **tmp, char *var, char **exported,
@@ -266,6 +272,10 @@ int				has_equal(char *var);
 /* builtin pwd*/
 void			pwd_cmd(t_builtin *builtins);
 /* built-in env */
+=======
+int	echo_cmd(t_list *token, int fd_dest);
+
+>>>>>>> hexplor
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
 /* built-in unset*/
@@ -304,6 +314,8 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
+void			command_listing(t_list *token, t_data *data);
+void			display_command(t_data *data);
 /* check */
 int				check_args(int argc, char **argv);
 int				check_quote_type(char **prompt_loop);
