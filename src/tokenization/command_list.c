@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/15 21:24:09 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/16 13:32:27 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static void	incremente_actual(t_list **actual, t_token **actual_content)
 {
-	if ((*actual)->next)
-	{
-		*actual = (*actual)->next;
+	*actual = (*actual)->next;
+	if (*actual)
 		*actual_content = (*actual)->content;
-	}
 }
 
 t_list	*command_listing(t_list *token)
@@ -44,11 +42,10 @@ t_list	*command_listing(t_list *token)
 			ft_printf("je cherche une commande\n");
 			ft_printf("commande trouvee: %s\n", actual_content->str);
 			ft_strlcpy(content->command, actual_content->str, 50); 
-			if (actual->next)
-				incremente_actual(&actual, &actual_content);
+			incremente_actual(&actual, &actual_content);
 			action = 1;
 		}
-		if (action == 1)
+		if (action == 1 && actual != NULL)
 		{
 			ft_printf("je cherche des options\n");
 			i = -1;
@@ -56,12 +53,11 @@ t_list	*command_listing(t_list *token)
 			{
 				ft_printf("options trouvee: %s\n", actual_content->str);
 				ft_strlcpy(content->option[++i], actual_content->str, 50);
-				if (actual->next)
-					incremente_actual(&actual, &actual_content);
+				incremente_actual(&actual, &actual_content);
 			}
 			action = 2;
 		}
-		if (action == 2)
+		if (action == 2 && actual != NULL)
 		{
 			ft_printf("je cherche des arguments\n");
 			i = -1;
@@ -69,38 +65,35 @@ t_list	*command_listing(t_list *token)
 			{
 				ft_printf("argument trouvee: %s\n", actual_content->str);
 				ft_strlcpy(content->arg[++i], actual_content->str, 50);
-				if (actual->next)
-					incremente_actual(&actual, &actual_content);
+				incremente_actual(&actual, &actual_content);
 			}
 			action = 3;
 		}
-		if (action == 3)
+		if (action == 3 && actual != NULL)
 		{
 			ft_printf("je cherche des redirections\n");
 			if (actual_content->str[0] == '>' || actual_content->str[0] == '<')
 			{
 				printf("redirection trouvee: %s\n", actual_content->str);
 				content->redirection[0] = actual_content->str[0];
+				incremente_actual(&actual, &actual_content);
+				ft_strlcpy(content->output, actual_content->str, 50);
+				ft_printf("output: %s\n", content->output);
 			}
 			else if (actual_content->str[0] == '|')
 			{
 				printf("redirection trouvee: %s\n", actual_content->str);
 				content->pipe = 1;
 			}
-			action = 4;
-		}
-		if (action == 4)
-		{
-			ft_printf("je push la commande\n");
-			if (command_list == NULL)
-				command_list = ft_lstnew_libft(&content);
-			else
-				ft_lstadd_back_libft(&command_list, ft_lstnew_libft(&content));
 			action = 0;
 		}
-		if (!actual->next)
-			break;
-		incremente_actual(&actual, &actual_content);
+		ft_printf("je push la commande\n");
+		if (command_list == NULL)
+			command_list = ft_lstnew_libft(&content);
+		else
+			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(&content));
+		if (actual)
+			incremente_actual(&actual, &actual_content);
 	}
 	return (command_list);
 }
