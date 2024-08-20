@@ -6,12 +6,13 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:55:13 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 21:15:12 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/21 00:45:33 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+GERER LES COMMANDES DE COMMANDE ARGUMENTEES
 static int	check_word(t_list *actual, t_list *before)
 {
 	t_token *content;

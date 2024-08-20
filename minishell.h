@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 23:29:56 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/21 00:32:40 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,7 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
-t_list			*command_listing(t_list *token);
+t_list			*command_listing(t_list *token, int *ret);
 /* check */
 int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);

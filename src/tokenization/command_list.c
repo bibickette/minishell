@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 23:43:20 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/21 00:31:42 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,12 @@ t_list	*command_listing(t_list *token, int *ret)
 				printf("redirection trouvee: %s\n", actual_content->str);
 				content->redirection[0] = actual_content->str[0];
 				incremente_actual(&actual, &actual_content);
+				if (ft_strlen(actual_content->str) > 50)
+				{
+					ft_printf("grosse redirection\n");
+					*ret = 1;
+					return (command_list);
+				}
 				ft_strlcpy(content->output, actual_content->str, 50);
 				ft_printf("output: %s\n", content->output);
 			}
@@ -113,7 +119,7 @@ t_list	*command_listing(t_list *token, int *ret)
 		if (actual)
 			incremente_actual(&actual, &actual_content);
 		if (ret)
-			break ;
+			return (command_list);
 	}
 	ret = 0;
 	return (command_list);
