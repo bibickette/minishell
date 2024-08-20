@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 21:17:52 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:29:01 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 void	prompt(t_list *token, t_data *minishell)
 {
 	char	*prompt;
+	int	ret;
 
 	handle_signals();
 	prompt = NULL;
 	display_intro();
+	ret = 0;
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
@@ -35,7 +37,11 @@ void	prompt(t_list *token, t_data *minishell)
 		}
 		else
 		{
-			minishell->command_list = command_listing(token);
+			minishell->command_list = command_listing(token, &ret);
+			if (ret != 1)
+			{
+				printf("la commande s'execute ICI\n");
+			}
 			ft_lstiter(token, print_token);
 			ft_lstclear_custom(&token, free);
 			free(prompt);

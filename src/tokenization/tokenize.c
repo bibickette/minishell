@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 15:49:14 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:09:53 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	tokenize(char *prompt, t_list **token)
 	char	buffer[BSIZE];
 
 	i = 0;
-	if (check_special_char(prompt) == KO)
-		return (KO);
 	ft_bzero(buffer, BSIZE);
 	prompt_loop = prompt;
 	while (*prompt_loop)
@@ -28,10 +26,10 @@ int	tokenize(char *prompt, t_list **token)
 			return (ft_lstclear_custom(token, free), KO);
 	if (ft_strlen(buffer) > 0)
 		add_token(token, buffer);
-	set_token_type(*token);
 	return (OK);
 }
 
+/*
 int	check_special_char(char *prompt)
 {
 	int	i;
@@ -50,3 +48,4 @@ int	check_special_char(char *prompt)
 	}
 	return (OK);
 }
+*/

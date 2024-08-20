@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 21:14:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:29:56 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ typedef struct s_builtin
 typedef struct s_command
 {
 	char		command[50];
-	char		option[50][5];
-	char		arg[50][30];
+	char		option[50][50];
+	char		arg[50][50];
 	char		output[50];
 	int			pipe;
 	char			redirection[1];
@@ -214,7 +214,7 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
-int				check_special_char(char *prompt);
+//int				check_special_char(char *prompt);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);

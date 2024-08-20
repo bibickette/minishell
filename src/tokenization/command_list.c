@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/16 13:40:23 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:43:20 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	incremente_actual(t_list **actual, t_token **actual_content)
 		*actual_content = (*actual)->content;
 }
 
-t_list	*command_listing(t_list *token)
+t_list	*command_listing(t_list *token, int *ret)
 {
 	t_list	*actual;
 	t_list	*command_list;
@@ -41,6 +41,12 @@ t_list	*command_listing(t_list *token)
 		{
 			ft_printf("je cherche une commande\n");
 			ft_printf("commande trouvee: %s\n", actual_content->str);
+			if (ft_strlen(actual_content->str) > 50)
+			{
+				ft_printf("grosse commande\n");
+				*ret = 1;
+				return (command_list);
+			}
 			ft_strlcpy(content->command, actual_content->str, 50); 
 			incremente_actual(&actual, &actual_content);
 			action = 1;
@@ -52,6 +58,12 @@ t_list	*command_listing(t_list *token)
 			while (actual_content->str[0] == '-' && actual)
 			{
 				ft_printf("options trouvee: %s\n", actual_content->str);
+				if (ft_strlen(actual_content->str) > 50 || i > 50)
+				{
+					ft_printf("grosse option\n");
+					*ret = 1;
+					return (command_list);
+				}
 				ft_strlcpy(content->option[++i], actual_content->str, 50);
 				incremente_actual(&actual, &actual_content);
 			}
@@ -64,6 +76,12 @@ t_list	*command_listing(t_list *token)
 			while (check_operator(actual_content->str) == KO && actual)
 			{
 				ft_printf("argument trouvee: %s\n", actual_content->str);
+				if (ft_strlen(actual_content->str) > 50 || i > 50)
+				{
+					ft_printf("gros arg\n");
+					*ret = 1;
+					return (command_list);
+				}
 				ft_strlcpy(content->arg[++i], actual_content->str, 50);
 				incremente_actual(&actual, &actual_content);
 			}
@@ -94,6 +112,9 @@ t_list	*command_listing(t_list *token)
 			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(&content));
 		if (actual)
 			incremente_actual(&actual, &actual_content);
+		if (ret)
+			break ;
 	}
+	ret = 0;
 	return (command_list);
 }
