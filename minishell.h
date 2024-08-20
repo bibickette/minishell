@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/15 20:11:21 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:14:24 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@
 # define NO_TYPE 0
 # define WORD_TYPE 1
 # define CMD_TYPE 2
+# define ARG_TYPE 99
 # define BUILTIN_TYPE 3
 # define OPT_CMD_TYPE 4 // -
 /* redirection */
@@ -291,6 +292,7 @@ void			handle_space(char **prompt_loop, t_list **token,
 
 t_list			*command_listing(t_list *token);
 /* check */
+int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);
 int				check_quote_type(char **prompt_loop);
 int				ft_strcmp(const char *s1, const char *s2);
