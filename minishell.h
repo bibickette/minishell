@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/24 15:56:40 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:02:38 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define CMD_TYPE 2
 # define ARG_TYPE 99
 # define BUILTIN_TYPE 3
-# define OPT_CMD_TYPE 4 // -
+# define OPT_TYPE 4 // -
 /* redirection */
 # define INFILE_TYPE 5
 # define OUTFILE_TYPE 6
@@ -291,7 +291,7 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
-t_list			*command_listing(t_list *token, int *ret);
+t_list			*command_listing(t_list *token);
 /* check */
 int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);
@@ -302,6 +302,8 @@ int				have_twin(char *prompt);
 /* Auto destruction minishell*/
 void			apocalypse(t_data *minishell);
 void			free_builtins(t_builtin *builtins);
+void			free_command_list(t_list *command_list);
+void			free_command(t_command *command);
 void			free_lists(t_data *minishell);
 void			free_double_char(char **array);
 void			error_exit(const char *msg);

@@ -6,37 +6,57 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:29:48 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/23 13:45:44 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:15:28 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-static void	print_double_tab(char tab[50][50])
+
+static void	print_double_tab(char **tab)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (tab[i] || i == 50)
+	if (tab)
 	{
-		printf("\t%s\n", tab[i]);
-		i++;
+		printf("\t");
+		while (tab[i])
+		{
+			printf(" %s", tab[i]);
+			i++;
+		}
+		printf("\n");
 	}
 }
-*/
+
 void	print_command(void *content)
 {
-	t_command *command;
+	t_command	*command;
 
+	if (!content)
+		return;
 	command = (t_command *)content;
-	printf("command: %p\n", command->command);
-	printf("command: %s\n", command->command);
-/*	
-	printf("command: %s\n", command->command);
-	printf("options:\n");
+	if (command->command)
+		printf("command:\t%s\n", command->command);
+	else
+		printf("command:\t(NULL)\n");
+	printf("options:");
 	print_double_tab(command->option);
-	printf("args:\n");
+	printf("args:");
 	print_double_tab(command->arg);
-	printf("redirections: %s\n", command->redirection);
-*/
+	if (command->redirection)
+	{
+		printf("redirections:\t%s\n", command->redirection);
+		if (command->output)
+			printf("output:\t%s\n", command->output);
+		else
+			printf("output:\t(NULL)\n");
+	}
+	else
+		printf("redirections:\t(NULL)\n");
+	if (command->pipe)
+		printf("pipe: yes\n");
+	else
+		printf("pipe: no\n");
 }
+
