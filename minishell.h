@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/21 00:32:40 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:56:40 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,12 +155,12 @@ typedef struct s_builtin
 
 typedef struct s_command
 {
-	char		command[50];
-	char		option[50][50];
-	char		arg[50][50];
-	char		output[50];
+	char		*command;
+	char		**option;
+	char		**arg;
+	char		*output;
 	int			pipe;
-	char			redirection[1];
+	char			*redirection;
 }				t_command;
 
 typedef struct s_minishell
@@ -206,6 +206,7 @@ void			ft_lstclear_custom_bis(t_list *head);
 /* tokenization */
 int				process_char(char **prompt_loop, t_list **token, char *buffer,
 					int *i);
+void			print_command(void *content);
 void			make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int				tokenize(char *prompt, t_list **token);
 void			add_token(t_list **token, char buffer[BSIZE]);

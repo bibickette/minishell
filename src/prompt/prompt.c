@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/20 23:29:01 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:44:33 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	prompt(t_list *token, t_data *minishell)
 				printf("la commande s'execute ICI\n");
 			}
 			ft_lstiter(token, print_token);
+			ft_lstiter(minishell->command_list, print_command);
 			ft_lstclear_custom(&token, free);
 			free(prompt);
 		}

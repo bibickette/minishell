@@ -6,13 +6,12 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:55:13 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/21 00:45:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:26:07 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-GERER LES COMMANDES DE COMMANDE ARGUMENTEES
 static int	check_word(t_list *actual, t_list *before)
 {
 	t_token *content;
@@ -74,7 +73,6 @@ int	check_lexical(t_list *token)
 	before = NULL;
 	while (actual)
 	{
-		printf("content->str: %s\n", content->str);
 		if (content->str[0] == '-')
 		{
 			if (check_option(before) == 0)
