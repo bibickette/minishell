@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/24 17:11:44 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:00:29 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	incremente_actual(t_list **actual, t_token **actual_content)
 
 t_list	*command_listing(t_list *token)
 {
-	t_list *actual;
-	t_list *command_list;
-	t_token *actual_content;
-	t_command *content;
-	int action;
-	int i;
+	int			i;
+	int			action;
+	t_list		*actual;
+	t_list		*command_list;
+	t_token		*actual_content;
+	t_command	*content;
 
 	action = 0;
 	if (!token)
@@ -49,7 +49,7 @@ t_list	*command_listing(t_list *token)
 			i = 0;
 			while (actual_content->str[0] == '-' && actual)
 			{
-				content->option = realloc(content->option, sizeof(char *) * (i + 2));
+				content->option = ft_realloc(content->option, sizeof(char *) * (i + 2));
 				content->option[i] = ft_strdup(actual_content->str);
 				content->option[++i] = NULL;
 				incremente_actual(&actual, &actual_content);
@@ -61,7 +61,7 @@ t_list	*command_listing(t_list *token)
 			i = 0;
 			while (check_operator(actual_content->str) == KO && actual)
 			{
-				content->arg = realloc(content->arg, sizeof(char *) * (i + 2));
+				content->arg = ft_realloc(content->arg, sizeof(char *) * (i + 2));
 				content->arg[i] = ft_strdup(actual_content->str);
 				content->arg[++i] = NULL;
 				incremente_actual(&actual, &actual_content);
