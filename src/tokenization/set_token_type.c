@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:01:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/11 21:45:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:52:03 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	current_is_word(t_token *current, t_token *before)
 	}
 	if (current->str[0] == '-')
 	{
-		current->type = OPT_CMD_TYPE;
+		current->type = OPT_TYPE;
 		if (before && before->type == WORD_TYPE)
 		{
 			before->type = CMD_TYPE;

@@ -77,8 +77,9 @@
 # define NO_TYPE 0
 # define WORD_TYPE 1
 # define CMD_TYPE 2
+# define ARG_TYPE 99
 # define BUILTIN_TYPE 3
-# define OPT_CMD_TYPE 4 // -
+# define OPT_TYPE 4 // -
 /* redirection */
 # define INFILE_TYPE 5
 # define OUTFILE_TYPE 6
@@ -162,11 +163,22 @@ typedef struct s_builtin
 
 }				t_builtin;
 
+typedef struct s_command
+{
+	char		*command;
+	char		**option;
+	char		**arg;
+	char		*output;
+	int			pipe;
+	char			*redirection;
+}				t_command;
+
 typedef struct s_minishell
 {
 	t_list		*token;
 	t_list		*history;
 	t_list		*actual_history;
+	t_list		*command_list;
 	t_builtin	*builtins;
 
 	char		**path;
@@ -204,6 +216,7 @@ void			ft_lstclear_custom_bis(t_list *head);
 /* tokenization */
 int				process_char(char **prompt_loop, t_list **token, char *buffer,
 					int *i);
+void			print_command(void *content);
 void			make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int				tokenize(char *prompt, t_list **token);
 void			add_token(t_list **token, char buffer[BSIZE]);
@@ -212,7 +225,7 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
-int				check_special_char(char *prompt);
+//int				check_special_char(char *prompt);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
@@ -314,9 +327,9 @@ int				handle_quote(char **prompt_loop, t_list **token,
 void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
-void			command_listing(t_list *token, t_data *data);
-void			display_command(t_data *data);
+t_list			*command_listing(t_list *token);
 /* check */
+int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);
 int				check_quote_type(char **prompt_loop);
 int				ft_strcmp(const char *s1, const char *s2);
@@ -325,6 +338,8 @@ int				have_twin(char *prompt);
 /* Auto destruction minishell*/
 void			apocalypse(t_data *minishell);
 void			free_builtins(t_builtin *builtins);
+void			free_command_list(t_list *command_list);
+void			free_command(t_command *command);
 void			free_lists(t_data *minishell);
 void			free_double_char(char **array);
 void			error_exit(const char *msg);

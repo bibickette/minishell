@@ -6,82 +6,86 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/14 20:08:44 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:11:44 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell.h"
 
-static int	count_number_of_commands(t_list *token)
+static void	incremente_actual(t_list **actual, t_token **actual_content)
 {
-	t_list	*actual;
-	t_token	*content;
-	int		i;
-	int		bit;
+	*actual = (*actual)->next;
+	if (*actual)
+		*actual_content = (*actual)->content;
+}
 
-	bit = 0;
-	i = 0;
-	actual = (t_list *)token;
-	content = (t_token *)actual->content;
+t_list	*command_listing(t_list *token)
+{
+	t_list *actual;
+	t_list *command_list;
+	t_token *actual_content;
+	t_command *content;
+	int action;
+	int i;
+
+	action = 0;
+	if (!token)
+		return (NULL);
+	actual = token;
+	actual_content = actual->content;
+	command_list = NULL;
 	while (actual)
 	{
-		if (bit == 0) 
+		content = calloc(1, sizeof(t_command));
+		if (action == 0)
 		{
-			printf("command: %s\n", content->str);
-			i++;
-			bit = 1;
-			if (actual->next != NULL)
+			content->command = ft_strdup(actual_content->str);
+			incremente_actual(&actual, &actual_content);
+			action = 1;
+		}
+		if (action == 1 && actual != NULL)
+		{
+			i = 0;
+			while (actual_content->str[0] == '-' && actual)
 			{
-				actual = actual->next;
-				content = (t_token *)actual->content;
+				content->option = realloc(content->option, sizeof(char *) * (i + 2));
+				content->option[i] = ft_strdup(actual_content->str);
+				content->option[++i] = NULL;
+				incremente_actual(&actual, &actual_content);
 			}
-			else
-				break;
+			action = 2;
 		}
-		if (check_operator(content->str) == OK)
-			bit = 0;
-		if (actual->next != NULL)
+		if (action == 2 && actual != NULL)
 		{
-			actual = actual->next;
-			content = (t_token *)actual->content;
+			i = 0;
+			while (check_operator(actual_content->str) == KO && actual)
+			{
+				content->arg = realloc(content->arg, sizeof(char *) * (i + 2));
+				content->arg[i] = ft_strdup(actual_content->str);
+				content->arg[++i] = NULL;
+				incremente_actual(&actual, &actual_content);
+			}
+			action = 3;
 		}
+		if (action == 3 && actual != NULL)
+		{
+			if (actual_content->str[0] == '>' || actual_content->str[0] == '<')
+			{
+				content->redirection = ft_strdup(actual_content->str);
+				incremente_actual(&actual, &actual_content);
+				content->output = ft_strdup(actual_content->str);
+			}
+			if (actual_content->str[0] == '|')
+				content->pipe = 1;
+			action = 0;
+		}
+		if (command_list == NULL)
+			command_list = ft_lstnew_libft(content);
 		else
-			break;
+			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));
+		if (actual)
+			incremente_actual(&actual, &actual_content);
 	}
-	printf("nb_commands = %d\n", i);
-	return (i);
-}
-
-static void	cpy_command(char *command, char *str)
-{
-	ft_strlcpy(command, str, ft_strlen(str) + 1);
-}
-
-void	command_listing(t_list *token, t_data *data)
-{
-	t_list	*actual;
-	t_token	*content;
-	char	**command;
-	int		i;
-	int		nb_commands;
-
-	i = 0;
-	command = NULL;
-	nb_commands = count_number_of_commands(token);
-	command = malloc((nb_commands + 1) * sizeof(char *));
-	command[nb_commands] = NULL;
-	actual = (t_list *)token;
-	content = (t_token *)actual->content;
-	while (actual && i < nb_commands && command[i])
-	{
-		if (check_operator(content->str) == KO && content->str[0] != '-')
-		{
-			command[i] = ft_calloc(ft_strlen(content->str) + 1, sizeof(char));
-			cpy_command(command[i], content->str);
-			i++;
-		}
-		actual = actual->next;
-		content = (t_token *)actual->content;
-	}
-	data->command = command;
+	return (command_list);
 }
