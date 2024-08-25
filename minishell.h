@@ -257,11 +257,6 @@ int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 
 /* Built-in commands */
 int				is_builtin(char *command);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> bibi_branch
 /* built-in export*/
 int				export_cmd(t_list **export_head, char *var, t_data *minishell);
 int				exporting(char **tmp, char *var, char **exported,
@@ -288,18 +283,10 @@ int				has_equal(char *var);
 /* builtin pwd*/
 void			pwd_cmd(t_builtin *builtins);
 /* built-in env */
-<<<<<<< HEAD
-=======
-int	echo_cmd(t_list *token, int fd_dest);
-
->>>>>>> hexplor
-=======
->>>>>>> bibi_branch
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
 /* built-in echo */
-int	echo_cmd(t_list *token, int fd_dest);
-
+int				echo_cmd(t_list *token, int fd_dest);
 /* built-in unset*/
 void			unset_cmd(t_builtin *builtins, char *var);
 void			unset_cmd_check_export(t_builtin *builtins, char *var);
