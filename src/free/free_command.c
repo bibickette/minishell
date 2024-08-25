@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   free_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:13:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/24 16:17:05 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:55:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include "minishell.h"
-
 void	free_command(t_command *command)
 {
-	int i;
+	int	i;
 
 	if (!command)
-		return;
+		return ;
 	if (command->command)
 		free(command->command);
 	if (command->option)
@@ -51,7 +49,7 @@ void	free_command(t_command *command)
 
 void	free_command_list(t_list *command_list)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	while (command_list)
 	{

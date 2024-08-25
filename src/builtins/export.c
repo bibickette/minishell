@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/15 17:55:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:03:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 	tmp = NULL;
 	if (exporting(&tmp, var, &exported, minishell) == KO)
 		return (KO);
-	printf("tmp: %s\n", tmp);
-	printf("exported: %s\n", exported);
 	if (tmp)
 		free(tmp);
 	if (export_replacement(minishell, minishell->builtins->export, var,
@@ -49,7 +47,7 @@ int	exporting(char **tmp, char *var, char **exported, t_data *minishell)
 		if (var[i] == '=')
 			break ;
 	if (export_check(tmp, var) == KO)
-		return (KO);
+		return (KO); // if KO do nothing
 	if (var[++i] == 39)
 	{
 		if (export_single_quote(exported, var, *tmp) == KO)

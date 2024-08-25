@@ -6,11 +6,39 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:33:25 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/15 17:40:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:18:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int	export_double_quote(t_data *minishell, char **exported, char *tmp,
+// 		char *var)
+// {
+// 	char	**expanded_exported;
+// 	int		y;
+
+// 	expanded_exported = NULL;
+// 	*exported = ft_strdup(tmp);
+// 	if (!*exported)
+// 		return (free_export_malloc(expanded_exported, tmp, *exported));
+// 	expanded_exported = ft_split(*exported, ' ');
+// 	if (!expanded_exported)
+// 		return (free_export_malloc(expanded_exported, tmp, *exported));
+// 	if (export_handle_dollar(minishell, &expanded_exported, tmp,
+// 			exported) == KO)
+// 		return (KO);
+// 	free(*exported);
+// 	*exported = NULL;
+// 	y = -1;
+// 	while (expanded_exported[++y])
+// 	{
+// 		expanded_exported[y] = strjoin_wfree(expanded_exported[y], " ");
+// 		if (!expanded_exported[y])
+// 			return (free_export_malloc(expanded_exported, tmp, *exported));
+// 	}
+// 	return (build_the_export(exported, expanded_exported, var, tmp));
+// }
 
 int	export_double_quote(t_data *minishell, char **exported, char *tmp,
 		char *var)

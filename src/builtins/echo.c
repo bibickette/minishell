@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:29:34 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/14 17:47:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:55:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int	echo_cmd(t_list *token, int fd_dest)
 {
 	t_list	*current;
 	t_token	*current_token;
-	int	n_flag;
+	int		n_flag;
 
 	n_flag = 0;
 	current = token;
-	while (current && ft_strcmp(((t_token *)current->content)->str, "echo") != 0)
+	while (current && ft_strcmp(((t_token *)current->content)->str,
+			"echo") != 0)
 	{
 		current = current->next;
 		if (!current)

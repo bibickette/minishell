@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:31:45 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/15 17:37:45 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:02:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ int	export_check(char **tmp, char *var)
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
-	if (var[++i] == 34 || var[i] == 39)
-		if (var[ft_strlen(var) - 1] != var[i])
-			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
-	if (var[i] == 34 || var[i] == 39)
-	{
-		*tmp = ft_strdup(var + i + 1);
-		if (!*tmp)
-			return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-		(*tmp)[ft_strlen(*tmp) - 1] = '\0';
-	}
-	else
-	{
+	// look for " or ' in the string
+	// if (var[++i] == 34 || var[i] == 39)
+	// 	if (var[ft_strlen(var) - 1] != var[i])
+	// 		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
+	// if (var[i] == 34 || var[i] == 39)
+	// {
+	// 	*tmp = ft_strdup(var + i + 1);
+	// 	if (!*tmp)
+	// 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
+	// 	(*tmp)[ft_strlen(*tmp) - 1] = '\0';
+	// }
+	// else
+	// {
 		*tmp = ft_strdup(var + i);
 		if (!*tmp)
 			return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-	}
+	// }
 	return (OK);
 }
 /*

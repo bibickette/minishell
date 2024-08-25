@@ -6,11 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/15 17:57:44 by phwang           ###   ########.fr       */
-=======
-/*   Updated: 2024/08/14 18:45:39 by yantoine         ###   ########.fr       */
->>>>>>> hexplor
+/*   Updated: 2024/08/25 14:14:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +103,7 @@
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR \
-	"Minishell Error : Malloc in function Dollar Expansion\n"
+# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -170,7 +165,7 @@ typedef struct s_command
 	char		**arg;
 	char		*output;
 	int			pipe;
-	char			*redirection;
+	char		*redirection;
 }				t_command;
 
 typedef struct s_minishell
@@ -225,7 +220,7 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
-//int				check_special_char(char *prompt);
+// int				check_special_char(char *prompt);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
@@ -238,6 +233,8 @@ void			current_is_word(t_token *current, t_token *before);
 char			*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char			*expansion_no_surround(char *var, t_data *minishell);
 char			*expansion_no_surround_list(char *var, t_data *minishell);
+/* expand dollar  everything */
+void expand_everything(t_data *minishell, t_list *token);
 
 /* history */
 void			display_history(t_data *minishell);
