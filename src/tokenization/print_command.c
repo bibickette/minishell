@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:29:48 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:55:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:40:22 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	print_double_tab(char **tab)
 {
+	int	i;
 	int	i;
 
 	i = 0;
@@ -29,11 +30,20 @@ static void	print_double_tab(char **tab)
 	}
 }
 
+static void	h_pipe(t_command *command)
+{
+	if (command->pipe)
+		printf("pipe: yes\n");
+	else
+		printf("pipe: no\n");
+}
+
 void	print_command(void *content)
 {
 	t_command	*command;
 
 	if (!content)
+		return ;
 		return ;
 	command = (t_command *)content;
 	if (command->command)
@@ -54,8 +64,5 @@ void	print_command(void *content)
 		if (command->output)
 			printf("output:\t%s\n", command->output);
 	}
-	if (command->pipe)
-		printf("pipe: yes\n");
-	else
-		printf("pipe: no\n");
+	h_pipe(command);
 }

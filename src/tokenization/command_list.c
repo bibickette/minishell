@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:55:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:40:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static void	incremente_actual(t_list **actual, t_token **actual_content)
 
 t_list	*command_listing(t_list *token)
 {
+	int			i;
+	int			action;
+	t_list		*actual;
+	t_list		*command_list;
+	t_token		*actual_content;
+	t_command	*content;
 	t_list		*actual;
 	t_list		*command_list;
 	t_token		*actual_content;
@@ -48,6 +54,7 @@ t_list	*command_listing(t_list *token)
 			i = 0;
 			while (actual_content->str[0] == '-' && actual)
 			{
+				content->option = ft_realloc(content->option, sizeof(char *) * (i + 2));
 				content->option = ft_realloc(content->option, sizeof(char *)
 						* (i + 2));
 				content->option[i] = ft_strdup(actual_content->str);
@@ -61,6 +68,7 @@ t_list	*command_listing(t_list *token)
 			i = 0;
 			while (check_operator(actual_content->str) == KO && actual)
 			{
+				content->arg = ft_realloc(content->arg, sizeof(char *) * (i + 2));
 				content->arg = ft_realloc(content->arg, sizeof(char *) * (i
 							+ 2));
 				content->arg[i] = ft_strdup(actual_content->str);
