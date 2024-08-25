@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 14:14:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 16:03:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ char			*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char			*expansion_no_surround(char *var, t_data *minishell);
 char			*expansion_no_surround_list(char *var, t_data *minishell);
 /* expand dollar  everything */
-void expand_everything(t_data *minishell, t_list *token);
+void			expand_everything(t_data *minishell, t_list *token);
 
 /* history */
 void			display_history(t_data *minishell);
@@ -276,6 +276,7 @@ int				export_replacement_list(t_list *export_head, char **exported,
 int				free_export_malloc(char **expanded_exported, char *tmp,
 					char *exported);
 int				has_dollar(char *var);
+int				has_multiple_dollar(char *var);
 int				has_equal(char *var);
 /* builtin pwd*/
 void			pwd_cmd(t_builtin *builtins);

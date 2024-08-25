@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 14:43:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:48:36 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,16 @@ t_list	*command_listing(t_list *token)
 		if (action == 1 && actual != NULL)
 		{
 			i = 0;
+			content->option = ft_calloc(2, sizeof(char *));
+			content->option[i] = ft_strdup(actual_content->str);
+			content->option[++i] = NULL;
+			incremente_actual(&actual, &actual_content);
 			while (actual_content->str[0] == '-' && actual)
 			{
-				content->option = ft_realloc(content->option, sizeof(char *) * (i + 2));
+				if (content->option == NULL || !content->option[0])
+					content->option = ft_calloc(2, sizeof(char *));
+				else
+					content->option = ft_realloc(content->option, sizeof(char *) * (i + 2));
 				content->option[i] = ft_strdup(actual_content->str);
 				content->option[++i] = NULL;
 				incremente_actual(&actual, &actual_content);
@@ -58,6 +65,10 @@ t_list	*command_listing(t_list *token)
 		if (action == 2 && actual != NULL)
 		{
 			i = 0;
+			content->arg = ft_calloc(2, sizeof(char *));
+			content->arg[i] = ft_strdup(actual_content->str);
+			content->arg[++i] = NULL;
+			incremente_actual(&actual, &actual_content);
 			while (check_operator(actual_content->str) == KO && actual)
 			{
 				content->arg = ft_realloc(content->arg, sizeof(char *) * (i + 2));

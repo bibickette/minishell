@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:31:45 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/25 14:02:57 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:46:24 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,20 @@ int	has_equal(char *var)
 	while (var[++i])
 		if (var[i] == '=')
 			return (OK);
+	return (KO);
+}
+
+int has_multiple_dollar(char *var)
+{
+	int	i;
+	int	dollar;
+
+	i = -1;
+	dollar = 0;
+	while (var[++i])
+		if (var[i] == '$')
+			dollar++;
+	if (dollar > 1)
+		return (OK);
 	return (KO);
 }
