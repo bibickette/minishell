@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 14:32:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:36:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void expand_everything(t_data *minishell, t_list *token)
 		if(((t_token *)tmp_head->content)->quote != S_QUOTE)
 		{
 			char *str_expanded;
-	char	**expanded_exported;
+			char	**expanded_exported;
 			str_expanded = ft_strdup(((t_token *)tmp_head->content)->str);
 			if(!str_expanded)
 				return(ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO));
@@ -57,7 +57,9 @@ void expand_everything(t_data *minishell, t_list *token)
 			if (!expanded_exported)
 				return(ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO));
 			// au dessus, separe la string dans des tabs, copie loriginal du token
-			
+			char	*dollar;
+			int		y;
+			y = -1;
 			
 		}
 		if(tmp_head->next == NULL)
