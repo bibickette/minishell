@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/28 18:52:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:55:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ void expand_everything(t_data *minishell, t_list *token)
 			if(str_expanded[ft_strlen(str_expanded) - 1] == ' ')
 				str_expanded[ft_strlen(str_expanded) - 1] = '\0';
 			free(((t_token *)tmp_head->content)->str);
-			printf("str_expanded: %s\n", str_expanded);
 			((t_token *)tmp_head->content)->str = ft_strdup(str_expanded);
 			free(str_expanded);	
 		}
