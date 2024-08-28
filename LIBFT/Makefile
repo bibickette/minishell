@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/15 13:04:16 by phwang            #+#    #+#              #
-#    Updated: 2024/04/29 22:13:14 by phwang           ###   ########.fr        #
+#    Updated: 2024/08/25 18:00:30 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ OBJ_DIR = obj
 
 #SRC FILES AND OBJECTS FILES, ALL FILES with the command : find . -name "ft_*.c"
 SRC =  \
+	countwords.c \
 	strjoin_wfree.c \
 	fibonacci.c \
 	nb_is_prime.c \

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:15:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/04/29 22:18:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/25 17:47:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char				*heedz_join(char *str, char *backup, char *buffer);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_split(char const *s, char c);
+int					countwords(const char *str, char sep);
 
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);

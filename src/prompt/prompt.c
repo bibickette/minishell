@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 17:44:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:52:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,65 @@ void expand_everything(t_data *minishell, t_list *token)
 				}
 				else if (has_dollar(expanded_exported[y]) == OK)
 				{
-					// if (has_multiple_dollar(expanded_exported[y]) == OK)
-					// {
-					// 	char **multiple_dollar;
-					// 	int dol;
-					// 	dol = 0;
-					// 	while(expanded_exported[y][++i])
-					// 		if(expanded_exported[y][i] == '$')
-					// 			dol++;
-					// 	printf("gros pouet---------\n");
-					// }
-					// else
-					// {
+					if (has_multiple_dollar(expanded_exported[y]) == OK)
+					{
+						// step 1 : sep les $ dans un tab
+						char **dollar_tab;
+						dollar_tab = ft_split(expanded_exported[y], '$');
+						if(!dollar_tab || !dollar_tab[0])
+						{
+							free(expanded_exported[y]);
+							expanded_exported[y] = ft_strdup("");
+						}
+						else
+						{
+							char *tmp_expanded;
+							char *tmp;
+							if (expanded_exported[y][0] == '$')
+							{
+								char *add_first_dol;
+								add_first_dol = ft_strdup("$");
+								add_first_dol = strjoin_wfree(add_first_dol, dollar_tab[0]);
+								tmp_expanded = dollar_expansion(add_first_dol, D_QUOTE, minishell);
+								if (!tmp_expanded)
+									tmp_expanded = ft_strdup("");
+								free(add_first_dol);
+								free(dollar_tab[0]);
+								dollar_tab[0] = ft_strdup(tmp_expanded);
+								free(tmp_expanded);
+							}
+							int i;
+							i = 0;
+							while(dollar_tab[++i])
+							{
+								tmp = ft_strdup("$");
+								tmp = strjoin_wfree(tmp, dollar_tab[i]);
+								tmp_expanded = dollar_expansion(tmp, D_QUOTE, minishell);
+								free(tmp);
+								free(dollar_tab[i]);
+								dollar_tab[i] = ft_strdup(tmp_expanded);
+								free(tmp_expanded);
+							}
+						}
+						int z;
+						// step 2 : rajouter les $ au debut des tab
+						// step 3 : extand
+						// step 4 : tout rassembler
+						free(expanded_exported[y]);
+						z = -1;
+						expanded_exported[y] = ft_strdup("");
+						while(dollar_tab[++z])
+						{
+							expanded_exported[y] = strjoin_wfree(expanded_exported[y], dollar_tab[z]);
+						}
+						free_double_char(dollar_tab);
+						printf("----------------\n");				
+						printf("expanded_exported[%d]: %s\n", y, expanded_exported[y]);
+						printf("----------------\n");
+						// end multiple dollar
+					}
+					else
+					{
 						char	*dup;
 						while (expanded_exported[y][++i])
 							if (expanded_exported[y][i] == '$')
@@ -100,7 +147,7 @@ void expand_everything(t_data *minishell, t_list *token)
 							expanded_exported[y] = strjoin_wfree(expanded_exported[y], dollar);
 						}
 						free(dollar);
-					// }
+					}
 				}
 				expanded_exported[y] = strjoin_wfree(expanded_exported[y], " ");
 			}
