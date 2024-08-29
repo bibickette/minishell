@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 16:03:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 02:13:10 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
+# define DOLLAR_EXPANSION_ERR \
+"Minishell Error : Malloc in function Dollar Expansion\n"
+# define EXPAND_MALLOC_ERR \
+"Minishell Error : Malloc in function Expand Everything\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -231,10 +234,29 @@ void			current_is_word(t_token *current, t_token *before);
 
 /* dollar expansion */
 char			*dollar_expansion(char *var, int quote_type, t_data *minishell);
+char			*create_expansion_dollar(t_data *minishell, char *var,
+					char *expanded, int quote_type);
 char			*expansion_no_surround(char *var, t_data *minishell);
 char			*expansion_no_surround_list(char *var, t_data *minishell);
+
 /* expand dollar  everything */
 void			expand_everything(t_data *minishell, t_list *token);
+int				start_expanding(t_data *minishell, char ***dollar_tab,
+					t_list *tmp_head);
+int				set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
+					char ***expanded_exported);
+int				build_unique_dollar(t_data *minishell, char **dollar,
+					char **expanded_exported);
+int				handle_multiple_dollar(t_data *minishell, char ***dollar_tab,
+					char **expanded_exported);
+int				first_step_multiple_dollar(t_data *minishell,
+					char ***dollar_tab, char **expanded_exported);
+int				add_doll_first_tab(t_data *minishell, char ***dollar_tab);
+int				add_doll_all_tab(t_data *minishell, char ***dollar_tab,
+					char *expanded_exported);
+int				do_the_expansion(t_data *minishel, char **dollar_tab);
+int				build_expand_n_replace(char **str_expanded,
+					char ***expanded_exported, t_list *tmp_head);
 
 /* history */
 void			display_history(t_data *minishell);

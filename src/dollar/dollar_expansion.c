@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/28 18:42:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 01:35:38 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,20 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell)
 {
 	char	*expanded;
 
+	expanded = NULL;
 	if (!var || !(var[0] == '$'))
-		return (NULL);
+	{
+		expanded = ft_strdup("");
+		if (!expanded)
+			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+		return (expanded);
+	}
+	return (create_expansion_dollar(minishell, var, expanded, quote_type));
+}
+
+char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
+		int quote_type)
+{
 	if (quote_type == S_QUOTE)
 	{
 		expanded = ft_strdup(var);
