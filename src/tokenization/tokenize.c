@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:27:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 16:28:32 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	tokenize(char *prompt, t_list **token)
 			return (ft_lstclear_custom(token, free), KO);
 	if (ft_strlen(buffer) > 0)
 		add_token(token, buffer);
+	handle_export(token);
 	return (OK);
 }
 

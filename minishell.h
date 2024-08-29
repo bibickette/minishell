@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 17:35:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 17:41:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,11 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
-// int				check_special_char(char *prompt);
+
+/* put export args together */
+int	check_last_equal(char *str);
+void	handle_export(t_list **token);
+t_list	*suppr_element(t_list **element);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
