@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 02:13:10 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:59:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,6 +344,13 @@ void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
 t_list			*command_listing(t_list *token);
+void	process_options(t_list **actual, t_token **actual_content, t_command *content);
+void	process_command(t_list **actual, t_token **actual_content, t_command *content);
+char	**add_argument(char **args, char *new_arg, int *size);
+char	**add_option(char **options, char *new_option, int *size);
+void	increment_actual(t_list **actual, t_token **actual_content);
+
+
 /* check */
 int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);
