@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 17:41:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 23:44:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 # define N_QUOTE 0
 # define S_QUOTE 1
 # define D_QUOTE 2
+# define JOINED 3
 
 /* type des tokens */
 
@@ -233,9 +234,8 @@ int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
 
 /* put export args together */
-int	check_last_equal(char *str);
-void	handle_export(t_list **token);
-t_list	*suppr_element(t_list **element);
+void join_token_if_needed(t_list *token, char *prompt);
+void join_token(t_list *token, t_list *is_next_token);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);

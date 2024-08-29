@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 16:28:32 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:30:59 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ int	tokenize(char *prompt, t_list **token)
 			return (ft_lstclear_custom(token, free), KO);
 	if (ft_strlen(buffer) > 0)
 		add_token(token, buffer);
-	handle_export(token);
 	return (OK);
 }
-
+/*
+en gros on parcours le prompt
+si un char est collé avec char+1 = un quote
+on strjoin les deux strings et supp le token vide
+*/
 /*
 int	check_special_char(char *prompt)
 {
