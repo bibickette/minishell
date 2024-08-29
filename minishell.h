@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 13:59:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/29 17:35:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,8 @@
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR \
-"Minishell Error : Malloc in function Dollar Expansion\n"
-# define EXPAND_MALLOC_ERR \
-"Minishell Error : Malloc in function Expand Everything\n"
+# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
+# define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -153,6 +151,13 @@ typedef struct s_element
 
 }				t_token;
 
+typedef struct s_file
+{
+	char		*name;
+	int			fd;
+	int			type;
+}				t_file;
+
 typedef struct s_builtin
 {
 	char		**env;
@@ -178,6 +183,9 @@ typedef struct s_minishell
 	t_list		*actual_history;
 	t_list		*command_list;
 	t_builtin	*builtins;
+
+	t_file		*files;
+	int			nb_files;
 
 	char		**path;
 	char		**command;
@@ -273,6 +281,13 @@ void			add_element(t_list *token, char buffer[BSIZE]);
 /* redirection, file */
 void			heredoc_create(t_data *minishell, char *limiter);
 int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
+int				take_all_files(t_data *minishell, t_list *token);
+int	count_n_allocate_files(t_data *minishell, t_list *token);
+int load_files_type(t_data *minishell, t_list *token);
+int	char_add_back_tab(char ***original_tab, char *to_add);
+int	count_n_copy_original_tab(char ***original_tab, char ***new_tab, int *nb_tab);
+int	no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
+
 
 /* Built-in commands */
 int				is_builtin(char *command);
@@ -344,12 +359,13 @@ void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
 t_list			*command_listing(t_list *token);
-void	process_options(t_list **actual, t_token **actual_content, t_command *content);
-void	process_command(t_list **actual, t_token **actual_content, t_command *content);
-char	**add_argument(char **args, char *new_arg, int *size);
-char	**add_option(char **options, char *new_option, int *size);
-void	increment_actual(t_list **actual, t_token **actual_content);
-
+void			process_options(t_list **actual, t_token **actual_content,
+					t_command *content);
+void			process_command(t_list **actual, t_token **actual_content,
+					t_command *content);
+char			**add_argument(char **args, char *new_arg, int *size);
+char			**add_option(char **options, char *new_option, int *size);
+void			increment_actual(t_list **actual, t_token **actual_content);
 
 /* check */
 int				check_lexical(t_list *token);
@@ -369,5 +385,6 @@ void			error_exit(const char *msg);
 void			handle_error(int error_code, char *prompt);
 void			handle_exit(t_data *minishell, char *prompt, t_list *token);
 void			free_token(void *token);
+void free_files_tab(t_data *minishell, t_file *files);
 
 #endif

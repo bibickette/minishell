@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_list_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:12 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 13:50:24 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/08/29 14:12:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	increment_actual(t_list **actual, t_token **actual_content)
 {
@@ -62,23 +61,23 @@ char	**add_argument(char **args, char *new_arg, int *size)
 	return (new_args);
 }
 
-void	process_command(t_list **actual, t_token **actual_content, \
-					t_command *content)
+void	process_command(t_list **actual, t_token **actual_content,
+		t_command *content)
 {
 	content->command = ft_strdup((*actual_content)->str);
 	increment_actual(actual, actual_content);
 }
 
-void	process_options(t_list **actual, t_token **actual_content, \
-					t_command *content)
+void	process_options(t_list **actual, t_token **actual_content,
+		t_command *content)
 {
-	int	size;
+	int size;
 
 	size = 0;
 	while (*actual && (*actual_content)->str[0] == '-')
 	{
-		content->option = add_option(content->option, \
-							(*actual_content)->str, &size);
+		content->option = add_option(content->option, (*actual_content)->str,
+				&size);
 		increment_actual(actual, actual_content);
 	}
 }

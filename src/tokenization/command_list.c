@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   command_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 13:50:06 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/08/29 14:12:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_arguments(t_list **actual,\
-					t_token **actual_content, t_command *content)
+static void	process_arguments(t_list **actual, t_token **actual_content,
+		t_command *content)
 {
 	int	size;
 
 	size = 0;
 	while (*actual && check_operator((*actual_content)->str) == KO)
 	{
-		content->arg = add_argument(content->arg, \
-						(*actual_content)->str, &size);
+		content->arg = add_argument(content->arg, (*actual_content)->str,
+				&size);
 		increment_actual(actual, actual_content);
 	}
 }
 
-static void	process_redirection_and_pipe(t_list **actual, \
-					t_token **actual_content, t_command *content)
+static void	process_redirection_and_pipe(t_list **actual,
+		t_token **actual_content, t_command *content)
 {
 	if ((*actual_content)->str[0] == '>' || (*actual_content)->str[0] == '<')
 	{
