@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:38:48 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 17:28:41 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:56:43 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	handle_export(t_list **token)
 	t_list		*actual;
 	t_token		*content;
 	t_token		*next_content;
-	char		*join;
+	char		*join1;
+	char 		*join2;
 
 	printf("beg\n");
 	actual = *token;
@@ -47,9 +48,12 @@ void	handle_export(t_list **token)
 			{
 				printf("egal trouve\n");
 				next_content = actual->next->content;
-				join = ft_strjoin(content->str, next_content->str);
+				join1 = ft_strjoin(content->str, " ");
 				free(content->str);
-				content->str = join;
+				content->str = join1;
+				join2 = ft_strjoin(content->str, next_content->str);
+				free(content->str);
+				content->str = join2;
 				actual->next = suppr_element(&actual->next);
 			}
 		}
