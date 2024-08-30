@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 22:34:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 22:41:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ int				load_new_prompt(char **new_prompt, char **tmp_prompt,
 int				line_economy(char *new_prompt, char *tmp_brut);
 int				start_join_token_if_needed(t_list *token, char *prompt,
 					t_list *brut_list);
+void stick_next_token(t_list *is_next_token, t_list **tmp_head, t_list **next_tmp);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
