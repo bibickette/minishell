@@ -1,39 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   check_special_char.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 20:30:59 by phwang           ###   ########.fr       */
+/*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
+/*   Updated: 2024/08/15 18:00:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenize(char *prompt, t_list **token)
-{
-	int		i;
-	char	*prompt_loop;
-	char	buffer[BSIZE];
-
-	i = 0;
-	ft_bzero(buffer, BSIZE);
-	prompt_loop = prompt;
-	while (*prompt_loop)
-		if (process_char(&prompt_loop, token, buffer, &i) == KO)
-			return (ft_lstclear_custom(token, free), KO);
-	if (ft_strlen(buffer) > 0)
-		add_token(token, buffer);
-	return (OK);
-}
-/*
-en gros on parcours le prompt
-si un char est collé avec char+1 = un quote
-on strjoin les deux strings et supp le token vide
-*/
-/*
 int	check_special_char(char *prompt)
 {
 	int	i;
@@ -52,4 +30,3 @@ int	check_special_char(char *prompt)
 	}
 	return (OK);
 }
-*/

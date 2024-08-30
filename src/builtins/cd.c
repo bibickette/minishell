@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 11:55:32 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 12:52:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 02:11:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ static int	handle_special_char(char **new_path, char **old_pwd, char **path)
 	return (0);
 }
 
-
 void	cd(char *path)
 {
-	char	*old_pwd; 
+	char	*old_pwd;
 	char	*new_path;
 	char	*new_pwd;
 
-	old_pwd = get_old_pwd(); 
+	old_pwd = get_old_pwd();
 	if (!old_pwd)
 		return ;
 	new_path = path;

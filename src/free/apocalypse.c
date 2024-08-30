@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/25 14:31:03 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:39:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,26 @@ void	ft_lstclear_custom_bis(t_list *head)
 	while (head)
 	{
 		tmp = head->next;
+		if (head->content)
+			free(head->content);
 		free(head);
 		head = 0;
 		head = tmp;
 	}
+}
+
+void free_files_tab(t_data *minishell, t_file *files)
+{
+	int i;
+
+	i = -1;
+	if(!files  || !minishell->nb_files)
+		return ;
+	while(minishell->files[++i].name && i < minishell->nb_files)
+	{
+		free(files[i].name);
+		files[i].name = 0;
+	}
+	free(files);
+	files = 0;
 }

@@ -3,89 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   command_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:00:29 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:12:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell.h"
 
-static void	incremente_actual(t_list **actual, t_token **actual_content)
+static void	process_arguments(t_list **actual, t_token **actual_content,
+		t_command *content)
 {
-	*actual = (*actual)->next;
-	if (*actual)
-		*actual_content = (*actual)->content;
+	int	size;
+
+	size = 0;
+	while (*actual && check_operator((*actual_content)->str) == KO)
+	{
+		content->arg = add_argument(content->arg, (*actual_content)->str,
+				&size);
+		increment_actual(actual, actual_content);
+	}
+}
+
+static void	process_redirection_and_pipe(t_list **actual,
+		t_token **actual_content, t_command *content)
+{
+	if ((*actual_content)->str[0] == '>' || (*actual_content)->str[0] == '<')
+	{
+		content->redirection = ft_strdup((*actual_content)->str);
+		increment_actual(actual, actual_content);
+		if (*actual)
+			content->output = ft_strdup((*actual_content)->str);
+	}
+	if ((*actual_content)->str[0] == '|')
+		content->pipe = 1;
 }
 
 t_list	*command_listing(t_list *token)
 {
-	int			i;
-	int			action;
 	t_list		*actual;
 	t_list		*command_list;
 	t_token		*actual_content;
 	t_command	*content;
 
-	action = 0;
 	if (!token)
 		return (NULL);
 	actual = token;
-	actual_content = actual->content;
 	command_list = NULL;
+	actual_content = actual->content;
 	while (actual)
 	{
-		content = calloc(1, sizeof(t_command));
-		if (action == 0)
-		{
-			content->command = ft_strdup(actual_content->str);
-			incremente_actual(&actual, &actual_content);
-			action = 1;
-		}
-		if (action == 1 && actual != NULL)
-		{
-			i = 0;
-			while (actual_content->str[0] == '-' && actual)
-			{
-				content->option = ft_realloc(content->option, sizeof(char *) * (i + 2));
-				content->option[i] = ft_strdup(actual_content->str);
-				content->option[++i] = NULL;
-				incremente_actual(&actual, &actual_content);
-			}
-			action = 2;
-		}
-		if (action == 2 && actual != NULL)
-		{
-			i = 0;
-			while (check_operator(actual_content->str) == KO && actual)
-			{
-				content->arg = ft_realloc(content->arg, sizeof(char *) * (i + 2));
-				content->arg[i] = ft_strdup(actual_content->str);
-				content->arg[++i] = NULL;
-				incremente_actual(&actual, &actual_content);
-			}
-			action = 3;
-		}
-		if (action == 3 && actual != NULL)
-		{
-			if (actual_content->str[0] == '>' || actual_content->str[0] == '<')
-			{
-				content->redirection = ft_strdup(actual_content->str);
-				incremente_actual(&actual, &actual_content);
-				content->output = ft_strdup(actual_content->str);
-			}
-			if (actual_content->str[0] == '|')
-				content->pipe = 1;
-			action = 0;
-		}
-		if (command_list == NULL)
+		content = ft_calloc(1, sizeof(t_command));
+		if (!content)
+			return (NULL);
+		process_command(&actual, &actual_content, content);
+		if (actual)
+			process_options(&actual, &actual_content, content);
+		if (actual)
+			process_arguments(&actual, &actual_content, content);
+		if (actual)
+			process_redirection_and_pipe(&actual, &actual_content, content);
+		if (!command_list)
 			command_list = ft_lstnew_libft(content);
 		else
 			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));
 		if (actual)
-			incremente_actual(&actual, &actual_content);
+			increment_actual(&actual, &actual_content);
 	}
 	return (command_list);
 }

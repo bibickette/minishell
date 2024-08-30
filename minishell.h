@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/24 17:02:38 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/29 23:44:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 # define N_QUOTE 0
 # define S_QUOTE 1
 # define D_QUOTE 2
+# define JOINED 3
 
 /* type des tokens */
 
@@ -98,8 +99,13 @@
 /*************************************/
 
 # define HANDLE_ERROR "Minishell Error Code :"
+
+/* builtins error */
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
+# define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
+# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
+# define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
@@ -123,6 +129,7 @@
 # define SPLIT_ERR "Minishell Error : Malloc Split\n"
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
+# define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
 
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"
@@ -145,6 +152,13 @@ typedef struct s_element
 
 }				t_token;
 
+typedef struct s_file
+{
+	char		*name;
+	int			fd;
+	int			type;
+}				t_file;
+
 typedef struct s_builtin
 {
 	char		**env;
@@ -160,7 +174,7 @@ typedef struct s_command
 	char		**arg;
 	char		*output;
 	int			pipe;
-	char			*redirection;
+	char		*redirection;
 }				t_command;
 
 typedef struct s_minishell
@@ -170,6 +184,9 @@ typedef struct s_minishell
 	t_list		*actual_history;
 	t_list		*command_list;
 	t_builtin	*builtins;
+
+	t_file		*files;
+	int			nb_files;
 
 	char		**path;
 	char		**command;
@@ -215,7 +232,10 @@ void			handle_operator(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
-//int				check_special_char(char *prompt);
+
+/* put export args together */
+void join_token_if_needed(t_list *token, char *prompt);
+void join_token(t_list *token, t_list *is_next_token);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
@@ -226,8 +246,29 @@ void			current_is_word(t_token *current, t_token *before);
 
 /* dollar expansion */
 char			*dollar_expansion(char *var, int quote_type, t_data *minishell);
+char			*create_expansion_dollar(t_data *minishell, char *var,
+					char *expanded, int quote_type);
 char			*expansion_no_surround(char *var, t_data *minishell);
-char			*expansion_parentheses(char *var, t_data *minishell);
+char			*expansion_no_surround_list(char *var, t_data *minishell);
+
+/* expand dollar  everything */
+void			expand_everything(t_data *minishell, t_list *token);
+int				start_expanding(t_data *minishell, char ***dollar_tab,
+					t_list *tmp_head);
+int				set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
+					char ***expanded_exported);
+int				build_unique_dollar(t_data *minishell, char **dollar,
+					char **expanded_exported);
+int				handle_multiple_dollar(t_data *minishell, char ***dollar_tab,
+					char **expanded_exported);
+int				first_step_multiple_dollar(t_data *minishell,
+					char ***dollar_tab, char **expanded_exported);
+int				add_doll_first_tab(t_data *minishell, char ***dollar_tab);
+int				add_doll_all_tab(t_data *minishell, char ***dollar_tab,
+					char *expanded_exported);
+int				do_the_expansion(t_data *minishel, char **dollar_tab);
+int				build_expand_n_replace(char **str_expanded,
+					char ***expanded_exported, t_list *tmp_head);
 
 /* history */
 void			display_history(t_data *minishell);
@@ -244,18 +285,48 @@ void			add_element(t_list *token, char buffer[BSIZE]);
 /* redirection, file */
 void			heredoc_create(t_data *minishell, char *limiter);
 int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
+int				take_all_files(t_data *minishell, t_list *token);
+int	count_n_allocate_files(t_data *minishell, t_list *token);
+int load_files_type(t_data *minishell, t_list *token);
+int	char_add_back_tab(char ***original_tab, char *to_add);
+int	count_n_copy_original_tab(char ***original_tab, char ***new_tab, int *nb_tab);
+int	no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
+
 
 /* Built-in commands */
 int				is_builtin(char *command);
-void			pwd_cmd(t_builtin *builtins);
-int				export_cmd(t_list **export_head, char *var);
+/* built-in export*/
+int				export_cmd(t_list **export_head, char *var, t_data *minishell);
+int				exporting(char **tmp, char *var, char **exported,
+					t_data *minishell);
+int				export_check(char **tmp, char *var);
+int				export_no_quote(char **exported, char *var, char *tmp);
+int				export_single_quote(char **exported, char *var, char *tmp);
+int				export_double_quote(t_data *minishell, char **exported,
+					char *tmp, char *var);
+int				export_handle_dollar(t_data *minishell,
+					char ***expanded_exported, char *tmp, char **exported);
+int				export_dollar_in_str(t_data *minishell,
+					char **expanded_exported, char *tmp, char **exported);
+int				build_the_export(char **exported, char **expanded_exported,
+					char *var, char *tmp);
+int				export_replacement(t_data *minishell, t_list *export_head,
+					char *var, char **exported);
+int				export_replacement_list(t_list *export_head, char **exported,
+					char *tmp_var);
+int				free_export_malloc(char **expanded_exported, char *tmp,
+					char *exported);
+int				has_dollar(char *var);
+int				has_multiple_dollar(char *var);
 int				has_equal(char *var);
-
-int	echo_cmd(t_list *token, int fd_dest);
-
+/* builtin pwd*/
+void			pwd_cmd(t_builtin *builtins);
+/* built-in env */
 void			env_cmd(char **env, t_list *export);
 void			env_cmd_check_export(t_list *export);
-
+/* built-in echo */
+int				echo_cmd(t_list *token, int fd_dest);
+/* built-in unset*/
 void			unset_cmd(t_builtin *builtins, char *var);
 void			unset_cmd_check_export(t_builtin *builtins, char *var);
 
@@ -292,6 +363,14 @@ void			handle_space(char **prompt_loop, t_list **token,
 					char buffer[BSIZE]);
 
 t_list			*command_listing(t_list *token);
+void			process_options(t_list **actual, t_token **actual_content,
+					t_command *content);
+void			process_command(t_list **actual, t_token **actual_content,
+					t_command *content);
+char			**add_argument(char **args, char *new_arg, int *size);
+char			**add_option(char **options, char *new_option, int *size);
+void			increment_actual(t_list **actual, t_token **actual_content);
+
 /* check */
 int				check_lexical(t_list *token);
 int				check_args(int argc, char **argv);
@@ -310,5 +389,6 @@ void			error_exit(const char *msg);
 void			handle_error(int error_code, char *prompt);
 void			handle_exit(t_data *minishell, char *prompt, t_list *token);
 void			free_token(void *token);
+void free_files_tab(t_data *minishell, t_file *files);
 
 #endif

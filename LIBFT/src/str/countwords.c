@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   countwords.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 14:38:27 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/14 18:00:00 by phwang           ###   ########.fr       */
+/*   Created: 2024/08/25 17:46:30 by phwang            #+#    #+#             */
+/*   Updated: 2024/08/25 17:46:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-size_t	ft_strlen(const char *s)
+int	countwords(const char *str, char sep)
 {
-	size_t	i;
+	int	words;
+	int	i;
+	int	len;
 
-	i = 0;
-	if (!*s || !s || s[0] == '\0' || s == NULL)
+	if (!str || !sep || ft_strlen(str) == 0)
 		return (0);
-	while (s[i])
-		i++;
-	return (i);
+	len = ft_strlen(str);
+	i = -1;
+	words = 0;
+	if (str[0] != sep)
+		words = 1;
+	while (++i < len)
+		if (str[i] == sep)
+			if (str[i + 1] != sep && str[i + 1] != '\0')
+				words++;
+	return (words);
 }
-/* calcule la longueur i d'une str *s */

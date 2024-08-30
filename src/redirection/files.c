@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 14:38:27 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/14 18:00:00 by phwang           ###   ########.fr       */
+/*   Created: 2024/08/29 18:21:33 by phwang            #+#    #+#             */
+/*   Updated: 2024/08/29 19:08:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+#include "minishell.h"
 
-	i = 0;
-	if (!*s || !s || s[0] == '\0' || s == NULL)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-/* calcule la longueur i d'une str *s */
+// int open_file(t_data *minishell, t_file *file)
+// {
+// 	if(file->type == INFILE_TYPE)
+// 	else if(file->type == OUTFILE_TYPE)
+// 	else if(file->type == APPEND_FILE_TYPE)
+// 	else if(file->type == HD_LIMITER_TYPE)
+// 	{
+// 		heredoc_create(minishell, file->name);
+// 	}
+// 	return(OK);
+// }
