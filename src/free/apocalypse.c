@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/29 17:39:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:38:59 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	ft_lstclear_custom_bis(t_list *head)
 	}
 }
 
-void free_files_tab(t_data *minishell, t_file *files)
+void	free_files_tab(t_data *minishell, t_file *files)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	if(!files  || !minishell->nb_files)
+	if (!files || !minishell->nb_files)
 		return ;
-	while(minishell->files[++i].name && i < minishell->nb_files)
+	while (minishell->files[++i].name && i < minishell->nb_files)
 	{
 		free(files[i].name);
 		files[i].name = 0;

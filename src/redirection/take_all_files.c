@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/29 17:37:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:39:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	count_n_allocate_files(t_data *minishell, t_list *token)
 	while (dico_files[++i])
 	{
 		minishell->files[i].name = ft_strdup(dico_files[i]);
-		if(!minishell->files[i].name)
+		if (!minishell->files[i].name)
 		{
 			free_double_char(dico_files);
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);

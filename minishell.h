@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 18:32:44 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:39:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,11 +235,12 @@ int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
 
 /* put export args together */
-void join_token_if_needed(t_list *token, char *prompt, t_list *brut_list);
-void join_token(t_list *token, t_list *is_next_token);
-int dupplicate_list(t_list *token, t_list **brut_list);
-int set_quote_n_put_back(t_list *token, t_list *brut_list);
-int put_quote_back(char **str, char quote);
+void			join_token_if_needed(t_list *token, char *prompt,
+					t_list *brut_list);
+void			join_token(t_list *token, t_list *is_next_token);
+int				dupplicate_list(t_list *token, t_list **brut_list);
+int				set_quote_n_put_back(t_list *token, t_list *brut_list);
+int				put_quote_back(char **str, char quote);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
@@ -290,12 +291,13 @@ void			add_element(t_list *token, char buffer[BSIZE]);
 void			heredoc_create(t_data *minishell, char *limiter);
 int				heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int				take_all_files(t_data *minishell, t_list *token);
-int	count_n_allocate_files(t_data *minishell, t_list *token);
-int load_files_type(t_data *minishell, t_list *token);
-int	char_add_back_tab(char ***original_tab, char *to_add);
-int	count_n_copy_original_tab(char ***original_tab, char ***new_tab, int *nb_tab);
-int	no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
-
+int				count_n_allocate_files(t_data *minishell, t_list *token);
+int				load_files_type(t_data *minishell, t_list *token);
+int				char_add_back_tab(char ***original_tab, char *to_add);
+int				count_n_copy_original_tab(char ***original_tab, char ***new_tab,
+					int *nb_tab);
+int				no_original_tab(char ***original_tab, char *to_add,
+					char ***new_tab);
 
 /* Built-in commands */
 int				is_builtin(char *command);
@@ -393,6 +395,6 @@ void			error_exit(const char *msg);
 void			handle_error(int error_code, char *prompt);
 void			handle_exit(t_data *minishell, char *prompt, t_list *token);
 void			free_token(void *token);
-void free_files_tab(t_data *minishell, t_file *files);
+void			free_files_tab(t_data *minishell, t_file *files);
 
 #endif

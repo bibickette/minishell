@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:21:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/29 17:36:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:39:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	no_original_tab(char ***original_tab, char *to_add, char ***new_tab)
 	return (OK);
 }
 
-int	count_n_copy_original_tab(char ***original_tab, char ***new_tab, int *nb_tab)
+int	count_n_copy_original_tab(char ***original_tab, char ***new_tab,
+		int *nb_tab)
 {
 	(*nb_tab) = 0;
 	while ((*original_tab)[(*nb_tab)])
@@ -59,15 +60,15 @@ int	char_add_back_tab(char ***original_tab, char *to_add)
 {
 	int		nb_tab;
 	char	**new_tab;
-	int ret;
+	int		ret;
 
 	new_tab = NULL;
-	if(!(*original_tab))
+	if (!(*original_tab))
 	{
 		ret = no_original_tab(original_tab, to_add, &new_tab);
-		return(ret);
+		return (ret);
 	}
-	if(count_n_copy_original_tab(original_tab, &new_tab, &nb_tab) == KO)
+	if (count_n_copy_original_tab(original_tab, &new_tab, &nb_tab) == KO)
 		return (KO);
 	if (to_add)
 	{

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:12 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 14:12:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:40:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	process_command(t_list **actual, t_token **actual_content,
 void	process_options(t_list **actual, t_token **actual_content,
 		t_command *content)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	while (*actual && (*actual_content)->str[0] == '-')
