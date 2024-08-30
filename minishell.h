@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 18:39:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 22:34:55 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,13 +234,22 @@ void			handle_operator(char **prompt_loop, t_list **token,
 int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
 
-/* put export args together */
-void			join_token_if_needed(t_list *token, char *prompt,
-					t_list *brut_list);
-void			join_token(t_list *token, t_list *is_next_token);
+/* put args stucked together */
+int				join_token_if_needed(t_list *token, char *prompt,
+					t_list *brut_list, char **t_pt);
+int				join_token(t_list *token, t_list *is_next_token);
 int				dupplicate_list(t_list *token, t_list **brut_list);
 int				set_quote_n_put_back(t_list *token, t_list *brut_list);
 int				put_quote_back(char **str, char quote);
+int				increment_lists(t_list **token, t_list **brut_list);
+int				check_new_prompt(char *new_prompt, char *tmp_brut);
+int				join_token_in_lists(t_list *token, t_list *brut_list,
+					t_list **tmp_token, t_list **tmp_brut);
+int				load_new_prompt(char **new_prompt, char **tmp_prompt,
+					char *token_str);
+int				line_economy(char *new_prompt, char *tmp_brut);
+int				start_join_token_if_needed(t_list *token, char *prompt,
+					t_list *brut_list);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);
