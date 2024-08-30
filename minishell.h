@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 23:44:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:32:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef struct s_command
 typedef struct s_minishell
 {
 	t_list		*token;
+	t_list		*brut_list;
 	t_list		*history;
 	t_list		*actual_history;
 	t_list		*command_list;
@@ -234,8 +235,11 @@ int				handle_buffer_overflow(t_list **token);
 int				check_operator(char *str);
 
 /* put export args together */
-void join_token_if_needed(t_list *token, char *prompt);
+void join_token_if_needed(t_list *token, char *prompt, t_list *brut_list);
 void join_token(t_list *token, t_list *is_next_token);
+int dupplicate_list(t_list *token, t_list **brut_list);
+int set_quote_n_put_back(t_list *token, t_list *brut_list);
+int put_quote_back(char **str, char quote);
 
 /* type of token */
 void			set_type_operator(t_token *last_token);

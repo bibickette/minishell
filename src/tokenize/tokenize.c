@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 19:08:31 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 20:30:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:22:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,3 @@ int	tokenize(char *prompt, t_list **token)
 		add_token(token, buffer);
 	return (OK);
 }
-/*
-en gros on parcours le prompt
-si un char est collé avec char+1 = un quote
-on strjoin les deux strings et supp le token vide
-*/
-/*
-int	check_special_char(char *prompt)
-{
-	int	i;
-
-	i = -1;
-	while (prompt[++i])
-	{
-		if (i > 0 && prompt[i - 1] && prompt[i - 1] != '$' && prompt[i] == '?')
-			return (ft_putstr_fd(SPECIAL_CHAR_ERR, STDERR_FILENO), KO);
-		if (prompt[i] == '~' || prompt[i] == '&' || prompt[i] == '`'
-			|| prompt[i] == '[' || prompt[i] == ']' || prompt[i] == '{'
-			|| prompt[i] == '}' || prompt[i] == '*' || prompt[i] == ';'
-			|| prompt[i] == ':' || prompt[i] == '\\' || prompt[i] == '('
-			|| prompt[i] == ')' )
-			return (ft_putstr_fd(SPECIAL_CHAR_ERR, STDERR_FILENO), KO);
-	}
-	return (OK);
-}
-*/
