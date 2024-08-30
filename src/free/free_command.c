@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:13:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:55:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 15:41:14 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	free_command(t_command *command)
 		free(command->arg);
 	}
 	if (command->output)
+		free(command->output);
+	if (command->input)
 		free(command->output);
 	if (command->redirection)
 		free(command->redirection);

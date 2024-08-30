@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:56:24 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 15:30:14 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/08/30 15:41:55 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,19 @@ static void	process_arguments(t_list **actual, t_token **actual_content,
 static void	process_redirection_and_pipe(t_list **actual,
 		t_token **actual_content, t_command *content)
 {
-	if ((*actual_content)->str[0] == '>' || (*actual_content)->str[0] == '<')
+	if ((*actual_content)->str[0] == '>')
 	{
 		content->redirection = ft_strdup((*actual_content)->str);
 		increment_actual(actual, actual_content);
 		if (*actual)
 			content->output = ft_strdup((*actual_content)->str);
+	}
+	else if ((*actual_content)->str[0] == '<')
+	{
+		content->redirection = ft_strdup((*actual_content)->str);
+		increment_actual(actual, actual_content);
+		if (*actual)
+			content->input = ft_strdup((*actual_content)->str);
 	}
 	if ((*actual_content)->str[0] == '|')
 		content->pipe = 1;

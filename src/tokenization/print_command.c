@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:29:48 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 14:42:14 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/30 15:40:11 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	print_command(void *content)
 		printf("redirections:\t%s\n", command->redirection);
 		if (command->output)
 			printf("output:\t%s\n", command->output);
+		if (command->input)
+			printf("input:\t%s\n", command->input);
 	}
 	h_pipe(command);
 }
