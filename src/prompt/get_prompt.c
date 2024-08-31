@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:40:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/12 12:40:52 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:04:21 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_prompt(t_data **minishell)
 	if (!prompt)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(0);
+		return (NULL);
 	}
 	if (ft_strlen(prompt) != 0)
 	{
