@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:24:30 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/30 18:26:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 22:31:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	set_quote_n_put_back(t_list *token, t_list *brut_list)
 	tmp_brut = brut_list;
 	while (tmp_head)
 	{
-		((t_token *)tmp_brut->content)->quote = ((t_token *)tmp_head->content)->quote;
+		((t_token *)tmp_brut->content)->quote = \
+		((t_token *)tmp_head->content)->quote;
 		if (((t_token *)tmp_brut->content)->quote != N_QUOTE)
 		{
 			if (((t_token *)tmp_brut->content)->quote == S_QUOTE)

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 22:49:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 22:27:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,26 @@
 
 /**********************************************/
 
-/*************************************/
-/*            SUMMARY :              */
-/*************************************/
-/*										*/
-/*      - Includes         				*/
-/*      - Codes errors        			*/
-/*      - Messages errors       		*/
-/*      - Structures         			*/
-/*      - Prompt functions           */
-/*      - Execution functions      		*/
-/*      - Utility functions          */
-/*										*/
-/*************************************/
+/************************************/
+/*            SUMMARY :             */
+/************************************/
+/*									*/
+/*      - Include         			*/
+/*      - Prompt functions          */
+/*      - Execution functions      	*/
+/*      - Utility functions         */
+/*									*/
+/************************************/
 
 /**********************************************/
 
+/*************************************/
+/*             Includes              */
+/*************************************/
+
 # include "minishell_strct.h"
+
+/**********************************************/
 
 /*************************************/
 /*         Prompt functions          */
@@ -118,6 +121,8 @@ int		add_doll_all_tab(t_data *minishell, char ***dollar_tab,
 int		do_the_expansion(t_data *minishel, char **dollar_tab);
 int		build_expand_n_replace(char **str_expanded, char ***expanded_exported,
 			t_list *tmp_head);
+int		has_dollar(char *var);
+int		has_multiple_dollar(char *var);
 
 /* history */
 void	display_history(t_data *minishell);
@@ -146,26 +151,8 @@ int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		is_builtin(char *command);
 /* built-in export*/
 int		export_cmd(t_list **export_head, char *var, t_data *minishell);
-int		exporting(char **tmp, char *var, char **exported, t_data *minishell);
-int		export_check(char **tmp, char *var);
-int		export_no_quote(char **exported, char *var, char *tmp);
-int		export_single_quote(char **exported, char *var, char *tmp);
-int		export_double_quote(t_data *minishell, char **exported, char *tmp,
-			char *var);
-int		export_handle_dollar(t_data *minishell, char ***expanded_exported,
-			char *tmp, char **exported);
-int		export_dollar_in_str(t_data *minishell, char **expanded_exported,
-			char *tmp, char **exported);
-int		build_the_export(char **exported, char **expanded_exported, char *var,
-			char *tmp);
-int		export_replacement(t_data *minishell, t_list *export_head, char *var,
-			char **exported);
-int		export_replacement_list(t_list *export_head, char **exported,
-			char *tmp_var);
-int		free_export_malloc(char **expanded_exported, char *tmp, char *exported);
-int		has_dollar(char *var);
-int		has_multiple_dollar(char *var);
-int		has_equal(char *var);
+int		export_replacement(t_data *minishell, t_list *export_head, char **var);
+int		export_replacement_list(t_list *export_head, char **var, char *tmp_var);
 /* builtin pwd*/
 void	pwd_cmd(t_builtin *builtins);
 /* built-in env */
@@ -234,5 +221,7 @@ void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt, t_list *token);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
+
+/**********************************************/
 
 #endif

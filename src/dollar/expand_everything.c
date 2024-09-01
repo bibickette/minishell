@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/30 18:39:04 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 22:43:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,45 @@ int	set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 		if ((*expanded_exported)[y][0] == '$'
 			&& has_multiple_dollar((*expanded_exported)[y]) == KO)
 		{
-			build_unique_dollar(minishell, &dollar, &(*expanded_exported)[y]);
+			if (build_unique_dollar(minishell, &dollar,
+					&(*expanded_exported)[y]) == KO)
+				return (KO);
 		}
 		else if (has_dollar((*expanded_exported)[y]) == OK)
 		{
-			handle_multiple_dollar(minishell, dollar_tab,
-				&(*expanded_exported)[y]);
+			if (handle_multiple_dollar(minishell, dollar_tab,
+					&(*expanded_exported)[y]))
+				return (KO);
 		}
 		(*expanded_exported)[y] = strjoin_wfree((*expanded_exported)[y], " ");
+		if (!(*expanded_exported)[y])
+			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	}
 	return (OK);
+}
+
+int	has_multiple_dollar(char *var)
+{
+	int	i;
+	int	dollar;
+
+	i = -1;
+	dollar = 0;
+	while (var[++i])
+		if (var[i] == '$')
+			dollar++;
+	if (dollar > 1)
+		return (OK);
+	return (KO);
+}
+
+int	has_dollar(char *var)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+		if (var[i] == '$')
+			return (OK);
+	return (KO);
 }

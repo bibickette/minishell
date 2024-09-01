@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:21:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/30 18:39:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 22:35:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,10 @@ int	char_add_back_tab(char ***original_tab, char *to_add)
 {
 	int		nb_tab;
 	char	**new_tab;
-	int		ret;
 
 	new_tab = NULL;
 	if (!(*original_tab))
-	{
-		ret = no_original_tab(original_tab, to_add, &new_tab);
-		return (ret);
-	}
+		return (no_original_tab(original_tab, to_add, &new_tab));
 	if (count_n_copy_original_tab(original_tab, &new_tab, &nb_tab) == KO)
 		return (KO);
 	if (to_add)

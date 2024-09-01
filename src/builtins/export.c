@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/25 14:03:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 22:44:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,23 @@
 int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 {
 	t_list	*new_export;
-	char	*exported;
-	char	*tmp;
+	int		i;
+	int		y;
 
-	exported = NULL;
 	new_export = NULL;
-	tmp = NULL;
-	if (exporting(&tmp, var, &exported, minishell) == KO)
-		return (KO);
-	if (tmp)
-		free(tmp);
-	if (export_replacement(minishell, minishell->builtins->export, var,
-			&exported) == OK)
+	i = -1;
+	while (var[++i])
+		if (var[i] == '=')
+			break ;
+	y = -1;
+	while (++y < i)
+		if (var[y] == ' ')
+			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
+	if (export_replacement(minishell, minishell->builtins->export, &var) == OK)
 		return (OK);
 	else
 	{
-		new_export = ft_lstnew_libft(exported);
+		new_export = ft_lstnew_libft(ft_strdup(var));
 		if (!new_export)
 			return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
 		ft_lstadd_back_libft(export_head, new_export);
@@ -38,81 +39,65 @@ int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 	return (OK);
 }
 
-int	exporting(char **tmp, char *var, char **exported, t_data *minishell)
+int	export_replacement(t_data *minishell, t_list *export_head, char **var)
 {
-	int	i;
+	char	*tmp_var;
+	int		i;
 
 	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			break ;
-	if (export_check(tmp, var) == KO)
-		return (KO); // if KO do nothing
-	if (var[++i] == 39)
-	{
-		if (export_single_quote(exported, var, *tmp) == KO)
-			return (KO);
-	}
-	else if (var[i] == 34)
-	{
-		if (export_double_quote(minishell, exported, *tmp, var) == KO)
-			return (KO);
-	}
-	else if (export_no_quote(exported, var, *tmp) == KO)
-		return (KO);
-	return (OK);
-}
-/*
-choisi lun des trois export dispo :
-no quote
-single quote
-double quote
-*/
-
-int	export_no_quote(char **exported, char *var, char *tmp)
-{
-	int	y;
-
-	*exported = ft_strdup(var);
-	if (!*exported)
-	{
-		free(tmp);
+	tmp_var = ft_strdup(*var);
+	if (!tmp_var)
 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
+	while (tmp_var[++i])
+		if (tmp_var[i] == '=')
+			break ;
+	if (ft_strlen(tmp_var) != (size_t)i)
+		tmp_var[i + 1] = '\0';
+	i = -1;
+	while (minishell->builtins->env[++i])
+	{
+		if (ft_strncmp(minishell->builtins->env[i], tmp_var,
+				ft_strlen(tmp_var)) == 0)
+		{
+			free(minishell->builtins->env[i]);
+			minishell->builtins->env[i] = *var;
+			free(tmp_var);
+			if (!minishell->builtins->env[i])
+				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
+			return (OK);
+		}
 	}
-	y = -1;
-	while ((*exported)[++y])
-		if ((*exported)[y] == ' ')
-			(*exported)[y] = '\0';
-	return (OK);
+	return (export_replacement_list(export_head, var, tmp_var));
 }
 /*
-build lexport de no quote
+si la variable a export existe deja, remplace par la nouvelle valeur
 */
 
-int	export_single_quote(char **exported, char *var, char *tmp)
+int	export_replacement_list(t_list *export_head, char **var, char *tmp_var)
 {
-	int	i;
-	int	y;
+	t_list	*tmp;
 
-	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			break ;
-	*exported = ft_calloc(++i + ft_strlen(tmp) + 1, sizeof(char));
-	if (!*exported)
+	tmp = export_head;
+	while (tmp)
 	{
-		free(tmp);
-		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
+		if (ft_strncmp((char *)tmp->content, tmp_var, ft_strlen(tmp_var)) == 0)
+		{
+			free(((t_token *)tmp->content)->str);
+			((t_token *)tmp->content)->str = *var;
+			return (free(tmp_var), OK);
+		}
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
 	}
-	y = -1;
-	while (++y < i)
-		(*exported)[y] = var[y];
-	i = -1;
-	while (tmp[++i])
-		(*exported)[i + y] = tmp[i];
-	(*exported)[y + i] = '\0';
-	return (OK);
+	free(tmp_var);
+	return (KO);
 }
+/*
+si la variable a export existe deja,
+	remplace par la nouvelle valeur dans la liste export
+*/
+
 /*
 build lexoport de single quote
 */
@@ -142,7 +127,7 @@ exporting : fait le lien entre le check du formatage de la variable a export
 export_check : check le format de la variable a export
 	- check si la variable a un =
 	- check si la variable a un quote, et si oui, si le quote est bien fermé
-	
+
 export_no_quote : build lexport de no quote
 
 export_single_quote : build lexport de single quote

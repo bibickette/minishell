@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/30 22:50:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 14:53:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 /**********************************************/
 
-/*************************************/
-/*            SUMMARY :              */
-/*************************************/
-/*										*/
-/*      - Includes         				*/
-/*      - Codes errors        			*/
-/*      - Messages errors       		*/
-/*      - Structures         			*/
-/*										*/
-/*************************************/
+/************************************/
+/*            SUMMARY :             */
+/************************************/
+/*									*/
+/*      - Includes         			*/
+/*      - Codes errors        		*/
+/*      - Messages errors       	*/
+/*      - Structures         		*/
+/*									*/
+/************************************/
 
 /**********************************************/
 
@@ -176,20 +176,24 @@ typedef struct s_command
 
 typedef struct s_minishell
 {
-	t_list		*token;
-	t_list		*brut_list;
 	t_list		*history;
 	t_list		*actual_history;
 	t_list		*command_list;
+	char		**command;
+
+	t_list		*token;
+	t_list		*brut_list;
+
 	t_builtin	*builtins;
 
 	t_file		*files;
 	int			nb_files;
 
 	char		**path;
-	char		**command;
 	int			last_status;
 	int			here_doc;
 }				t_data;
+
+/**********************************************/
 
 #endif
