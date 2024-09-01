@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:01:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/24 16:52:03 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/01 23:08:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,6 @@ void	current_is_word(t_token *current, t_token *before)
 		current->type = DOLLAR_TYPE;
 	else if (current->str[0] == '.')
 		current->type = EXECUTABLE_TYPE;
+	else if(current->index > 0 && before->type == OPT_TYPE)
+		current->type = ARG_TYPE;
 }
