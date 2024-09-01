@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 22:24:38 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 23:14:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	prompt(t_list *token, t_data *minishell)
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
-		if (ft_strcmp(prompt, "exit") == 0)
+		if (!prompt || ft_strcmp(prompt, "exit") == 0)
 			handle_exit(minishell, prompt, token);
-		if (ft_strcmp(prompt, "history") == 0)
+		else if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
-		if (tokenize(prompt, &token) != KO)
+		else if (tokenize(prompt, &token) != KO)
 		{
 			dupplicate_list(token, &minishell->brut_list);
 			expand_everything(minishell, token);

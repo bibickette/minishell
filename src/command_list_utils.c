@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:12 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 18:40:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 23:10:29 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char	**add_argument(char **args, char *new_arg, int *size)
 void	process_command(t_list **actual, t_token **actual_content,
 		t_command *content)
 {
+	if (check_operator((*actual_content)->str) == OK)
+		return ;
 	content->command = ft_strdup((*actual_content)->str);
 	increment_actual(actual, actual_content);
 }

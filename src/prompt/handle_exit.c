@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:08:07 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 15:54:57 by phwang           ###   ########.fr       */
+/*   Updated: 2024/08/31 15:05:42 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	handle_exit(t_data *minishell, char *prompt, t_list *token)
 {
-	free(prompt);
-	free(token);
+	if (prompt)
+		free(prompt);
 	apocalypse(minishell);
 	exit(0);
 }

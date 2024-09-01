@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 14:53:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/01 23:13:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ typedef struct s_command
 	char		**option;
 	char		**arg;
 	char		*output;
+	char		*input;
 	int			pipe;
 	char		*redirection;
 }				t_command;
