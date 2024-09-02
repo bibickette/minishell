@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 23:13:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 01:51:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
-# define SPECIAL_CHAR_ERR "Minishell Error : Special character\n"
+# define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
+# define SYNTAX_ERR "Minishell Error : Syntax error\n"
 
 /* process */
 # define STATUS_ERR "A process hasn't ended well\n"
@@ -152,8 +153,9 @@ typedef struct s_element
 typedef struct s_file
 {
 	char		*name;
-	int			fd;
 	int			type;
+	int			fd;
+	int			is_open;
 }				t_file;
 
 typedef struct s_builtin

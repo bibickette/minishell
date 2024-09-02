@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/30 18:39:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 00:45:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	take_all_files(t_data *minishell, t_list *token)
 	i = -1;
 	if (!minishell->files || !minishell->files[0].name)
 		return (KO);
-	while (minishell->files[++i].name && i < minishell->nb_files)
+	while (minishell->files[++i].name)
 	{
 		printf("file name : %s\n", minishell->files[i].name);
 		printf("file type : %d\n", minishell->files[i].type);
+		printf("file is open : %d\n", minishell->files[i].is_open);
 	}
 	return (OK);
 }
@@ -88,7 +89,10 @@ int	load_files_type(t_data *minishell, t_list *token)
 			|| ((t_token *)tmp_head->content)->type == OUTFILE_TYPE
 			|| ((t_token *)tmp_head->content)->type == APPEND_FILE_TYPE
 			|| ((t_token *)tmp_head->content)->type == HD_LIMITER_TYPE)
+		{
+			minishell->files[tab].is_open = KO;
 			minishell->files[tab++].type = ((t_token *)tmp_head->content)->type;
+		}
 		if (tmp_head->next == NULL)
 			break ;
 		tmp_head = tmp_head->next;
