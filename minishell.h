@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 02:15:28 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:39:45 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ int				process_char(char **prompt_loop, t_list **token, char *buffer,
 void			print_command(void *content);
 void			make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int				tokenize(char *prompt, t_list **token);
+int				go_next(t_list *actual, t_command *actual_command);
 char			**set_command_list(t_list *token);
 void			add_token(t_list **token, char buffer[BSIZE]);
 void			trim_space(char buffer[BSIZE]);

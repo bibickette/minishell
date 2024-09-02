@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:13:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 15:41:14 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/02 13:43:43 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	free_command(t_command *command)
 		free(command->output);
 	if (command->redirection)
 		free(command->redirection);
+	if (command->entire_command)
+		free(command->entire_command);
 	free(command);
 }
 

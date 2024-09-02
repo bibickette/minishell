@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   set_entire_comamnd_bis.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/01 20:26:33 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 13:31:10 by yantoine         ###   ########.fr       */
+/*   Created: 2024/09/02 13:22:57 by yantoine          #+#    #+#             */
+/*   Updated: 2024/09/02 13:42:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-void	execution(t_data *minishell)
+int	go_next(t_list *actual, t_command *actual_command)
 {
-	printf("execution launch\n");
-}*/
+	actual = actual->next;
+	if (!actual)
+		return (0);
+	else if (actual && actual->content)
+		actual_command = (t_command *)actual->content;
+	return (1);
+}

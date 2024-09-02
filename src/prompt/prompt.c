@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 02:23:52 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:28:18 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	prompt(t_list *token, t_data *minishell)
 			take_all_files(minishell, token);
 			ft_lstiter(token, print_token);
 			minishell->command_list = command_listing(token);
-			set_command_V1000(minishell->command_list);
+			set_entire_command(minishell->command_list);
 			ft_lstiter(minishell->command_list, print_command);
 			free_files_tab(minishell, minishell->files);
 			free_command_list(minishell->command_list);
