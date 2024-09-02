@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:37:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 13:47:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:17:49 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,19 @@ int	set_entire_command(t_list *command_list)
 {
 	t_list			*actual;
 	t_command	*actual_command;
+	int		ret;
 
 	printf("set_entire_command\n");
 	if (command_list)
 	{
 		init_variable(&actual, &actual_command, command_list);
-		while (actual && actual_command)
+		while (actual && actual->content)
 		{
 			actual_command->entire_command = join_command(actual_command);
 			printf("entire_command: %s\n", actual_command->entire_command);
-			if (!go_next(actual, actual_command))
+			ret = go_next(&actual, &actual_command);
+			printf("ret: %d\n", ret);
+			if (ret == 0)
 				break;
 		}
 	}
