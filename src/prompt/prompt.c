@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 01:47:01 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 02:10:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	prompt(t_list *token, t_data *minishell)
 			expand_everything(minishell, token);
 			start_join_token_if_needed(token, prompt, minishell->brut_list);
 			set_token_type(token);
-			if(check_token_operator_order(token, minishell) == OK)
+			if (check_token_operator_order(token, minishell) == OK)
 			{
 				take_all_files(minishell, token);
 				ft_lstiter(token, print_token);
@@ -40,9 +40,8 @@ void	prompt(t_list *token, t_data *minishell)
 				ft_lstiter(minishell->command_list, print_command);
 				printf("la commande s'execute ICI\n");
 				free_files_tab(minishell, minishell->files);
-				free_command_list(minishell->command_list);			
+				free_command_list(minishell->command_list);
 			}
-			
 		}
 		ft_lstclear_custom(&token, free);
 		ft_lstclear_custom(&minishell->brut_list, free);
@@ -52,7 +51,8 @@ void	prompt(t_list *token, t_data *minishell)
 
 /*
 note sur env et export
-si la variable a un =, elle sera integré dans env ET export, sinon seulement dans export
+si la variable a un =, elle sera integré dans env ET export,
+	sinon seulement dans export
 si cest pouet=
 dans export ca fera pouet=''
 et env pouet=

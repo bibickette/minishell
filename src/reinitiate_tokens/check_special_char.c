@@ -6,20 +6,20 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 01:56:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 02:11:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int lf_spechar_list(t_list *token)
+int	lf_spechar_list(t_list *token)
 {
 	t_list	*tmp;
 
 	tmp = token;
 	while (tmp)
 	{
-		if(((t_token *)tmp->content)->quote == N_QUOTE)
+		if (((t_token *)tmp->content)->quote == N_QUOTE)
 			if (check_special_char(((t_token *)tmp->content)->str) == KO)
 				return (KO);
 		if (tmp->next == NULL)

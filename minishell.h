@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 02:01:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 02:10:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ void	set_token_type(t_list *head);
 void	analyze_type(t_token *current, t_token *before);
 void	put_redir_type(t_token *current, t_token *before);
 void	current_is_word(t_token *current, t_token *before);
-int	check_token_operator_order(t_list *token, t_data *minishell);
+int		check_token_operator_order(t_list *token, t_data *minishell);
 
-int lf_spechar_list(t_list *token);
-int	check_special_char(char *prompt);
+int		lf_spechar_list(t_list *token);
+int		check_special_char(char *prompt);
 
 /* dollar expansion */
 char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
