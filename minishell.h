@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 02:10:36 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 17:08:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int		no_environment(t_data *minishell);
 int		load_env(t_data *minishell, char **env);
 int		load_path(t_data *minishell, int flag);
 char	*trim_end(char *path_env);
+int load_original_export(char **env, t_list **real_export);
+
 
 /* prompt */
 void	display_prompt(void);

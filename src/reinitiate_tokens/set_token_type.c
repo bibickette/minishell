@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:01:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 02:10:38 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 18:14:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ void	put_redir_type(t_token *current, t_token *before)
 		if (current->type == WORD_TYPE)
 			current->type = CMD_TYPE;
 		if (is_builtin(current->str) == OK)
+		{
 			current->type = BUILTIN_TYPE;
+			if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0)
+				current->builtin_type = BUILT_W_OPT;
+			if (ft_strncmp(current->str, "env", ft_strlen(current->str)) == 0)
+				current->builtin_type = BUILT_NO_OPT_ARG;
+			else
+				current->builtin_type = BUILT_NO_OPT_ARG;
+		}
 	}
 }
 
@@ -74,7 +82,15 @@ void	current_is_word(t_token *current, t_token *before)
 	{
 		current->type = CMD_TYPE;
 		if (is_builtin(current->str) == OK)
+		{
 			current->type = BUILTIN_TYPE;
+			if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0)
+				current->builtin_type = BUILT_W_OPT;
+			if (ft_strncmp(current->str, "env", ft_strlen(current->str)) == 0)
+				current->builtin_type = BUILT_NO_OPT_ARG;
+			else
+				current->builtin_type = BUILT_NO_OPT_ARG;
+		}
 	}
 	if (current->str[0] == '-')
 	{
@@ -91,6 +107,8 @@ void	current_is_word(t_token *current, t_token *before)
 	else if (current->str[0] == '.')
 		current->type = EXECUTABLE_TYPE;
 	else if (current->index > 0 && (before->type == OPT_TYPE
-			|| before->type == CMD_TYPE))
+			|| before->type == CMD_TYPE || before->type == BUILTIN_TYPE))
+		current->type = ARG_TYPE;
+	else if (current->index > 0 && before->type == ARG_TYPE)
 		current->type = ARG_TYPE;
 }

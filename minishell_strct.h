@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 01:51:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/02 17:40:21 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@
 # define DOLLAR_TYPE 13 // $
 # define EXECUTABLE_TYPE 14
 
+# define BUILT_NO_OPTION 16
+# define BUILT_W_OPT 17
+# define BUILT_NO_OPT_ARG 18
+
 /**********************************************/
 
 /*************************************/
@@ -146,6 +150,7 @@ typedef struct s_element
 
 	char		*str;
 	int			type;
+	int builtin_type;
 	int			quote;
 
 }				t_token;
@@ -163,7 +168,7 @@ typedef struct s_builtin
 	char		**env;
 	char		*pwd;
 	t_list		*export;
-
+	t_list		*real_export;
 }				t_builtin;
 
 typedef struct s_command
