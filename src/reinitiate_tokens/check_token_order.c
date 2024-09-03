@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 18:17:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 13:15:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	check_token_operator_order(t_list *token, t_data *minishell)
 		if ((ft_strncmp(((t_token *)tmp->content)->str, "||", 2) == 0)
 			|| (check_operator(((t_token *)tmp->content)->str) == OK
 				&& tmp->next == NULL)
+			||  (((t_token *)tmp->content)->str[0] == '|' && ((t_token *)tmp->next->content)->str[0] == '|')
 			|| (((t_token *)tmp->content)->index == 0
 				&& ((t_token *)tmp->content)->type == PIPE_TYPE))
 		{
