@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 00:45:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:13:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ int	take_all_files(t_data *minishell, t_list *token)
 	i = -1;
 	if (!minishell->files || !minishell->files[0].name)
 		return (KO);
-	while (minishell->files[++i].name)
-	{
-		printf("file name : %s\n", minishell->files[i].name);
-		printf("file type : %d\n", minishell->files[i].type);
-		printf("file is open : %d\n", minishell->files[i].is_open);
-	}
+	while(++i < minishell->nb_files)
+		open_file(minishell, &minishell->files[i]);
 	return (OK);
 }
 

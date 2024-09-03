@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 17:08:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:38:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,11 @@ int		char_add_back_tab(char ***original_tab, char *to_add);
 int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
+int open_file(t_data *minishell, t_file *file);
+void open_infile(t_file *file);
+void open_outfile(t_file *file);
+void open_append_outfile(t_file *file);
+void close_all_files(t_file *files);
 
 /* Built-in commands */
 int		is_builtin(char *command);
@@ -227,6 +232,11 @@ void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt, t_list *token);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
+
+
+/* temporary */
+void print_all_files(t_file *files);
+
 
 /**********************************************/
 

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 17:32:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:15:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	prompt(t_list *token, t_data *minishell)
 			if (check_token_operator_order(token, minishell) == OK)
 			{
 				take_all_files(minishell, token);
+				print_all_files(minishell->files);
+				close_all_files(minishell->files);
 				ft_lstiter(token, print_token);
 				minishell->command_list = command_listing(token);
 				ft_lstiter(minishell->command_list, print_command);
@@ -48,7 +50,32 @@ void	prompt(t_list *token, t_data *minishell)
 		free(prompt);
 	}
 }
+void print_all_files(t_file *files)
+{
+	int i = -1;
+	if(!files)
+		return;
+	while (files[++i].name)
+	{
+		printf("file name : %s\n", files[i].name);
+		printf("file type : %d\n", files[i].type);
+		printf("file is open : %d\n", files[i].is_open);
+		printf("file fd open : %d\n", files[i].fd);
+	}
 
+}
+
+void close_all_files(t_file *files)
+{
+	int i = -1;
+	if(!files)
+		return;
+	while (files[++i].name)
+	{
+		close_one_fd(files[i].fd);
+		files[i].is_open = KO;
+	}
+}
 /*
 note sur env et export :
 si la variable na pas de = alors elle ne sera pas intégré dans env

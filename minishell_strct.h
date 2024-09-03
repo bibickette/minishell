@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 17:40:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:33:03 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,10 @@
 # define HERE_DOC_MSG "heredoc>"
 # define HERE_DOC ".here_doc"
 # define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
-# define INFILE_ERROR_FD "Couldn't open the infile\n"
+# define INFILE_ERROR_FD "Minishell Error : Couldn't open the infile\n"
+# define OUTFILE_ERROR_FD "Minishell Error : Couldn't open the outfile\n"
+# define FILE_ERR "Minishell Error : Access"
+# define FILE_NOT_EXIST "No such file or directory\n"
 
 /**********************************************/
 
@@ -150,7 +153,7 @@ typedef struct s_element
 
 	char		*str;
 	int			type;
-	int builtin_type;
+	int 		builtin_type;
 	int			quote;
 
 }				t_token;
