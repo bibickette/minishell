@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 17:11:06 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:30:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest)
 	return (get_status_process(minish, minish->last_status, pid, fd_dest));
 }
 
-void	close_one_fd(int fd)
-{
-	if (fd != STDIN_FILENO && fd != STDOUT_FILENO && fd != STDERR_FILENO && fd != KO)
-		close(fd);
-}
 
 void	split_n_path(t_data *minishell, char *cmd_arg, char ***arg, char **path)
 {

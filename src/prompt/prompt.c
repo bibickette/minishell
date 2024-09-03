@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 18:12:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:30:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,7 @@ void	prompt(t_list *token, t_data *minishell)
 		free(prompt);
 	}
 }
-void	print_all_files(t_file *files)
-{
-	int	i;
 
-	i = -1;
-	if (!files)
-		return ;
-	while (files[++i].name)
-	{
-		printf("file name : %s\n", files[i].name);
-		printf("file type : %d\n", files[i].type);
-		printf("file is open : %d\n", files[i].is_open);
-		printf("file fd open : %d\n", files[i].fd);
-	}
-}
-
-void	close_all_files(t_file *files)
-{
-	int	i;
-
-	i = -1;
-	if (!files)
-		return ;
-	while (files[++i].name)
-	{
-		close_one_fd(files[i].fd);
-		files[i].is_open = KO;
-	}
-}
 /*
 note sur env et export :
 si la variable na pas	de = alors elle ne sera pas intégré dans env
