@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 18:11:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:44:06 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		check_token_operator_order(t_list *token, t_data *minishell);
 
 int		lf_spechar_list(t_list *token);
 int		check_special_char(char *prompt);
+int check_token_special_char(t_list *token);
 
 /* dollar expansion */
 char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
