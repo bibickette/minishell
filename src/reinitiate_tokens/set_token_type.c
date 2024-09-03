@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:01:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 18:14:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:23:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,19 @@ void	put_redir_type(t_token *current, t_token *before)
 			else
 				current->builtin_type = BUILT_NO_OPT_ARG;
 		}
+	}
+	if (check_operator(current->str) == OK)
+	{
+		if (current->str[0] == '|')
+			current->type = PIPE_TYPE;
+		else if (ft_strcmp(current->str, "<<") == 0)
+			current->type = HERE_DOC_TYPE;
+		else if (ft_strcmp(current->str, ">>") == 0)
+			current->type = HD_APPEND_TYPE;
+		else if (ft_strcmp(current->str, ">") == 0)
+			current->type = OUT_REDIR_TYPE;
+		else if (ft_strcmp(current->str, "<") == 0)
+			current->type = IN_REDIR_TYPE;	
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 01:27:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:28:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	free_files_tab(t_data *minishell, t_file *files)
 	i = -1;
 	if (!files || !minishell->nb_files)
 		return ;
-	while (minishell->files[++i].name && i < minishell->nb_files)
+	while (i < minishell->nb_files && minishell->files[++i].name)
 	{
 		free(files[i].name);
 		files[i].name = 0;

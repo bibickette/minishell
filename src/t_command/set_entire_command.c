@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   set_entire_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:37:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 18:17:49 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:12:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	init_variable(t_list **actual, \
-				t_command **actual_command, t_list *command_list)
+static int	init_variable(t_list **actual, t_command **actual_command,
+		t_list *command_list)
 {
 	printf("init_variable\n");
 	*actual = command_list;
@@ -48,7 +48,7 @@ static char	*join_c(char *buffer, char *string)
 static char	*join_double_tab(char *buffer, char **d_tab)
 {
 	char	*join;
-	int	i;
+	int		i;
 
 	printf("join_double_tab\n");
 	if (!buffer && !d_tab)
@@ -85,7 +85,7 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 			buffer = join;
 			printf("buffer: %s\n", buffer);
 		}
-		return(buffer);
+		return (buffer);
 	}
 	else
 		return (NULL);
@@ -107,9 +107,9 @@ static char	*join_command(t_command *actual_command)
 
 int	set_entire_command(t_list *command_list)
 {
-	t_list			*actual;
+	t_list		*actual;
 	t_command	*actual_command;
-	int		ret;
+	int			ret;
 
 	printf("set_entire_command\n");
 	if (command_list)
@@ -122,7 +122,7 @@ int	set_entire_command(t_list *command_list)
 			ret = go_next(&actual, &actual_command);
 			printf("ret: %d\n", ret);
 			if (ret == 0)
-				break;
+				break ;
 		}
 	}
 	return (1);

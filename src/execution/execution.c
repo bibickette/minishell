@@ -6,13 +6,13 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:26:33 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 17:58:52 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:41:24 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exec_redirect(int (*exec_one_cmd_redirect)(t_data *, char *, int ), \
+static int	exec_redirect_ouput(int (*exec_one_cmd_redirect)(t_data *, char *, int ), \
 				t_data *minishell, t_command *command)
 {
 	int	ret;
@@ -22,6 +22,20 @@ static int	exec_redirect(int (*exec_one_cmd_redirect)(t_data *, char *, int ), \
 	fd = get_fd(command->output);
 	ret = exec_one_cmd_redirect(minishell, command->entire_command, fd);
 	printf("ret = %d\n", ret);
+	if (fd >= 0)
+		close(fd);
+	return (ret);
+}
+
+static int	exec_redirect_input(int (*exec_one_cmd_redirect)(t_data *, char *, int ), \
+				t_data *minishell, t_command *command)
+{
+	int	ret;
+	int	fd;
+
+	fd = 0;
+	fd = get_fd(command->input);
+	ret = exec_one_cmd_redirect(minishell, command->entire_command, fd);
 	if (fd >= 0)
 		close(fd);
 	return (ret);
