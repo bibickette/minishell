@@ -6,13 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 18:30:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 19:53:03 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest)
+int	execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest, int fd_in)
 {
 	int		pid;
 	char	**arg;
@@ -26,7 +26,7 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest)
 	if (pid == 0)
 	{
 		split_n_path(minish, cmd_arg, &arg, &path);
-		if (redirection_dup(STDIN_FILENO, fd_dest) != OK)
+		if (redirection_dup(fd_in, fd_dest) != OK)
 		{
 			free_double_char(arg);
 			free(path);

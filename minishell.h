@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 19:07:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 20:00:25 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int		check_token_operator_order(t_list *token, t_data *minishell);
 int		lf_spechar_list(t_list *token);
 int		check_special_char(char *prompt);
 
-
 /* dollar expansion */
 char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
@@ -181,7 +180,7 @@ void	unset_cmd_check_export(t_builtin *builtins, char *var);
 int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
 int		redirection_dup(int fd_in, int fd_out);
-int		execve_one_cmd(t_data *minishell, char *cmd_path, int fd_dest);
+int		execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest, int fd_in);
 void	execve_error(t_data *minishell, char *path, char **arg, int fd_dest);
 void	execution(t_data *minishell);
 int		get_status_process(t_data *minishell, int status, pid_t pid,
