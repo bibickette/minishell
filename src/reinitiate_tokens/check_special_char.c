@@ -6,13 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 02:11:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 22:01:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	lf_spechar_list(t_list *token)
+int	lf_spechar_list(t_data *minishell, t_list *token)
 {
 	t_list	*tmp;
 
@@ -20,8 +20,13 @@ int	lf_spechar_list(t_list *token)
 	while (tmp)
 	{
 		if (((t_token *)tmp->content)->quote == N_QUOTE)
+		{
 			if (check_special_char(((t_token *)tmp->content)->str) == KO)
+			{
+				minishell->last_status = 2;
 				return (KO);
+			}
+		}
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;

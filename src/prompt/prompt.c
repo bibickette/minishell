@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 19:16:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 22:00:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	prompt(t_list *token, t_data *minishell)
 		{
 			dupplicate_list(token, &minishell->brut_list);
 			expand_everything(minishell, token);
-			if (lf_spechar_list(token) == OK)
+			if (lf_spechar_list(minishell, token) == OK)
 			{
 				start_join_token_if_needed(token, prompt, minishell->brut_list);
 				set_token_type(token);
 				if (check_token_operator_order(token, minishell) == OK)
 				{
 					take_all_files(minishell, token);
-					if(minishell->nb_files > 0)
+					if (minishell->nb_files > 0)
 					{
 						print_all_files(minishell->files);
 						close_all_files(minishell->files);

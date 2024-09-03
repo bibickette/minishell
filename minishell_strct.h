@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 18:11:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 21:56:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 # define SYNTAX_ERR "Minishell Error : Syntax error\n"
+# define BUILTIN_SYNTAX_ERR "Minishell Error : Builtin doesn't accept option/argument\n"
 
 /* process */
 # define STATUS_ERR "A process hasn't ended well\n"

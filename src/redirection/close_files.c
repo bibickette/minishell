@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:29:53 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 18:55:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 22:01:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	close_all_files(t_file *files)
 
 void	close_one_fd(int fd)
 {
-	if (fd != STDIN_FILENO && fd != STDOUT_FILENO && fd != STDERR_FILENO && fd != KO)
+	if (fd != STDIN_FILENO && fd != STDOUT_FILENO && fd != STDERR_FILENO
+		&& fd != KO)
 		close(fd);
 }
 

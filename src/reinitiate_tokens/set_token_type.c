@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:01:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 19:40:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 22:18:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,9 @@ void	put_redir_type(t_token *current, t_token *before)
 	{
 		if (current->type == WORD_TYPE)
 			current->type = CMD_TYPE;
-		if (is_builtin(current->str) == OK)
-		{
-			current->type = BUILTIN_TYPE;
-			if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0)
-				current->builtin_type = BUILT_W_OPT;
-			if (ft_strncmp(current->str, "env", ft_strlen(current->str)) == 0)
-				current->builtin_type = BUILT_NO_OPT_ARG;
-			else
-				current->builtin_type = BUILT_NO_OPTION;
-		}
+		set_builtin_type(current);
 	}
-	if (check_operator(current->str) == OK)
-	{
-		if (current->str[0] == '|')
-			current->type = PIPE_TYPE;
-		else if (ft_strcmp(current->str, "<<") == 0)
-			current->type = HERE_DOC_TYPE;
-		else if (ft_strcmp(current->str, ">>") == 0)
-			current->type = HD_APPEND_TYPE;
-		else if (ft_strcmp(current->str, ">") == 0)
-			current->type = OUT_REDIR_TYPE;
-		else if (ft_strcmp(current->str, "<") == 0)
-			current->type = IN_REDIR_TYPE;	
-	}
+	reset_operator_type(current);
 }
 
 void	current_is_word(t_token *current, t_token *before)
@@ -94,16 +73,7 @@ void	current_is_word(t_token *current, t_token *before)
 	if (current->index == 0)
 	{
 		current->type = CMD_TYPE;
-		if (is_builtin(current->str) == OK)
-		{
-			current->type = BUILTIN_TYPE;
-			if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0)
-				current->builtin_type = BUILT_W_OPT;
-			if (ft_strncmp(current->str, "env", ft_strlen(current->str)) == 0)
-				current->builtin_type = BUILT_NO_OPT_ARG;
-			else
-				current->builtin_type = BUILT_NO_OPTION;
-		}
+		set_builtin_type(current);
 	}
 	if (current->str[0] == '-')
 	{
@@ -121,7 +91,7 @@ void	current_is_word(t_token *current, t_token *before)
 		current->type = EXECUTABLE_TYPE;
 	else if (current->index > 0 && (before->type == OPT_TYPE
 			|| before->type == CMD_TYPE || before->type == BUILTIN_TYPE
-			||  before->type == ARG_TYPE))
+			|| before->type == ARG_TYPE))
 		current->type = ARG_TYPE;
 	else if (current->index > 0 && current->type == WORD_TYPE)
 		current->type = CMD_TYPE;
