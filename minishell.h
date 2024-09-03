@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 18:17:16 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:39:50 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,6 +335,7 @@ void			unset_cmd(t_builtin *builtins, char *var);
 void			unset_cmd_check_export(t_builtin *builtins, char *var);
 
 /* Execution */
+int				get_fd(char *path);
 char			*find_path(char *cmd, char **path);
 int				redirection_dup(int fd_in, int fd_out);
 int				execve_one_cmd(t_data *minishell, char *cmd_path, int fd_dest);

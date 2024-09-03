@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   get_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/01 20:26:33 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 19:53:22 by yantoine         ###   ########.fr       */
+/*   Created: 2024/09/02 19:30:18 by yantoine          #+#    #+#             */
+/*   Updated: 2024/09/02 20:05:50 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(t_data *minishell)
+int	get_fd(char *path)
 {
-	t_command	*command;
-	int		fd;
+	int	fd;
 
-	fd = 0;
-	command = (t_command *)minishell->command_list->content;
-	if (command->output)
-	{
-		fd = get_fd(command->output);
-		execve_one_cmd(minishell, (char *)command->entire_command, fd);
-	}
+	fd = open(path, O_CREAT | O_TRUNC);
+	if (fd == -1)
+		printf("bad fd file\n");
 	else
-		execve_one_cmd(minishell, (char *)command->entire_command, 1);
-	if (fd != 0)
-		close(fd);
+		printf("GOCHA\n");
+	return (fd);
 }

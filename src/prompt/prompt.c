@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 19:05:44 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:58:26 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void	prompt(t_list *token, t_data *minishell)
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
-		if (!prompt || ft_strcmp(prompt, "exit") == 0)
+		if (ft_strcmp(prompt, "exit") == 0)
 			handle_exit(minishell, prompt, token);
 		else if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
-		else if (tokenize(prompt, &token) != KO)
+		else if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
 		{
+			free(prompt);
 			expand_everything(minishell, token);
 			join_token_if_needed(token, prompt);
 			set_token_type(token);
@@ -41,7 +42,6 @@ void	prompt(t_list *token, t_data *minishell)
 			free_command_list(minishell->command_list);
 		}
 		ft_lstclear_custom(&token, free);
-		free(prompt);
 	}
 }
 void	join_token_if_needed(t_list *token, char *prompt)
