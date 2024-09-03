@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 19:30:18 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 20:05:50 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:20:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	get_fd(char *path)
 {
 	int	fd;
 
-	fd = open(path, O_CREAT | O_TRUNC);
+	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		printf("bad fd file\n");
+		printf("erreur ouverture fichier\n");
 	else
 		printf("GOCHA\n");
 	return (fd);
