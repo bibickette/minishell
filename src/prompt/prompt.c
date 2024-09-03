@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 17:17:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 17:48:39 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	prompt(t_list *token, t_data *minishell)
 	{
 		prompt = get_prompt(&minishell);
 		if (ft_strcmp(prompt, "exit") == 0)
-			handle_exit(minishell, prompt, token);
+			handle_exit(minishell, prompt);
 		else if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
 		else if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
@@ -42,6 +42,7 @@ void	prompt(t_list *token, t_data *minishell)
 				set_entire_command(minishell->command_list);
 				ft_lstiter(minishell->command_list, print_command);
 				printf("la commande s'execute ICI\n");
+				execution(minishell);
 				free_files_tab(minishell, minishell->files);
 				free_command_list(minishell->command_list);
 			}

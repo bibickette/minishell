@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 17:14:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 17:46:56 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void	free_lists(t_data *minishell);
 void	free_double_char(char **array);
 void	error_exit(const char *msg);
 void	handle_error(int error_code, char *prompt);
-void	handle_exit(t_data *minishell, char *prompt, t_list *token);
+void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
 
