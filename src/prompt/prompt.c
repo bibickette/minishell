@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 19:02:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 19:16:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	prompt(t_list *token, t_data *minishell)
 		{
 			dupplicate_list(token, &minishell->brut_list);
 			expand_everything(minishell, token);
-			// if(check_token_special_char(token) == OK)
-			// {
+			if (lf_spechar_list(token) == OK)
+			{
 				start_join_token_if_needed(token, prompt, minishell->brut_list);
 				set_token_type(token);
 				if (check_token_operator_order(token, minishell) == OK)
@@ -51,28 +51,12 @@ void	prompt(t_list *token, t_data *minishell)
 					free_command_list(minishell->command_list);
 					minishell->nb_files = 0;
 				}
-			// }
+			}
 		}
 		ft_lstclear_custom(&token, free);
 		ft_lstclear_custom(&minishell->brut_list, free);
 		free(prompt);
 	}
-}
-
-int check_token_special_char(t_list *token)
-{
-	t_list *tmp;
-	tmp = token;
-	while(tmp)
-	{
-		if(((t_token *)tmp->content)->quote == N_QUOTE)
-			if (check_special_char(((t_token *)tmp->content)->str) == KO)
-				return (KO);
-		if(tmp->next == NULL)
-			break;
-		tmp = tmp->next;
-	}
-	return (OK);
 }
 
 /*
