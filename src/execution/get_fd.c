@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   get_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/01 22:32:34 by yantoine         ###   ########.fr       */
+/*   Created: 2024/09/02 19:30:18 by yantoine          #+#    #+#             */
+/*   Updated: 2024/09/03 15:20:57 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+int	get_fd(char *path)
 {
-	void	*new_ptr;
+	int	fd;
 
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		printf("erreur ouverture fichier\n");
+	else
+		printf("GOCHA\n");
+	return (fd);
 }

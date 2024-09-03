@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   nb_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/01 22:32:34 by yantoine         ###   ########.fr       */
+/*   Created: 2023/09/17 14:55:09 by phwang            #+#    #+#             */
+/*   Updated: 2024/03/16 20:36:06 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../libft.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+int	nb_sqrt(int nb)
 {
-	void	*new_ptr;
+	int	i;
 
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
+	i = 1;
+	if (nb < 0)
+		return (0);
+	while (i <= 46340)
 	{
-		free(ptr);
-		return (NULL);
+		if (i * i == nb)
+			return (i);
+		i++;
 	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	return (0);
 }
+/*int main()
+{
+	int nb = 46340;
+	__builtin_printf("%d", ft_sqrt(nb));
+}*/

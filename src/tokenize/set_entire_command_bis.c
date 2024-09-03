@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   set_entire_comamnd_bis.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/01 22:32:34 by yantoine         ###   ########.fr       */
+/*   Created: 2024/09/02 13:22:57 by yantoine          #+#    #+#             */
+/*   Updated: 2024/09/02 18:17:35 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+int	go_next(t_list **actual, t_command **actual_command)
 {
-	void	*new_ptr;
-
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
+	*actual = (*actual)->next;
+	if (!actual)
+		return (0);
+	else if (*actual && (*actual)->content)
+		*actual_command = (t_command *)(*actual)->content;
+	return (1);
 }

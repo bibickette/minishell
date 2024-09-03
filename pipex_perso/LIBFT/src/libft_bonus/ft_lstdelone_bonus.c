@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 14:55:25 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/01 22:32:34 by yantoine         ###   ########.fr       */
+/*   Created: 2023/11/22 14:09:59 by phwang            #+#    #+#             */
+/*   Updated: 2024/03/16 20:25:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../libft.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	void	*new_ptr;
-
-	if (!ptr)
-		return (malloc(size));
-	new_ptr = malloc(size);
-	if (!new_ptr)
+	if (lst)
 	{
-		free(ptr);
-		return (NULL);
+		del(lst->content);
+		free(lst);
 	}
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
 }

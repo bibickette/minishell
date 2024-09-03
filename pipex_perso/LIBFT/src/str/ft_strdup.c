@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 18:56:55 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 21:35:06 by hexplor          ###   ########.fr       */
+/*   Created: 2023/11/10 15:51:27 by phwang            #+#    #+#             */
+/*   Updated: 2024/03/16 20:19:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strdup(const char *s)
 {
-	char	*newstr;
+	char	*sdup;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	if (!s1 || !s2)
+	if (!s)
 		return (NULL);
-	newstr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!newstr)
+	sdup = (char *) malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!(sdup))
 		return (NULL);
-	while (s1[i])
+	while (s[i])
 	{
-		newstr[i] = s1[i];
+		sdup[i] = s[i];
 		i++;
 	}
-	while (s2[j])
-	{
-		newstr[i + j] = s2[j];
-		j++;
-	}
-	newstr[i + j] = '\0';
-	return (newstr);
+	sdup[i] = '\0';
+	return (sdup);
 }
