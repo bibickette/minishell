@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 17:17:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:12:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	prompt(t_list *token, t_data *minishell)
 		free(prompt);
 	}
 }
-void print_all_files(t_file *files)
+void	print_all_files(t_file *files)
 {
-	int i = -1;
-	if(!files)
-		return;
+	int	i;
+
+	i = -1;
+	if (!files)
+		return ;
 	while (files[++i].name)
 	{
 		printf("file name : %s\n", files[i].name);
@@ -63,14 +65,15 @@ void print_all_files(t_file *files)
 		printf("file is open : %d\n", files[i].is_open);
 		printf("file fd open : %d\n", files[i].fd);
 	}
-
 }
 
-void close_all_files(t_file *files)
+void	close_all_files(t_file *files)
 {
-	int i = -1;
-	if(!files)
-		return;
+	int	i;
+
+	i = -1;
+	if (!files)
+		return ;
 	while (files[++i].name)
 	{
 		close_one_fd(files[i].fd);
@@ -79,11 +82,11 @@ void close_all_files(t_file *files)
 }
 /*
 note sur env et export :
-si la variable na pas de = alors elle ne sera pas intégré dans env
+si la variable na pas	de = alors elle ne sera pas intégré dans env
 elle le sera seulement dans export
 export display "declare -x " avant chaque case de lenv
 
-si la variable a un = et rien apres alors elle est export dans env et export
+si la variable a		un = et rien apres alors elle est export dans env et export
 elle est export dans export avec var=""
 
 si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
