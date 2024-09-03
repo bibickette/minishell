@@ -6,12 +6,13 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:26:33 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 16:22:05 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:50:19 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static int	exec_redirect(int (*exec_one_cmd_redirect)(t_data, char *, int ), \
 				t_data *minishell, char *cmd_arg, char *output)
 {
@@ -35,3 +36,4 @@ void	execution(t_data *minishell)
 	if (fd != 0)
 		close(fd);
 }
+*/
