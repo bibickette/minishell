@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 15:55:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:29:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 # define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
-
+# define ADD_BACK_TAB_ERR "Minishell Error : Malloc in function char_add_back_tab\n"
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"
 # define HERE_DOC ".here_doc"
@@ -171,7 +171,7 @@ typedef struct s_builtin
 	char		**env;
 	char		*pwd;
 	t_list		*export;
-	t_list		*real_export;
+	char		**real_export;
 }				t_builtin;
 
 typedef struct s_command

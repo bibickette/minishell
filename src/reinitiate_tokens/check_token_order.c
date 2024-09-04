@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 21:59:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:37:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int	check_every_condition(t_list *tmp)
 
 int	check_builtin_condition(t_list *tmp)
 {
-	if ((((t_token *)tmp->content)->type == BUILTIN_TYPE
+	if (tmp->next && ((((t_token *)tmp->content)->type == BUILTIN_TYPE
 			&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPTION
 				|| ((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG)
 			&& ((t_token *)tmp->next->content)->type == OPT_TYPE)
 		|| (((t_token *)tmp->content)->type == BUILTIN_TYPE
 			&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG
-				&& ((t_token *)tmp->next->content)->type == ARG_TYPE)))
+				&& ((t_token *)tmp->next->content)->type == ARG_TYPE))))
 		return (ft_putstr_fd(BUILTIN_SYNTAX_ERR, STDERR_FILENO), KO);
 	return (OK);
 }

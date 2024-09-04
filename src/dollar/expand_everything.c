@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:43:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:47:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ void	expand_everything(t_data *minishell, t_list *token)
 		{
 			if (has_dollar(((t_token *)tmp_head->content)->str) == OK)
 				start_expanding(minishell, &dollar_tab, tmp_head);
+		}
+		if(((t_token *)tmp_head->content)->quote == N_QUOTE)
+		{
+			char *tmp;
+			tmp = ft_strdup(((t_token *)tmp_head->content)->str);
+			free(((t_token *)tmp_head->content)->str);
+			((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");
+			free(tmp);
 		}
 		if (tmp_head->next == NULL)
 			break ;

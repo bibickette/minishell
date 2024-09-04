@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 17:26:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:48:18 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int	load_env(t_data *minishell, char **env)
 			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	}
 	minishell->builtins->env[i] = 0;
+	i = -1;
+	while (++i < env_size)
+		if(char_add_back_tab(&minishell->builtins->real_export, env[i]) == KO)
+			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
 	return (load_path(minishell, 1));
 }
 
