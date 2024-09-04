@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 23:48:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/05 01:17:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		check_builtin_condition(t_list *tmp);
 
 int		lf_spechar_list(t_data *minishell, t_list *token);
 int		check_special_char(char *prompt);
+int		check_more_special_char(char c);
 
 /* dollar expansion */
 char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
@@ -169,8 +170,11 @@ void	close_all_files(t_file *files);
 /* Built-in commands */
 int		is_builtin(char *command);
 /* built-in export*/
-int		export_cmd(char *var, t_data *minishell);
-int		export_replacement(t_data *minishell, char **var);
+int		export_cmd_w_arg(char *var, t_data *minishell);
+int		export_replacement(char ***env_or_export, char **var);
+int		check_export_format(char *var, t_data *minishell);
+int		has_equal(char *var);
+
 /* builtin pwd*/
 void	pwd_cmd(t_builtin *builtins);
 /* built-in env */

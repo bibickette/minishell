@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 22:01:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/05 00:57:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,24 @@ int	check_special_char(char *prompt)
 	i = -1;
 	while (prompt[++i])
 	{
-		if (prompt[i] == '~' || prompt[i] == '&' || prompt[i] == '`'
+		if (prompt[i] == '~' || prompt[i] == '*' || prompt[i] == ';'
+			|| prompt[i] == '?' || prompt[i] == '&' || prompt[i] == '`'
+			|| prompt[i] == '(' || prompt[i] == ')' || prompt[i] == '#'
 			|| prompt[i] == '[' || prompt[i] == ']' || prompt[i] == '{'
-			|| prompt[i] == '}' || prompt[i] == '*' || prompt[i] == ';'
-			|| prompt[i] == ':' || prompt[i] == '\\' || prompt[i] == '('
-			|| prompt[i] == ')' || prompt[i] == '?' || prompt[i] == '@'
-			|| prompt[i] == '#' || prompt[i] == '%' || prompt[i] == '^')
+			|| prompt[i] == '}' || prompt[i] == ':' || prompt[i] == '\\')
 			return (ft_putstr_fd(SPECIAL_CHAR_ERR, STDERR_FILENO), KO);
 	}
+	return (OK);
+}
+
+int	check_more_special_char(char c)
+{
+	if (c == ' ' || c == '+' || c == '-' || c == '?' || c == 34 || c == 39
+		|| c == '!' || c == '@' || c == '#' || c == '%' || c == '^' || c == '&'
+		|| c == '*' || c == '(' || c == ')' || c == '{' || c == '}' || c == '['
+		|| c == ']' || c == '\\' || c == '.' || c == ',' || c == ';' || c == ':'
+		|| c == '<' || c == '>' || c == '~' || c == '/' || c == '`' || c == '|'
+		|| c == '$' || c == '\t')
+		return (KO);
 	return (OK);
 }

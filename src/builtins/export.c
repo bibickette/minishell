@@ -6,41 +6,66 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 23:48:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/05 01:17:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	export_cmd(char *var, t_data *minishell)
+int	export_cmd_w_arg(char *var, t_data *minishell)
+{
+	if (check_export_format(var, minishell) == KO)
+		return (KO);
+	if (has_equal(var) == OK)
+	{
+		if (export_replacement(&minishell->builtins->env, &var) == OK)
+			minishell->last_status = 0;
+		else if (char_add_back_tab(&minishell->builtins->env, var) == KO)
+		{
+			minishell->last_status = 1;
+			return (KO);
+		}
+	}
+	/*
+	else
+		import dans export tab
+	*/
+	return (OK);
+}
+
+/*
+note sur env et export :
+si la variable na pas	de = alors elle ne sera pas intégré dans env
+elle le sera seulement dans export
+export display "declare -x " avant chaque case de lenv
+
+si la variable a		un = et rien apres alors elle est export dans env et export
+elle est export dans export avec var=""
+
+si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
+
+*/
+
+int	check_export_format(char *var, t_data *minishell)
 {
 	int	i;
 	int	y;
 
-	// t_list	*new_export;
-	// new_export = NULL;
 	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
+	if (var[0] == '=' || (var[0] >= '0' && var[0] <= '9'))
+		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
 	y = -1;
 	while (++y < i)
-		if (var[y] == ' ')
+		if (check_more_special_char(var[y]) == KO)
 			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
-	if (export_replacement(minishell, &var) == OK)
-		return (OK);
-	else
-	{
-		char_add_back_tab(&minishell->builtins->env, var);
-		// new_export = ft_lstnew_libft(ft_strdup(var));
-		// if (!new_export)
-		// 	return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
-		// ft_lstadd_back_libft(export_head, new_export);
-	}
+	minishell->last_status = 1;
 	return (OK);
 }
 
-int	export_replacement(t_data *minishell, char **var)
+int	export_replacement(char ***env_or_export, char **var)
 {
 	char	*tmp_var;
 	int		i;
@@ -55,15 +80,14 @@ int	export_replacement(t_data *minishell, char **var)
 	if (ft_strlen(tmp_var) != (size_t)i)
 		tmp_var[i + 1] = '\0';
 	i = -1;
-	while (minishell->builtins->env[++i])
+	while ((*env_or_export)[++i])
 	{
-		if (ft_strncmp(minishell->builtins->env[i], tmp_var,
-				ft_strlen(tmp_var)) == 0)
+		if (ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
 		{
-			free(minishell->builtins->env[i]);
-			minishell->builtins->env[i] = ft_strdup(*var);
+			free((*env_or_export)[i]);
+			(*env_or_export)[i] = ft_strdup(*var);
 			free(tmp_var);
-			if (!minishell->builtins->env[i])
+			if (!(*env_or_export)[i])
 				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 			return (OK);
 		}
@@ -117,15 +141,13 @@ export_replacement_list : check si la variable a export existe deja
 
 */
 
-/*
-note sur env et export :
-si la variable na pas	de = alors elle ne sera pas intégré dans env
-elle le sera seulement dans export
-export display "declare -x " avant chaque case de lenv
+int	has_equal(char *var)
+{
+	int	i;
 
-si la variable a		un = et rien apres alors elle est export dans env et export
-elle est export dans export avec var=""
-
-si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
-
-*/
+	i = -1;
+	while (var[++i])
+		if (var[i] == '=')
+			return (OK);
+	return (KO);
+}
