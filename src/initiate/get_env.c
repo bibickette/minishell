@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 18:48:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:49:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,19 @@ int	no_environment(t_data *minishell)
 
 int	load_env(t_data *minishell, char **env)
 {
-	int		env_size;
-	int		i;
+	int	env_size;
+	int	i;
 
 	env_size = 0;
 	while (env[env_size])
 		env_size++;
-	minishell->builtins->env = ft_calloc(env_size + 1, sizeof(char *));
-	if (!minishell->builtins->env)
-		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	i = -1;
 	while (++i < env_size)
-	{
-		minishell->builtins->env[i] = ft_strdup(env[i]);
-		if (!minishell->builtins->env[i])
-			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-	}
-	minishell->builtins->env[i] = 0;
+		if (char_add_back_tab(&minishell->builtins->env, env[i]) == KO)
+			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
 	i = -1;
 	while (++i < env_size)
-		if(char_add_back_tab(&minishell->builtins->real_export, env[i]) == KO)
+		if (char_add_back_tab(&minishell->builtins->export, env[i]) == KO)
 			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
 	return (load_path(minishell, 1));
 }

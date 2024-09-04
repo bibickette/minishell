@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 22:30:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:49:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ void	expand_everything(t_data *minishell, t_list *token)
 {
 	t_list	*tmp_head;
 	char	**dollar_tab;
+	char	*str_token_before;
+	char	*tmp;
 
 	tmp_head = token;
-	char *str_token_before;
 	str_token_before = NULL;
 	while (tmp_head)
 	{
-		if ((((t_token *)tmp_head->content)->quote != S_QUOTE) &&
-		str_token_before && ft_strcmp(str_token_before, "<<") != 0)
+		if ((((t_token *)tmp_head->content)->quote != S_QUOTE)
+			&& (!str_token_before || (str_token_before
+					&& ft_strcmp(str_token_before, "<<") != 0)))
 			if (has_dollar(((t_token *)tmp_head->content)->str) == OK)
 				start_expanding(minishell, &dollar_tab, tmp_head);
-		if(((t_token *)tmp_head->content)->quote == N_QUOTE)
+		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
 		{
-			char *tmp;
 			tmp = ft_strdup(((t_token *)tmp_head->content)->str);
 			free(((t_token *)tmp_head->content)->str);
 			((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");

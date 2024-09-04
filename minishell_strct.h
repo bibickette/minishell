@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 22:58:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:48:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@
 # define IN_REDIR_TYPE 8  // <
 # define OUT_REDIR_TYPE 9 // >
 /* heredoc */
-# define HERE_DOC_TYPE 10    // <<
+# define HERE_DOC_TYPE 10   // <<
 # define HD_LIMITER_TYPE 11 // EOF
 # define HD_APPEND_TYPE 12  // >>
 # define APPEND_FILE_TYPE 13
 /* other */
-# define PIPE_TYPE 14   // |
+# define PIPE_TYPE 14 // |
 
 # define BUILT_NO_OPTION 16
 # define BUILT_W_OPT 17
@@ -169,8 +169,7 @@ typedef struct s_builtin
 {
 	char		**env;
 	char		*pwd;
-	t_list		*export;
-	char		**real_export;
+	char		**export;
 }				t_builtin;
 
 typedef struct s_command

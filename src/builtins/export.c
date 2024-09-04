@@ -6,19 +6,19 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:44:01 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:48:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	export_cmd(t_list **export_head, char *var, t_data *minishell)
+int	export_cmd(char *var, t_data *minishell)
 {
-	t_list	*new_export;
-	int		i;
-	int		y;
+	int	i;
+	int	y;
 
-	new_export = NULL;
+	// t_list	*new_export;
+	// new_export = NULL;
 	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
@@ -27,19 +27,20 @@ int	export_cmd(t_list **export_head, char *var, t_data *minishell)
 	while (++y < i)
 		if (var[y] == ' ')
 			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
-	if (export_replacement(minishell, minishell->builtins->export, &var) == OK)
+	if (export_replacement(minishell, &var) == OK)
 		return (OK);
 	else
 	{
-		new_export = ft_lstnew_libft(ft_strdup(var));
-		if (!new_export)
-			return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
-		ft_lstadd_back_libft(export_head, new_export);
+		char_add_back_tab(&minishell->builtins->env, var);
+		// new_export = ft_lstnew_libft(ft_strdup(var));
+		// if (!new_export)
+		// 	return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
+		// ft_lstadd_back_libft(export_head, new_export);
 	}
 	return (OK);
 }
 
-int	export_replacement(t_data *minishell, t_list *export_head, char **var)
+int	export_replacement(t_data *minishell, char **var)
 {
 	char	*tmp_var;
 	int		i;
@@ -60,46 +61,18 @@ int	export_replacement(t_data *minishell, t_list *export_head, char **var)
 				ft_strlen(tmp_var)) == 0)
 		{
 			free(minishell->builtins->env[i]);
-			minishell->builtins->env[i] = *var;
+			minishell->builtins->env[i] = ft_strdup(*var);
 			free(tmp_var);
 			if (!minishell->builtins->env[i])
 				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 			return (OK);
 		}
 	}
-	return (export_replacement_list(export_head, var, tmp_var));
-}
-/*
-si la variable a export existe deja, remplace par la nouvelle valeur
-*/
-
-int	export_replacement_list(t_list *export_head, char **var, char *tmp_var)
-{
-	t_list	*tmp;
-
-	tmp = export_head;
-	while (tmp)
-	{
-		if (ft_strncmp((char *)tmp->content, tmp_var, ft_strlen(tmp_var)) == 0)
-		{
-			free(((t_token *)tmp->content)->str);
-			((t_token *)tmp->content)->str = *var;
-			return (free(tmp_var), OK);
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
 	free(tmp_var);
 	return (KO);
 }
 /*
-si la variable a export existe deja,
-	remplace par la nouvelle valeur dans la liste export
-*/
-
-/*
-build lexoport de single quote
+si la variable a export existe deja, remplace par la nouvelle valeur
 */
 
 /*
@@ -141,5 +114,18 @@ export_replacement : check si la variable a export existe deja
 	et la remplace par la nouvelle valeur
 export_replacement_list : check si la variable a export existe deja
 	et la remplace par la nouvelle valeur dans la liste export
+
+*/
+
+/*
+note sur env et export :
+si la variable na pas	de = alors elle ne sera pas intégré dans env
+elle le sera seulement dans export
+export display "declare -x " avant chaque case de lenv
+
+si la variable a		un = et rien apres alors elle est export dans env et export
+elle est export dans export avec var=""
+
+si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
 
 */

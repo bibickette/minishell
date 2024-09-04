@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 23:01:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:48:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		no_environment(t_data *minishell);
 int		load_env(t_data *minishell, char **env);
 int		load_path(t_data *minishell, int flag);
 char	*trim_end(char *path_env);
-int		load_original_export(char **env, t_list **real_export);
 
 /* prompt */
 void	display_prompt(void);
@@ -58,7 +57,7 @@ char	*get_prompt(t_data **minishell);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void *));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 void	ft_lstclear_custom_bis(t_list *head);
-void first_token_is_exit(char *prompt, t_data *minishell, t_list *token);
+void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token);
 
 /* tokenization */
 int		process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
@@ -101,7 +100,7 @@ void	put_redir_type(t_token *current, t_token *before);
 void	current_is_word(t_token *current, t_token *before);
 void	set_builtin_type(t_token *current);
 void	reset_operator_type(t_token *current);
-void 	reset_cmd_pipe(t_list *head);
+void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
@@ -170,19 +169,16 @@ void	close_all_files(t_file *files);
 /* Built-in commands */
 int		is_builtin(char *command);
 /* built-in export*/
-int		export_cmd(t_list **export_head, char *var, t_data *minishell);
-int		export_replacement(t_data *minishell, t_list *export_head, char **var);
-int		export_replacement_list(t_list *export_head, char **var, char *tmp_var);
+int		export_cmd(char *var, t_data *minishell);
+int		export_replacement(t_data *minishell, char **var);
 /* builtin pwd*/
 void	pwd_cmd(t_builtin *builtins);
 /* built-in env */
-void	env_cmd(char **env, t_list *export);
-void	env_cmd_check_export(t_list *export);
+void	env_cmd(char **env);
 /* built-in echo */
 int		echo_cmd(t_list *token, int fd_dest);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
-void	unset_cmd_check_export(t_builtin *builtins, char *var);
 
 /* Execution */
 int		get_fd(char *path);
