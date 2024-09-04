@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 19:04:12 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 22:46:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	prompt(t_list *token, t_data *minishell)
 				start_join_token_if_needed(token, prompt, minishell->brut_list);
 				first_token_is_exit(prompt, minishell, token);
 				set_token_type(token);
+				reset_cmd_pipe(token);
 				if (check_token_operator_order(token, minishell) == OK)
 				{
 					take_all_files(minishell, token);

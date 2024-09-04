@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 18:29:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 22:58:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@
 # define APPEND_FILE_TYPE 13
 /* other */
 # define PIPE_TYPE 14   // |
-# define DOLLAR_TYPE 15 // $
 
 # define BUILT_NO_OPTION 16
 # define BUILT_W_OPT 17

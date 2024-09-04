@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 18:52:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:01:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	put_redir_type(t_token *current, t_token *before);
 void	current_is_word(t_token *current, t_token *before);
 void	set_builtin_type(t_token *current);
 void	reset_operator_type(t_token *current);
+void 	reset_cmd_pipe(t_list *head);
+void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_every_condition(t_list *tmp);
