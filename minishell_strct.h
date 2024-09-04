@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 21:56:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 15:55:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,22 @@
 # define NO_TYPE 0
 # define WORD_TYPE 1
 # define CMD_TYPE 2
-# define ARG_TYPE 99
-# define BUILTIN_TYPE 3
-# define OPT_TYPE 4 // -
+# define ARG_TYPE 3
+# define BUILTIN_TYPE 4
+# define OPT_TYPE 5 // -
 /* redirection */
-# define INFILE_TYPE 5
-# define OUTFILE_TYPE 6
-# define IN_REDIR_TYPE 7  // <
-# define OUT_REDIR_TYPE 8 // >
+# define INFILE_TYPE 6
+# define OUTFILE_TYPE 7
+# define IN_REDIR_TYPE 8  // <
+# define OUT_REDIR_TYPE 9 // >
 /* heredoc */
-# define HERE_DOC_TYPE 9    // <<
-# define HD_LIMITER_TYPE 10 // EOF
-# define HD_APPEND_TYPE 11  // >>
-# define APPEND_FILE_TYPE 15
+# define HERE_DOC_TYPE 10    // <<
+# define HD_LIMITER_TYPE 11 // EOF
+# define HD_APPEND_TYPE 12  // >>
+# define APPEND_FILE_TYPE 13
 /* other */
-# define PIPE_TYPE 12   // |
-# define DOLLAR_TYPE 13 // $
-# define EXECUTABLE_TYPE 14
+# define PIPE_TYPE 14   // |
+# define DOLLAR_TYPE 15 // $
 
 # define BUILT_NO_OPTION 16
 # define BUILT_W_OPT 17
