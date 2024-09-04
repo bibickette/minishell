@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/23 13:29:48 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/30 15:40:11 by hexplor          ###   ########.fr       */
+/*   Created: 2024/09/04 18:20:01 by yantoine          #+#    #+#             */
+/*   Updated: 2024/09/04 19:19:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Fonction pour afficher les tableaux d'arguments ou d'options
 static void	print_double_tab(char **tab)
 {
 	int	i;
@@ -29,6 +30,7 @@ static void	print_double_tab(char **tab)
 	}
 }
 
+// Fonction pour afficher si la commande utilise un pipe
 static void	h_pipe(t_command *command)
 {
 	if (command->pipe)
@@ -37,6 +39,24 @@ static void	h_pipe(t_command *command)
 		printf("pipe: no\n");
 }
 
+// Fonction pour afficher les redirections multiples sans le symbole "->"
+static void	print_redirections(char **redirections, char **files, const char *type)
+{
+	int	i;
+
+	i = 0;
+	if (redirections && files)
+	{
+		printf("%s:\n", type);
+		while (redirections[i] && files[i])
+		{
+			printf("\t%s %s\n", redirections[i], files[i]);  // Affiche simplement redirection et fichier
+			i++;
+		}
+	}
+}
+
+// Fonction principale pour afficher une commande
 void	print_command(void *content)
 {
 	t_command	*command;
@@ -44,25 +64,37 @@ void	print_command(void *content)
 	if (!content)
 		return ;
 	command = (t_command *)content;
+
+	// Affiche la commande principale
 	if (command->command)
 		printf("command:\t%s\n", command->command);
+
+	// Affiche les options
 	if (command->option)
 	{
 		printf("options:");
 		print_double_tab(command->option);
 	}
+
+	// Affiche les arguments
 	if (command->arg)
 	{
 		printf("args:");
 		print_double_tab(command->arg);
 	}
-	if (command->redirection)
+
+	// Affiche les redirections de sortie
+	if (command->redirections && command->outputs)
 	{
-		printf("redirections:\t%s\n", command->redirection);
-		if (command->output)
-			printf("output:\t%s\n", command->output);
-		if (command->input)
-			printf("input:\t%s\n", command->input);
+		print_redirections(command->redirections, command->outputs, "output redirections");
 	}
+
+	// Affiche les redirections d'entrée
+	if (command->redirections && command->inputs)
+	{
+		print_redirections(command->redirections, command->inputs, "input redirections");
+	}
+
+	// Affiche si la commande est liée par un pipe
 	h_pipe(command);
 }

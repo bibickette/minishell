@@ -1,24 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   command_list_utils.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 13:30:12 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 19:17:05 by yantoine         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
+void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_command *content)
+{
+	int	arg_size = 0;
+	int	opt_size = 0;
+
+	while (*actual)
+	{
+		if ((*actual_content)->type == ARG_TYPE) // Si c'est un argument
+		{
+			content->arg = add_argument(content->arg, (*actual_content)->str, &arg_size);
+		}
+		else if ((*actual_content)->type == OPT_TYPE) // Si c'est une option
+		{
+			content->option = add_option(content->option, (*actual_content)->str, &opt_size);
+		}
+		else
+		{
+			break;
+		}
+		increment_actual(actual, actual_content);
+	}
+}
+
+// Incrémente le pointeur sur l'élément actuel
 void	increment_actual(t_list **actual, t_token **actual_content)
 {
-	*actual = (*actual)->next;
+	if (*actual)
+		*actual = (*actual)->next;
 	if (*actual)
 		*actual_content = (*actual)->content;
 }
 
+// Ajoute une option en fonction du type
 char	**add_option(char **options, char *new_option, int *size)
 {
 	char	**new_options;
@@ -40,6 +54,7 @@ char	**add_option(char **options, char *new_option, int *size)
 	return (new_options);
 }
 
+// Ajoute un argument en fonction du type
 char	**add_argument(char **args, char *new_arg, int *size)
 {
 	char	**new_args;
@@ -61,25 +76,11 @@ char	**add_argument(char **args, char *new_arg, int *size)
 	return (new_args);
 }
 
-void	process_command(t_list **actual, t_token **actual_content,
-		t_command *content)
+// Traite la commande principale
+void	process_command(t_list **actual, t_token **actual_content, t_command *content)
 {
-	if (check_operator((*actual_content)->str) == OK || (*actual_content)->str[0] == '-')
+	if ((*actual_content)->type != CMD_TYPE)
 		return ;
 	content->command = ft_strdup((*actual_content)->str);
 	increment_actual(actual, actual_content);
-}
-
-void	process_options(t_list **actual, t_token **actual_content,
-		t_command *content)
-{
-	int	size;
-
-	size = 0;
-	while (*actual && (*actual_content)->str[0] == '-')
-	{
-		content->option = add_option(content->option, (*actual_content)->str,
-				&size);
-		increment_actual(actual, actual_content);
-	}
 }

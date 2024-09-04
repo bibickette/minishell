@@ -1,56 +1,52 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free_command.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 16:13:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/02 13:43:43 by yantoine         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
+// Fonction pour libérer un tableau de chaînes de caractères
+static void	free_double_tab(char **tab)
+{
+	int i = 0;
+
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+// Fonction pour libérer une commande
 void	free_command(t_command *command)
 {
-	int	i;
-
 	if (!command)
 		return ;
+
+	// Libère la commande principale
 	if (command->command)
 		free(command->command);
-	if (command->option)
-	{
-		i = 0;
-		while (command->option[i])
-		{
-			free(command->option[i]);
-			i++;
-		}
-		free(command->option);
-	}
-	if (command->arg)
-	{
-		i = 0;
-		while (command->arg[i])
-		{
-			free(command->arg[i]);
-			i++;
-		}
-		free(command->arg);
-	}
-	if (command->output)
-		free(command->output);
-	if (command->input)
-		free(command->output);
-	if (command->redirection)
-		free(command->redirection);
+
+	// Libère les options
+	free_double_tab(command->option);
+
+	// Libère les arguments
+	free_double_tab(command->arg);
+
+	// Libère les fichiers de sortie et redirections associées
+	free_double_tab(command->outputs);
+	free_double_tab(command->redirections);
+
+	// Libère les fichiers d'entrée
+	free_double_tab(command->inputs);
+
+	// Libère la commande entière si elle est stockée
 	if (command->entire_command)
 		free(command->entire_command);
+
+	// Libère enfin la structure de la commande elle-même
 	free(command);
 }
 
+// Fonction pour libérer la liste chaînée de commandes
 void	free_command_list(t_list *command_list)
 {
 	t_list	*tmp;

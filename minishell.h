@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 17:12:45 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/04 18:25:08 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ void	trim_space(char buffer[BSIZE]);
 void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 int		handle_buffer_overflow(t_list **token);
 int		check_operator(char *str);
+
+/* Commande listing */
+t_list	*command_listing(t_list *token);
+void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_command *content);
+void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_command *content);
+char	**add_redirection(char **redirections, char *redirection, int *size);
+char	**add_file(char **files, char *file, int *size);
+void	process_command(t_list **actual, t_token **actual_content, t_command *content);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
