@@ -6,12 +6,12 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:26:33 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 19:41:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:15:43 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static int	exec_redirect_ouput(int (*exec_one_cmd_redirect)(t_data *, char *, int ), \
 				t_data *minishell, t_command *command)
 {
@@ -47,7 +47,8 @@ void	execution(t_data *minishell)
 
 	command = (t_command *)minishell->command_list->content;
 	if (command->output)
-		exec_redirect(execve_one_cmd, minishell, command);
+		exec_redirect_output(execve_one_cmd, minishell, command);
 	else
 		execve_one_cmd(minishell, (char *)command->entire_command, 1);
 }
+*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 18:34:39 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:12:45 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,14 @@ void	set_token_type(t_list *head);
 void	analyze_type(t_token *current, t_token *before);
 void	put_redir_type(t_token *current, t_token *before);
 void	current_is_word(t_token *current, t_token *before);
-int		check_token_operator_order(t_list *token, t_data *minishell);
+void	set_builtin_type(t_token *current);
+void	reset_operator_type(t_token *current);
 
-int		lf_spechar_list(t_list *token);
+int		check_token_operator_order(t_list *token, t_data *minishell);
+int		check_every_condition(t_list *tmp);
+int		check_builtin_condition(t_list *tmp);
+
+int		lf_spechar_list(t_data *minishell, t_list *token);
 int		check_special_char(char *prompt);
 
 /* dollar expansion */
@@ -180,7 +185,7 @@ void	unset_cmd_check_export(t_builtin *builtins, char *var);
 int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
 int		redirection_dup(int fd_in, int fd_out);
-int		execve_one_cmd(t_data *minishell, char *cmd_path, int fd_dest);
+int		execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest, int fd_in);
 void	execve_error(t_data *minishell, char *path, char **arg, int fd_dest);
 void	execution(t_data *minishell);
 int		get_status_process(t_data *minishell, int status, pid_t pid,

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 18:35:31 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:19:36 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	prompt(t_list *token, t_data *minishell)
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
-		if (ft_strcmp(prompt, "exit") == 0)
+		if (ft_strncmp(prompt, "exit", 4) == 0)
 			handle_exit(minishell, prompt);
 		else if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
@@ -30,21 +30,27 @@ void	prompt(t_list *token, t_data *minishell)
 		{
 			dupplicate_list(token, &minishell->brut_list);
 			expand_everything(minishell, token);
-			start_join_token_if_needed(token, prompt, minishell->brut_list);
-			set_token_type(token);
-			if (check_token_operator_order(token, minishell) == OK)
+			if (lf_spechar_list(minishell, token) == OK)
 			{
-				take_all_files(minishell, token);
-				print_all_files(minishell->files);
-				close_all_files(minishell->files);
-				ft_lstiter(token, print_token);
-				minishell->command_list = command_listing(token);
-				set_entire_command(minishell->command_list);
-				ft_lstiter(minishell->command_list, print_command);
-				printf("la commande s'execute ICI\n");
-				execution(minishell);
-				free_files_tab(minishell, minishell->files);
-				free_command_list(minishell->command_list);
+				start_join_token_if_needed(token, prompt, minishell->brut_list);
+				set_token_type(token);
+				if (check_token_operator_order(token, minishell) == OK)
+				{
+					take_all_files(minishell, token);
+					if (minishell->nb_files > 0)
+					{
+						print_all_files(minishell->files);
+						close_all_files(minishell->files);
+					}
+					ft_lstiter(token, print_token);
+					minishell->command_list = command_listing(token);
+					set_entire_command(minishell->command_list);
+					ft_lstiter(minishell->command_list, print_command);
+					printf("la commande s'execute ICI\n");
+					free_files_tab(minishell, minishell->files);
+					free_command_list(minishell->command_list);
+					minishell->nb_files = 0;
+				}
 			}
 		}
 		ft_lstclear_custom(&token, free);
