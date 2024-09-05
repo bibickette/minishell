@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 23:17:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 01:04:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ void	prompt(t_list *token, t_data *minishell)
 				{
 					take_all_files(minishell, token);
 					if (minishell->nb_files > 0)
-					{
 						print_all_files(minishell->files);
-						close_all_files(minishell->files);
-					}
 					ft_lstiter(token, print_token);
 					minishell->command_list = command_listing(token);
 					set_entire_command(minishell->command_list);
 					ft_lstiter(minishell->command_list, print_command);
 					printf("la commande s'execute ICI\n");
+					execve_one_cmd(minishell, "cat -e", token);
+						// close_all_files(minishell->files);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
 					minishell->nb_files = 0;
@@ -60,14 +59,6 @@ void	prompt(t_list *token, t_data *minishell)
 }
 
 /*
-note sur env et export :
-si la variable na pas	de = alors elle ne sera pas intégré dans env
-elle le sera seulement dans export
-export display "declare -x " avant chaque case de lenv
-
-si la variable a		un = et rien apres alors elle est export dans env et export
-elle est export dans export avec var=""
-
-si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
-
+faire un in tab file et out tab file
+essayer dopen les files dans le execve, si un in foire, on cree pas le out
 */

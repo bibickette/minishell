@@ -6,11 +6,26 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/05 01:17:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/05 23:42:21 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void export_cmd_no_arg(char **export)
+{
+	int i;
+	i = -1;
+	while(export[++i])
+	{
+		if (ft_strcmp(export[i], "") != 0)
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(export[i], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+	}
+}
 
 int	export_cmd_w_arg(char *var, t_data *minishell)
 {
@@ -18,7 +33,7 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 		return (KO);
 	if (has_equal(var) == OK)
 	{
-		if (export_replacement(&minishell->builtins->env, &var) == OK)
+		if (export_replacement_env(&minishell->builtins->env, &var) == OK)
 			minishell->last_status = 0;
 		else if (char_add_back_tab(&minishell->builtins->env, var) == KO)
 		{
@@ -28,7 +43,13 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 	}
 	/*
 	else
-		import dans export tab
+	{
+		if (char_add_back_tab(&minishell->builtins->export, var) == KO)
+		{
+			minishell->last_status = 1;
+			return (KO);
+		}
+	}
 	*/
 	return (OK);
 }
@@ -36,13 +57,13 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 /*
 note sur env et export :
 si la variable na pas	de = alors elle ne sera pas intégré dans env
-elle le sera seulement dans export
-export display "declare -x " avant chaque case de lenv
+elle le sera seulement dans export OK
+export display "declare -x " avant chaque case de lenv OK
 
-si la variable a		un = et rien apres alors elle est export dans env et export
+si la variable a un = et rien apres alors elle est export dans env et export
 elle est export dans export avec var=""
 
-si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
+si le premier char cest =, renvoyer erreur ; ca fait un last status = 1 ok
 
 */
 
@@ -65,7 +86,7 @@ int	check_export_format(char *var, t_data *minishell)
 	return (OK);
 }
 
-int	export_replacement(char ***env_or_export, char **var)
+int	export_replacement_env(char ***env_or_export, char **var)
 {
 	char	*tmp_var;
 	int		i;

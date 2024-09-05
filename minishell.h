@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/05 01:17:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 00:46:25 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,9 @@ void	close_all_files(t_file *files);
 /* Built-in commands */
 int		is_builtin(char *command);
 /* built-in export*/
+void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
-int		export_replacement(char ***env_or_export, char **var);
+int	export_replacement_env(char ***env_or_export, char **var);
 int		check_export_format(char *var, t_data *minishell);
 int		has_equal(char *var);
 
@@ -187,15 +188,19 @@ void	unset_cmd(t_builtin *builtins, char *var);
 /* Execution */
 int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
+int redirection_in(t_file *files);
+int redirection_out(t_file *files);
+
 int		redirection_dup(int fd_in, int fd_out);
-int		execve_one_cmd(t_data *minish, char *cmd_arg, int fd_dest, int fd_in);
-void	execve_error(t_data *minishell, char *path, char **arg, int fd_dest);
+int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
+void	execve_error(t_data *minishell, char *path, char **arg);
+void exceve_error_free(t_data *minish, char **arg, char *path, t_list *token);
+
 void	execution(t_data *minishell);
-int		get_status_process(t_data *minishell, int status, pid_t pid,
-			int fd_dest);
+int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
-void	split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
-			char **path);
+char *split_n_path(t_data *minishell, char *cmd_arg, char ***arg, t_list *token);
+
 /**********************************************/
 
 /*************************************/
