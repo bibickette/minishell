@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 14:46:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 15:47:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 		((t_token *)current->content)->type = CMD_TYPE;
 		(*cmd_on_pipe)++;
 	}
-	else if(((t_token *)current->content)->type == WORD_TYPE && (*cmd_on_pipe) == 0)
+	else if (((t_token *)current->content)->type == WORD_TYPE
+		&& (*cmd_on_pipe) == 0)
 	{
 		((t_token *)current->content)->type = CMD_TYPE;
 		set_builtin_type((t_token *)current->content);
