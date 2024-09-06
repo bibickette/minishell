@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:08:07 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 00:49:14 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:39:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_exit(t_data *minishell, char *prompt, t_list *token)
 
 void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token)
 {
-	if(!token)
+	if (!token)
 		return ;
 	if (ft_strncmp(((t_token *)token->content)->str, "exit",
 			ft_strlen(((t_token *)token->content)->str)) == 0)

@@ -6,24 +6,37 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 18:21:33 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 01:02:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:38:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_file(t_data *minishell, t_file *file)
+int	open_all_infile(t_data *minishell, t_file *file)
 {
 	if (file->type == INFILE_TYPE || file->type == HD_LIMITER_TYPE)
 	{
 		if (file->type == HD_LIMITER_TYPE)
+		{
 			heredoc_create(minishell, file->name);
-		open_infile(file);
+			file->name = HERE_DOC;
+		}
+		if (open_infile(file) == KO)
+			return (KO);
 	}
-	else if (file->type == OUTFILE_TYPE)
-		open_outfile(file);
+	return (OK);
+}
+
+int	open_all_outfile(t_data *minishell, t_file *file)
+{
+	if (file->type == OUTFILE_TYPE)
+	{
+		if (open_outfile(file) == KO)
+			return (KO);
+	}
 	else if (file->type == APPEND_FILE_TYPE)
-		open_append_outfile(file);
+		if (open_append_outfile(file) == KO)
+			return (KO);
 	return (OK);
 }
 
@@ -49,7 +62,7 @@ int	open_infile(t_file *file)
 	else
 	{
 		file->fd = KO;
-		return(ft_putstr_fd(FILE_NOT_EXIST, STDERR_FILENO), KO);
+		return (ft_putstr_fd(FILE_NOT_EXIST, STDERR_FILENO), KO);
 	}
 	return (OK);
 }
@@ -95,5 +108,5 @@ int	open_append_outfile(t_file *file)
 		file->is_open = OK;
 		return (OK);
 	}
-	return(OK);
+	return (OK);
 }

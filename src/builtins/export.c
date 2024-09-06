@@ -6,17 +6,18 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/05 23:42:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:40:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void export_cmd_no_arg(char **export)
+void	export_cmd_no_arg(char **export)
 {
-	int i;
+	int	i;
+
 	i = -1;
-	while(export[++i])
+	while (export[++i])
 	{
 		if (ft_strcmp(export[i], "") != 0)
 		{
@@ -60,7 +61,7 @@ si la variable na pas	de = alors elle ne sera pas intégré dans env
 elle le sera seulement dans export OK
 export display "declare -x " avant chaque case de lenv OK
 
-si la variable a un = et rien apres alors elle est export dans env et export
+si la variable a		un = et rien apres alors elle est export dans env et export
 elle est export dans export avec var=""
 
 si le premier char cest =, renvoyer erreur ; ca fait un last status = 1 ok
