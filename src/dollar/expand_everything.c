@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 23:49:44 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:58:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	expand_everything(t_data *minishell, t_list *token)
 	str_token_before = NULL;
 	while (tmp_head)
 	{
-		if ((((t_token *)tmp_head->content)->quote != S_QUOTE)
-			&& (!str_token_before || (str_token_before
-					&& ft_strcmp(str_token_before, "<<") != 0)))
+		if (right_condition_for_expand(tmp_head, str_token_before) == OK)
 			if (has_dollar(((t_token *)tmp_head->content)->str) == OK)
 				start_expanding(minishell, &dollar_tab, tmp_head);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
@@ -40,6 +38,14 @@ void	expand_everything(t_data *minishell, t_list *token)
 		str_token_before = ((t_token *)tmp_head->content)->str;
 		tmp_head = tmp_head->next;
 	}
+}
+
+int	right_condition_for_expand(t_list *tmp_head, char *str_token_before)
+{
+	if ((((t_token *)tmp_head->content)->quote != S_QUOTE) && (!str_token_before
+			|| (str_token_before && ft_strcmp(str_token_before, "<<") != 0)))
+		return (OK);
+	return (KO);
 }
 
 int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
@@ -93,30 +99,4 @@ int	set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	}
 	return (OK);
-}
-
-int	has_multiple_dollar(char *var)
-{
-	int	i;
-	int	dollar;
-
-	i = -1;
-	dollar = 0;
-	while (var[++i])
-		if (var[i] == '$')
-			dollar++;
-	if (dollar > 1)
-		return (OK);
-	return (KO);
-}
-
-int	has_dollar(char *var)
-{
-	int	i;
-
-	i = -1;
-	while (var[++i])
-		if (var[i] == '$')
-			return (OK);
-	return (KO);
 }

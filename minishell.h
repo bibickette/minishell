@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 19:15:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:58:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_every_condition(t_list *tmp);
 int		check_builtin_condition(t_list *tmp);
+int		check_every_builtin_n_type(t_list *token);
 
 int		lf_spechar_list(t_data *minishell, t_list *token);
 int		check_special_char(char *prompt);
@@ -125,6 +126,7 @@ char	*expansion_no_surround_list(char *var, t_data *minishell);
 
 /* expand dollar  everything */
 void	expand_everything(t_data *minishell, t_list *token);
+int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);
 int		start_expanding(t_data *minishell, char ***dollar_tab,
 			t_list *tmp_head);
 int		set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
@@ -168,6 +170,9 @@ int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_all_infile(t_data *minishell, t_file *file);
 int		open_all_outfile(t_file *file);
+
+int		file_type(t_list *tmp_head);
+int		load_file_tab(t_data *minishell, char **dico_files);
 
 int		open_infile(t_file *file);
 int		open_outfile(t_file *file);

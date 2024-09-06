@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 13:36:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:50:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	prompt(t_list *token, t_data *minishell)
 				if (check_token_operator_order(token, minishell) == OK)
 				{
 					take_all_files(minishell, token);
-					// if (minishell->nb_files > 0)
-						// print_all_files(minishell->files);
+					if (minishell->nb_files > 0)
+						print_all_files(minishell->files);
 					ft_lstiter(token, print_token);
 					minishell->command_list = command_listing(token);
 					set_entire_command(minishell->command_list);
