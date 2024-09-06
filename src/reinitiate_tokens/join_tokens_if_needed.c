@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:25:24 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 14:16:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:26:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int	join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
 		char **t_pt)
 {
 	t_list		*t_b;
-	t_list		*tmp_token;
 	static char	*n_p = NULL;
 
-	tmp_token = token;
 	t_b = brut_list;
 	while (t_b)
 	{
@@ -37,16 +35,16 @@ int	join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
 			return (KO);
 		if (check_new_prompt(n_p, ((t_token *)t_b->content)->str) == OK)
 		{
-			if (increment_lists(&tmp_token, &t_b) == KO)
+			if (increment_lists(&t_b) == KO)
 				break ;
 		}
 		else if (line_economy(n_p, ((t_token *)t_b->content)->str) == OK)
 		{
-			if (join_token_in_lists(token, brut_list, &tmp_token, &t_b) == KO)
+			if (join_token_in_lists(token, brut_list, &t_b) == KO)
 				return (KO);
 			*t_pt = prompt;
 		}
-		else if (increment_lists(&tmp_token, &t_b) == KO)
+		else if (increment_lists(&t_b) == KO)
 			break ;
 	}
 	return (OK);
@@ -61,27 +59,23 @@ int	load_new_prompt(char **new_prompt, char **tmp_prompt, char *token_str)
 	return (OK);
 }
 
-int	join_token_in_lists(t_list *token, t_list *brut_list, t_list **tmp_token,
-		t_list **tmp_brut)
+int	join_token_in_lists(t_list *token, t_list *brut_list, t_list **tmp_brut)
 {
-	t_list	*is_next_token;
+	int	token_nb;
 
-	is_next_token = (*tmp_brut)->next;
-	if (join_token(brut_list, is_next_token) == KO)
+	token_nb = ((t_token *)(*tmp_brut)->next->content)->index;
+	if (join_token(brut_list, token_nb) == KO)
 		return (KO);
-	is_next_token = (*tmp_token)->next;
-	if (join_token(token, is_next_token))
+	if (join_token(token, token_nb) == KO)
 		return (KO);
 	*tmp_brut = brut_list;
-	*tmp_token = token;
 	return (OK);
 }
 
-int	increment_lists(t_list **token, t_list **brut_list)
+int	increment_lists(t_list **brut_list)
 {
 	if ((*brut_list)->next == NULL)
 		return (KO);
 	*brut_list = (*brut_list)->next;
-	*token = (*token)->next;
 	return (OK);
 }

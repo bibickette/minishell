@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 22:15:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:17:29 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	prompt(t_list *token, t_data *minishell)
 		else if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
 		{
 			dupplicate_list(token, &minishell->brut_list);
+			set_index_again(token, minishell->brut_list);
 			expand_everything(minishell, token);
 			if (lf_spechar_list(minishell, token) == OK)
 			{

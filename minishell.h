@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 22:37:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:25:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,23 @@ int		check_operator(char *str);
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
 			char **t_pt);
-int		join_token(t_list *token, t_list *is_next_token);
+int		join_token(t_list *token, int token_nb);
 int		dupplicate_list(t_list *token, t_list **brut_list);
 int		set_quote_n_put_back(t_list *token, t_list *brut_list);
 int		put_quote_back(char **str, char quote);
-int		increment_lists(t_list **token, t_list **brut_list);
+int		increment_lists(t_list **brut_list);
 int		check_new_prompt(char *new_prompt, char *tmp_brut);
 int		join_token_in_lists(t_list *token, t_list *brut_list,
-			t_list **tmp_token, t_list **tmp_brut);
+			t_list **tmp_brut);
 int		load_new_prompt(char **new_prompt, char **tmp_prompt, char *token_str);
 int		line_economy(char *new_prompt, char *tmp_brut);
 int		start_join_token_if_needed(t_list *token, char *prompt,
 			t_list *brut_list);
 void	stick_next_token(t_list *is_next_token, t_list **tmp_head,
 			t_list **next_tmp);
+
+void	set_index_again(t_list *token, t_list *brut_list);
+
 int		set_entire_command(t_list *command_list);
 int		go_next(t_list **actual, t_command **actual_command);
 
