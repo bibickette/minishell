@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 23:25:40 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:47:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,8 @@ void	env_cmd(char **env);
 int		echo_cmd(t_list *token, int fd_dest);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
+/* built-in cd */
+void	cd_cmd(char *path);
 
 /* Execution */
 int		get_fd(char *path);
@@ -213,7 +215,7 @@ int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
 void	exceve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
-int		execve_builtin(t_data *minishell, char **arg);
+int		execve_builtin(t_data *minishell, char **arg, t_list *token);
 void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
 			t_list *token);
 

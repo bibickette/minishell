@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 22:17:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:46:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
 		t_list *token)
 {
+	int	ret;
+
 	if (is_builtin(arg[0]) == OK)
 	{
-		if (execve_builtin(minish, arg) == KO)
+		ret = execve_builtin(minish, arg, token);
+		if (ret == KO || ret == M_KO)
 		{
 			exceve_error_free(minish, arg, path, token);
-			exit(EXIT_FAILURE);
+			if (ret == M_KO)
+				exit(127);
+			else
+				exit(EXIT_FAILURE);
 		}
 		exceve_error_free(minish, arg, path, token);
 	}
@@ -28,7 +34,7 @@ void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
 		execve_error(minish, path, arg, token);
 }
 
-int	execve_builtin(t_data *minishell, char **arg)
+int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 {
 	int	i;
 
@@ -53,5 +59,18 @@ int	execve_builtin(t_data *minishell, char **arg)
 			while (arg[++i])
 				unset_cmd(minishell->builtins, arg[i]);
 	}
+	else if (ft_strcmp(arg[0], "cd") == 0)
+	{
+		// if(!arg[1])
+		// 	cd doit amener sur home
+		// else
+		cd_cmd(arg[1]);
+	}
+	else if (ft_strcmp(arg[0], "echo") == 0)
+		echo_cmd(token, STDOUT_FILENO);
+	else if (ft_strcmp(arg[0], "exit") == 0)
+		return (M_KO);
+	else if (ft_strcmp(arg[0], "history") == 0)
+		display_history(minishell);
 	return (OK);
 }

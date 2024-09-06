@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 23:17:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:46:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	prompt(t_list *token, t_data *minishell)
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
-		if (ft_strcmp(prompt, "history") == 0)
-			display_history(minishell);
-		else if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
+		if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
 		{
 			dupplicate_list(token, &minishell->brut_list);
 			set_index_again(token, minishell->brut_list);
@@ -45,7 +43,7 @@ void	prompt(t_list *token, t_data *minishell)
 					set_entire_command(minishell->command_list);
 					ft_lstiter(minishell->command_list, print_command);
 					printf("la commande s'execute ICI\n");
-					// execve_one_cmd(minishell, "pwd", token);
+					execve_one_cmd(minishell, "env", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
 					minishell->nb_files = 0;

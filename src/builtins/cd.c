@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 11:55:32 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/29 02:11:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:30:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	handle_special_char(char **new_path, char **old_pwd, char **path)
 	return (0);
 }
 
-void	cd(char *path)
+void	cd_cmd(char *path)
 {
 	char	*old_pwd;
 	char	*new_path;
