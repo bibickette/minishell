@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 15:45:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 17:55:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ int		is_builtin(char *command);
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
 int		export_replacement_env(char ***env_or_export, char **var);
+int load_right_export(char *var, char **key_export);
+
 int		check_export_format(char *var, t_data *minishell);
 int		has_equal(char *var);
 

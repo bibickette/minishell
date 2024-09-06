@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/05 23:13:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 17:01:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 
 # define KO -1
 # define OK 0
+# define M_KO 1
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 

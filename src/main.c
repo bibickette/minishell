@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:18:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/05 01:17:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 18:41:04 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	if (init_minishell(&minishell) == KO || get_env(minishell, env) == KO)
 		return (apocalypse(minishell), 1);
-	prompt(minishell->token, minishell);
+	export_cmd_w_arg("prout=", minishell);
+	export_cmd_w_arg("pouet=lala", minishell);
+	export_cmd_w_arg("chips=kk", minishell);
+	export_cmd_w_arg("chips", minishell);
+	export_cmd_no_arg(minishell->builtins->export);
+	env_cmd(minishell->builtins->env);
+	// prompt(minishell->token, minishell);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 13:40:44 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 18:41:55 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,102 @@ void	export_cmd_no_arg(char **export)
 
 int	export_cmd_w_arg(char *var, t_data *minishell)
 {
+	int		ret;
+	char	*key_export;
+
 	if (check_export_format(var, minishell) == KO)
 		return (KO);
 	if (has_equal(var) == OK)
 	{
-		if (export_replacement_env(&minishell->builtins->env, &var) == OK)
-			minishell->last_status = 0;
-		else if (char_add_back_tab(&minishell->builtins->env, var) == KO)
+		ret = export_replacement_env(&minishell->builtins->env, &var);
+		if (ret == M_KO)
 		{
 			minishell->last_status = 1;
 			return (KO);
 		}
+		else if (ret == KO)
+		{
+			if (char_add_back_tab(&minishell->builtins->env, var) == KO)
+			{
+				minishell->last_status = 1;
+				return (KO);
+			}
+			minishell->last_status = 0;
+		}
+		load_right_export(var, &key_export);
+		ret = export_replacement_env(&minishell->builtins->export, &key_export);
+		if (ret == M_KO)
+		{
+			free(key_export);
+			minishell->last_status = 1;
+			return (KO);
+		}
+		else if (ret == KO)
+		{
+			if (char_add_back_tab(&minishell->builtins->export,
+					key_export) == KO)
+			{
+				free(key_export);
+				minishell->last_status = 1;
+				return (KO);
+			}
+			minishell->last_status = 0;
+		}
+		free(key_export);
+		minishell->last_status = 0;
+		return (OK);
 	}
-	/*
 	else
 	{
-		if (char_add_back_tab(&minishell->builtins->export, var) == KO)
+		load_right_export(var, &key_export);
+		ret = export_replacement_env(&minishell->builtins->export, &key_export);
+		if (ret == M_KO)
 		{
+			free(key_export);
 			minishell->last_status = 1;
 			return (KO);
 		}
+		else if (ret == KO)
+		{
+			if (char_add_back_tab(&minishell->builtins->export,
+					key_export) == KO)
+			{
+				free(key_export);
+				minishell->last_status = 1;
+				return (KO);
+			}
+			minishell->last_status = 0;
+		}
+		free(key_export);
+		minishell->last_status = 0;
+		return (OK);
 	}
-	*/
+	return (OK);
+}
+int	load_right_export(char *var, char **key_export)
+{
+	char	*value_export;
+	int		i;
+
+	value_export = NULL;
+	*key_export = ft_strdup(var);
+	if (has_equal(var) == OK)
+	{
+		i = -1;
+		while ((*key_export)[++i])
+			if ((*key_export)[i] == '=')
+				break ;
+		if (ft_strlen((*key_export)) != (size_t)i)
+		{
+			load_value_n_key_export(key_export, &value_export, &var);
+			(*key_export) = strjoin_wfree((*key_export), value_export);
+			free(value_export);
+		}
+		else
+		{
+			(*key_export) = ft_strjoin(var, "\"\"");
+		}
+	}
 	return (OK);
 }
 
@@ -91,26 +165,47 @@ int	export_replacement_env(char ***env_or_export, char **var)
 {
 	char	*tmp_var;
 	int		i;
+	size_t	len_var;
 
 	i = -1;
 	tmp_var = ft_strdup(*var);
 	if (!tmp_var)
-		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-	while (tmp_var[++i])
-		if (tmp_var[i] == '=')
-			break ;
-	if (ft_strlen(tmp_var) != (size_t)i)
-		tmp_var[i + 1] = '\0';
+		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), M_KO);
+	if (has_equal(tmp_var) == OK)
+	{
+		while (tmp_var[++i])
+			if (tmp_var[i] == '=')
+				break ;
+		len_var = ft_strlen(tmp_var);
+		if (len_var != (size_t)i)
+			tmp_var[i + 1] = '\0';
+	}
 	i = -1;
 	while ((*env_or_export)[++i])
 	{
-		if (ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
+		if ((ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0
+				|| (ft_strncmp((*env_or_export)[i], tmp_var,
+						ft_strlen(tmp_var)) == 0
+					&& ft_strlen((*env_or_export)[i]) == ft_strlen(tmp_var)))
+			|| ((has_equal(tmp_var) == OK
+					&& has_equal((*env_or_export)[i]) == OK
+					&& ft_strncmp((*env_or_export)[i], tmp_var,
+						ft_strlen(tmp_var)) == 0) || (has_equal(tmp_var) == KO
+					&& ft_strlen(tmp_var) < ft_strlen((*env_or_export)[i])
+					&& (*env_or_export)[i][ft_strlen(tmp_var)] == '='
+					&& ft_strncmp((*env_or_export)[i], tmp_var,
+						ft_strlen(tmp_var) + 1) == 0)
+				|| ((has_equal((*env_or_export)[i]) == KO
+						&& ft_strlen(tmp_var) > ft_strlen((*env_or_export)[i])
+						&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
+						&& ft_strncmp((*env_or_export)[i], tmp_var,
+							ft_strlen(tmp_var) - 1) == 0))))
 		{
 			free((*env_or_export)[i]);
 			(*env_or_export)[i] = ft_strdup(*var);
 			free(tmp_var);
 			if (!(*env_or_export)[i])
-				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
+				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), M_KO);
 			return (OK);
 		}
 	}
@@ -134,11 +229,11 @@ la recherche de la variable se fait dabord dans env, puis dans export
 
 
 export_cmd : main cmd, is the builtin
- - check le format, renvoie erreur si ! des trois types
- - build la variable a export
- - check si la variable a export existe deja
- - si oui, la remplace
- - sinon, lajoute a la liste export
+	- check le format, renvoie erreur si ! des trois types
+	- build la variable a export
+	- check si la variable a export existe deja
+	- si oui, la remplace
+	- sinon, lajoute a la liste export
 
 exporting : fait le lien entre le check du formatage de la variable a export
 	et le choix de lexport a faire
