@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 22:13:57 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 22:37:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int		process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
 void	print_command(void *content);
 void	make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int		tokenize(char *prompt, t_list **token);
-int		go_next(t_list **actual, t_command **actual_command);
-char	**set_command_list(t_list *token);
 void	add_token(t_list **token, char buffer[BSIZE]);
 void	trim_space(char buffer[BSIZE]);
 void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE]);
@@ -122,7 +120,6 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 			int quote_type);
 char	*expansion_no_surround(char *var, t_data *minishell);
-char	*expansion_no_surround_list(char *var, t_data *minishell);
 
 /* expand dollar  everything */
 void	expand_everything(t_data *minishell, t_list *token);
@@ -150,7 +147,6 @@ int		has_multiple_dollar(char *var);
 void	display_history(t_data *minishell);
 void	clear__history(t_data **minishell);
 void	add_to_history(t_data **minishell, char *command);
-void	add_element(t_list *token, char buffer[BSIZE]);
 
 /**********************************************/
 
@@ -231,7 +227,6 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 
 /* Signal handling */
 void	handle_signals(void);
-void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
 
 /* memory */
@@ -252,7 +247,6 @@ char	**add_option(char **options, char *new_option, int *size);
 void	increment_actual(t_list **actual, t_token **actual_content);
 
 /* check */
-int		check_lexical(t_list *token);
 int		check_args(int argc, char **argv);
 int		check_quote_type(char **prompt_loop);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -265,9 +259,8 @@ void	free_command_list(t_list *command_list);
 void	free_command(t_command *command);
 void	free_lists(t_data *minishell);
 void	free_double_char(char **array);
-void	error_exit(const char *msg);
 void	handle_error(int error_code, char *prompt);
-void	handle_exit(t_data *minishell, char *prompt, t_list *token);
+void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
 
