@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:20:01 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 19:19:59 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:27:42 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	print_double_tab(char **tab)
 	}
 }
 
-// Fonction pour afficher si la commande utilise un pipe
 static void	h_pipe(t_command *command)
 {
 	if (command->pipe)
@@ -39,7 +38,6 @@ static void	h_pipe(t_command *command)
 		printf("pipe: no\n");
 }
 
-// Fonction pour afficher les redirections multiples sans le symbole "->"
 static void	print_redirections(char **redirections, char **files, const char *type)
 {
 	int	i;
@@ -56,7 +54,6 @@ static void	print_redirections(char **redirections, char **files, const char *ty
 	}
 }
 
-// Fonction principale pour afficher une commande
 void	print_command(void *content)
 {
 	t_command	*command;

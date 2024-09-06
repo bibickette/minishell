@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/04 18:25:08 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:18:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void	close_all_files(t_file *files);
 
 /* Built-in commands */
 int		is_builtin(char *command);
+char		**double_tab_command(t_list *command_list);
 /* built-in export*/
 int		export_cmd(t_list **export_head, char *var, t_data *minishell);
 int		export_replacement(t_data *minishell, t_list *export_head, char **var);
