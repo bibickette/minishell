@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 17:55:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:15:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_all_infile(t_data *minishell, t_file *file);
-int		open_all_outfile(t_data *minishell, t_file *file);
+int		open_all_outfile(t_file *file);
 
 int		open_infile(t_file *file);
 int		open_outfile(t_file *file);
@@ -179,8 +179,13 @@ int		is_builtin(char *command);
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
-int		export_replacement_env(char ***env_or_export, char **var);
-int load_right_export(char *var, char **key_export);
+int		export_in_env(char *var, t_data *minishell);
+int		replace_in_tab(char ***env_or_export, char *tmp_var, char **var);
+
+int		export_in_export(char *var, char **key_export, t_data *minishell);
+int		export_replacement_tab(char ***env_or_export, char **var);
+int		load_right_export(char *var, char **key_export);
+int		the_big_condition(char ***env_or_export, char *tmp_var, int i);
 
 int		check_export_format(char *var, t_data *minishell);
 int		has_equal(char *var);
