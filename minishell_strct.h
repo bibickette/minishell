@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 17:01:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 21:44:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
 # define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
 # define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
+# define NOT_ENOUGH_ARG "Minishell Error : Not enough arguments\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"

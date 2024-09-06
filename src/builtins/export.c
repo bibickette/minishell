@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 19:14:01 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 22:19:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,8 @@ int	replace_in_tab(char ***env_or_export, char *tmp_var, char **var)
 
 int	the_big_condition(char ***env_or_export, char *tmp_var, int i)
 {
-	if (ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0
-		|| (ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0
-			&& ft_strlen((*env_or_export)[i]) == ft_strlen(tmp_var)))
-		return (OK);
-	else if (has_equal(tmp_var) == OK && has_equal((*env_or_export)[i]) == OK
-		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
+	if ((ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0
+		&& ft_strlen((*env_or_export)[i]) == ft_strlen(tmp_var)))
 		return (OK);
 	else if (has_equal(tmp_var) == OK && has_equal((*env_or_export)[i]) == OK
 		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
@@ -107,14 +103,13 @@ int	the_big_condition(char ***env_or_export, char *tmp_var, int i)
 	else if (has_equal(tmp_var) == KO
 		&& ft_strlen(tmp_var) < ft_strlen((*env_or_export)[i])
 		&& (*env_or_export)[i][ft_strlen(tmp_var)] == '='
-		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
-			+ 1) == 0)
+		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
 		return (OK);
 	else if ((has_equal((*env_or_export)[i]) == KO
 		&& ft_strlen(tmp_var) > ft_strlen((*env_or_export)[i])
 		&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
 		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
-				- 1) == 0))
+			- 1) == 0))
 		return (OK);
 	return (KO);
 }
