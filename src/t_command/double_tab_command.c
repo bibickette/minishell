@@ -6,15 +6,31 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 14:17:38 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:49:21 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**double_tab_command(t_list *command_list)
+static int	size_list(t_list *command_list)
+{
+	int		size;
+	t_list	*actual;
+
+	size = 0;
+	actual = command_list;
+	while (actual)
+	{
+		size++;
+		actual = actual->next;
+	}
+	return (size);
+}
+
+char	**double_tab_command(t_data *minishell, t_list *command_list)
 {
 	int					i;
+	int					size;
 	char				**tab_command;
 	t_list			*actual;
 	t_command	*content;
@@ -24,13 +40,13 @@ char	**double_tab_command(t_list *command_list)
 	if (!actual)
 		return (NULL);
 	content = (t_command *)actual->content;
-	tab_command = ft_calloc(ft_lstsize(command_list) + 1, sizeof(char *));
-	if (!tab_command)
-		return (NULL);
+	size = size_list(command_list);
+	printf("size : %d\n", size);
+	tab_command = ft_calloc(size + 1, sizeof(char *));
 	while (actual)
 	{
-		tab_command[i] = content->command;
-		tab_command[i + 1] = NULL;
+		char_add_back_tab(&minishell->command, content->entire_command);
+		printf("ajout de commande %s \n", content->entire_command);
 		actual = actual->next;
 		if (actual && actual->content)
 			content = (t_command *)actual->content;

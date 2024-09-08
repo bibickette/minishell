@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 14:38:10 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:50:03 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ void	prompt(t_list *token, t_data *minishell)
 					ft_lstiter(token, print_token);
 					minishell->command_list = command_listing(token);
 					set_entire_command(minishell->command_list);
-					minishell->command = double_tab_command(minishell->command_list);
+					minishell->command = double_tab_command(minishell, minishell->command_list);
+					print_double_tab(minishell->command);
 					printf("la commande s'execute ICI\n");
-					export_cmd_w_arg("ABCDE", minishell);
-					execve_one_cmd(minishell, "export", token);
+					//export_cmd_w_arg("ABCDE", minishell);
+					//execve_one_cmd(minishell, "export", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
 					minishell->nb_files = 0;

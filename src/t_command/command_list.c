@@ -53,25 +53,18 @@ void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_c
 			content->redirections = add_redirection(content->redirections, (*actual_content)->str, &redir_size);
 			increment_actual(actual, actual_content);
 			if (*actual && (*actual_content)->type == OUTFILE_TYPE)
-			{
 				content->outputs = add_file(content->outputs, (*actual_content)->str, &output_size);
-				increment_actual(actual, actual_content);
-			}
 		}
 		else if ((*actual_content)->type == IN_REDIR_TYPE || (*actual_content)->type == HERE_DOC_TYPE)
 		{
 			content->redirections = add_redirection(content->redirections, (*actual_content)->str, &redir_size);
 			increment_actual(actual, actual_content);
 			if (*actual && (*actual_content)->type == INFILE_TYPE)
-			{
 				content->inputs = add_file(content->inputs, (*actual_content)->str, &input_size);
-				increment_actual(actual, actual_content);
-			}
 		}
 		else if ((*actual_content)->type == PIPE_TYPE)
 		{
 			content->pipe = 1;
-			increment_actual(actual, actual_content);
 			break;
 		}
 		else
@@ -98,11 +91,12 @@ t_list	*command_listing(t_list *token)
 			return (NULL);
 		if (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
 			process_command(&actual, &actual_content, content);
-		if (actual)
+		if (actual && (actual_content->type == ARG_TYPE || actual_content->type == OPT_TYPE))
 			process_arguments_and_options(&actual, &actual_content, content);
-		if (actual)
+		if (actual && (actual_content->type == IN_REDIR_TYPE || actual_content->type == OUT_REDIR_TYPE || \
+							actual_content->type == HERE_DOC_TYPE || actual_content->type == HD_APPEND_TYPE || actual_content->type == PIPE_TYPE))
 			process_redirection_and_pipe(&actual, &actual_content, content);
-		if (!command_list && actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
+		if (!command_list && (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE))
 			command_list = ft_lstnew_libft(content);
 		else
 			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));

@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 13:06:53 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:05:59 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*trim_end(char *path_env);
 void	display_prompt(void);
 void	display_intro(void);
 void	print_token(void *content);
+void	print_double_tab(char **tab);
 
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
@@ -188,7 +189,7 @@ void	close_all_files(t_file *files);
 
 /* Built-in commands */
 int		is_builtin(char *command);
-char		**double_tab_command(t_list *command_list);
+char		**double_tab_command(t_data *minishell, t_list *command_list);
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
