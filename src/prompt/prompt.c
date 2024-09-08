@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 13:05:02 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:18:07 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	prompt(t_list *token, t_data *minishell)
 		else if (ft_strcmp(prompt, "history") == 0)
 			display_history(minishell);
 		else if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
+		if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
 		{
 			dupplicate_list(token, &minishell->brut_list);
+			set_index_again(token, minishell->brut_list);
 			expand_everything(minishell, token);
 			if (lf_spechar_list(minishell, token) == OK)
 			{
@@ -40,13 +42,12 @@ void	prompt(t_list *token, t_data *minishell)
 				{
 					take_all_files(minishell, token);
 					// if (minishell->nb_files > 0)
-						// print_all_files(minishell->files);
+					// 	print_all_files(minishell->files);
 					ft_lstiter(token, print_token);
 					minishell->command_list = command_listing(token);
 					set_entire_command(minishell->command_list);
 					minishell->command = double_tab_command(minishell->command_list);
 					printf("la commande s'execute ICI\n");
-					// execve_one_cmd(minishell, "cat -e", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
 					minishell->nb_files = 0;

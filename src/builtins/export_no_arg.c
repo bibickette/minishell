@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   export_no_arg.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 21:55:56 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 21:48:41 by phwang           ###   ########.fr       */
+/*   Created: 2024/09/06 19:00:38 by phwang            #+#    #+#             */
+/*   Updated: 2024/09/06 19:00:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_cmd(t_builtin *builtins, char *var)
+void	export_cmd_no_arg(char **export)
 {
 	int	i;
 
 	i = -1;
-	while (builtins->env[++i])
-		if (the_big_condition(&builtins->env, var, i) == OK)
-			builtins->env[i][0] = '\0';
-	i = -1;
-	while (builtins->export[++i])
-		if (the_big_condition(&builtins->export, var, i) == OK)
-			builtins->export[i][0] = '\0';
+	while (export[++i])
+	{
+		if (ft_strcmp(export[i], "") != 0)
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(export[i], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/05 00:57:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:08:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,15 @@ int	check_more_special_char(char c)
 		|| c == '$' || c == '\t')
 		return (KO);
 	return (OK);
+}
+
+int	has_equal(char *var)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+		if (var[i] == '=')
+			return (OK);
+	return (KO);
 }

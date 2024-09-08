@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 23:47:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:58:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,29 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 
 /* recoit la variable a etendre vecv le $ et la cherche dans env
 malloc et renvoie un char * pour manipuler a la guise lexpansion */
+
+int	has_multiple_dollar(char *var)
+{
+	int	i;
+	int	dollar;
+
+	i = -1;
+	dollar = 0;
+	while (var[++i])
+		if (var[i] == '$')
+			dollar++;
+	if (dollar > 1)
+		return (OK);
+	return (KO);
+}
+
+int	has_dollar(char *var)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+		if (var[i] == '$')
+			return (OK);
+	return (KO);
+}

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:24:30 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:31:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 23:26:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,30 @@ int	put_quote_back(char **str, char quote)
 	free(*str);
 	*str = with_quote;
 	return (OK);
+}
+
+void	set_index_again(t_list *token, t_list *brut_list)
+{
+	t_list	*tmp;
+	int		index;
+
+	tmp = token;
+	index = 0;
+	while (tmp)
+	{
+		((t_token *)tmp->content)->index = index;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+		index++;
+	}
+	tmp = brut_list;
+	index = 0;
+	while (tmp)
+	{
+		((t_token *)tmp->content)->index = index++;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
 }

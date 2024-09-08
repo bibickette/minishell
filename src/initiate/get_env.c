@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 14:33:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 15:46:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,10 @@ int	load_env(t_data *minishell, char **env)
 	while (++i < env_size)
 		if (char_add_back_tab(&minishell->builtins->env, env[i]) == KO)
 			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
-	// load_export_tab(minishell, env);
+	if (load_export_tab(minishell, env) == KO)
+		return (KO);
 	return (load_path(minishell, 1));
 }
-
-// int load_export_tab(t_data *minishell, char **env)
-// {
-// 	int	i;
-// 	char *value_export;
-// 	char *full_export;
-
-// 	i = -1;
-// 	full_export = NULL;
-// 	value_export = NULL;
-// 	while (env[++i])
-// 	{
-// 		value_export = ft_strnstr(env[i], "=", ft_strlen(env[i]));
-// 		if (char_add_back_tab(&minishell->builtins->export, env[i]) == KO)
-// 			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
-// 	}
-// }
 
 int	load_path(t_data *minishell, int flag)
 {

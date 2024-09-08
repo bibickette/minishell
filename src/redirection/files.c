@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 18:21:33 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 13:38:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 18:53:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	open_all_infile(t_data *minishell, t_file *file)
 	return (OK);
 }
 
-int	open_all_outfile(t_data *minishell, t_file *file)
+int	open_all_outfile(t_file *file)
 {
 	if (file->type == OUTFILE_TYPE)
 	{

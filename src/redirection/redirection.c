@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 22:05:44 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 13:38:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 18:53:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	redirection_out(t_data *minishell, t_file *files)
 	if (!files)
 		return (OK);
 	while (++i < minishell->nb_files)
-		if (open_all_outfile(minishell, &minishell->files[i]) == KO)
+		if (open_all_outfile(&minishell->files[i]) == KO)
 			return (KO);
 	i = -1;
 	while (files[++i].name)

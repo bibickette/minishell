@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 14:50:18 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:07:10 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 
 # define KO -1
 # define OK 0
+# define M_KO 1
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
@@ -108,6 +109,7 @@
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
 # define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
 # define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
+# define NOT_ENOUGH_ARG "Minishell Error : Not enough arguments\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"

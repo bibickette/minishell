@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 14:46:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:46:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	reset_cmd_pipe(t_list *head)
 
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 {
-	if (((t_token *)current->content)->type == CMD_TYPE)
+	if (((t_token *)current->content)->type == CMD_TYPE
+		|| ((t_token *)current->content)->type == BUILTIN_TYPE)
 		(*cmd_on_pipe)++;
 	if (((t_token *)current->content)->type == PIPE_TYPE)
 		(*on_pipe_nb)++;
@@ -54,9 +55,11 @@ void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 		&& cmd_on_pipe == on_pipe_nb)
 	{
 		((t_token *)current->content)->type = CMD_TYPE;
+		set_builtin_type((t_token *)current->content);
 		(*cmd_on_pipe)++;
 	}
-	else if(((t_token *)current->content)->type == WORD_TYPE && (*cmd_on_pipe) == 0)
+	else if (((t_token *)current->content)->type == WORD_TYPE
+		&& (*cmd_on_pipe) == 0)
 	{
 		((t_token *)current->content)->type = CMD_TYPE;
 		set_builtin_type((t_token *)current->content);

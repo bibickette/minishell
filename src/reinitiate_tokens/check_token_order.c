@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 13:40:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 22:16:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,39 @@ int	check_token_operator_order(t_list *token, t_data *minishell)
 		if (check_every_condition(tmp) == KO
 			|| check_builtin_condition(tmp) == KO)
 		{
-			minishell->last_status = 2;
+			minishell->last_status = 1;
 			return (KO);
 		}
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	if (check_every_builtin_n_type(token) == KO)
+	{
+		minishell->last_status = 1;
+		return (KO);
+	}
+	return (OK);
+}
+
+int	check_every_builtin_n_type(t_list *token)
+{
+	t_list	*tmp;
+	int		cmd_type;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			cmd_type = ((t_token *)tmp->content)->builtin_type;
+		else if (((t_token *)tmp->content)->type == CMD_TYPE)
+			cmd_type = ((t_token *)tmp->content)->type;
+		if (((t_token *)tmp->content)->type == ARG_TYPE
+			&& cmd_type == BUILT_NO_OPT_ARG)
+			return (ft_putstr_fd(BUILTIN_SYNTAX_ERR, STDERR_FILENO), KO);
+		else if (((t_token *)tmp->content)->type == OPT_TYPE
+			&& (cmd_type == BUILT_NO_OPTION || cmd_type == BUILT_NO_OPT_ARG))
+			return (ft_putstr_fd(BUILTIN_SYNTAX_ERR, STDERR_FILENO), KO);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
