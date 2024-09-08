@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 21:00:40 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/08 17:49:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 18:10:36 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_double_char(char **array)
 	while (array[i])
 	{
 		free(array[i]);
-		array[i] = 0;
 		i++;
 	}
 	free(array);

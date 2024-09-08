@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 17:27:41 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:12:44 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	prompt(t_list *token, t_data *minishell)
 					// execve_one_cmd(minishell, "export", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
-					free_double_char(minishell->command);
+					if (minishell->command)
+						free(minishell->command);
 					minishell->nb_files = 0;
 				}
 			}

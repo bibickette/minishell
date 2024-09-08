@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 17:47:01 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:05:42 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**double_tab_command(t_data *minishell, t_list *command_list)
 	tab_command = ft_calloc(size + 1, sizeof(char *));
 	while (actual)
 	{
-		char_add_back_tab(&minishell->command, content->entire_command);
+		tab_command[i] = content->entire_command;
 		printf("ajout de commande %s \n", content->entire_command);
 		actual = actual->next;
 		if (actual && actual->content)
