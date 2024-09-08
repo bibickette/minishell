@@ -7,23 +7,16 @@ void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_
 
 	while (*actual)
 	{
-		if ((*actual_content)->type == ARG_TYPE) // Si c'est un argument
-		{
+		if ((*actual_content)->type == ARG_TYPE)
 			content->arg = add_argument(content->arg, (*actual_content)->str, &arg_size);
-		}
-		else if ((*actual_content)->type == OPT_TYPE) // Si c'est une option
-		{
+		else if ((*actual_content)->type == OPT_TYPE)
 			content->option = add_option(content->option, (*actual_content)->str, &opt_size);
-		}
 		else
-		{
 			break;
-		}
 		increment_actual(actual, actual_content);
 	}
 }
 
-// Incrémente le pointeur sur l'élément actuel
 void	increment_actual(t_list **actual, t_token **actual_content)
 {
 	if (*actual)
@@ -32,7 +25,6 @@ void	increment_actual(t_list **actual, t_token **actual_content)
 		*actual_content = (*actual)->content;
 }
 
-// Ajoute une option en fonction du type
 char	**add_option(char **options, char *new_option, int *size)
 {
 	char	**new_options;
@@ -54,7 +46,6 @@ char	**add_option(char **options, char *new_option, int *size)
 	return (new_options);
 }
 
-// Ajoute un argument en fonction du type
 char	**add_argument(char **args, char *new_arg, int *size)
 {
 	char	**new_args;
@@ -76,7 +67,6 @@ char	**add_argument(char **args, char *new_arg, int *size)
 	return (new_args);
 }
 
-// Traite la commande principale
 void	process_command(t_list **actual, t_token **actual_content, t_command *content)
 {
 	if ((*actual_content)->type != CMD_TYPE && (*actual_content)->type != BUILTIN_TYPE)

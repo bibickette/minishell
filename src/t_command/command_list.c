@@ -87,19 +87,24 @@ t_list	*command_listing(t_list *token)
 	while (actual)
 	{
 		content = ft_calloc(1, sizeof(t_command));
-		if (!content)
-			return (NULL);
-		if (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
-			process_command(&actual, &actual_content, content);
-		if (actual && (actual_content->type == ARG_TYPE || actual_content->type == OPT_TYPE))
-			process_arguments_and_options(&actual, &actual_content, content);
-		if (actual && (actual_content->type == IN_REDIR_TYPE || actual_content->type == OUT_REDIR_TYPE || \
+		while (1)
+		{
+			if (!content)
+				return (NULL);
+			else if (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
+				process_command(&actual, &actual_content, content);
+			else if (actual && (actual_content->type == ARG_TYPE || actual_content->type == OPT_TYPE))
+				process_arguments_and_options(&actual, &actual_content, content);
+			else if (actual && (actual_content->type == IN_REDIR_TYPE || actual_content->type == OUT_REDIR_TYPE || \
 							actual_content->type == HERE_DOC_TYPE || actual_content->type == HD_APPEND_TYPE || actual_content->type == PIPE_TYPE))
-			process_redirection_and_pipe(&actual, &actual_content, content);
-		if (!command_list && (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE))
-			command_list = ft_lstnew_libft(content);
-		else
-			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));
+				process_redirection_and_pipe(&actual, &actual_content, content);
+			else if (!command_list && (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE))
+				command_list = ft_lstnew_libft(content);
+			if (!actual || actual_content->type == PIPE_TYPE)
+				break;
+			increment_actual(&actual, &actual_content);
+		}
+		ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));
 		increment_actual(&actual, &actual_content);
 	}
 	return (command_list);
