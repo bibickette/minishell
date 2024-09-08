@@ -6,40 +6,88 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:44:01 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:40:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	export_cmd(t_list **export_head, char *var, t_data *minishell)
+void	export_cmd_no_arg(char **export)
 {
-	t_list	*new_export;
-	int		i;
-	int		y;
+	int	i;
 
-	new_export = NULL;
+	i = -1;
+	while (export[++i])
+	{
+		if (ft_strcmp(export[i], "") != 0)
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(export[i], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+	}
+}
+
+int	export_cmd_w_arg(char *var, t_data *minishell)
+{
+	if (check_export_format(var, minishell) == KO)
+		return (KO);
+	if (has_equal(var) == OK)
+	{
+		if (export_replacement_env(&minishell->builtins->env, &var) == OK)
+			minishell->last_status = 0;
+		else if (char_add_back_tab(&minishell->builtins->env, var) == KO)
+		{
+			minishell->last_status = 1;
+			return (KO);
+		}
+	}
+	/*
+	else
+	{
+		if (char_add_back_tab(&minishell->builtins->export, var) == KO)
+		{
+			minishell->last_status = 1;
+			return (KO);
+		}
+	}
+	*/
+	return (OK);
+}
+
+/*
+note sur env et export :
+si la variable na pas	de = alors elle ne sera pas intégré dans env
+elle le sera seulement dans export OK
+export display "declare -x " avant chaque case de lenv OK
+
+si la variable a		un = et rien apres alors elle est export dans env et export
+elle est export dans export avec var=""
+
+si le premier char cest =, renvoyer erreur ; ca fait un last status = 1 ok
+
+*/
+
+int	check_export_format(char *var, t_data *minishell)
+{
+	int	i;
+	int	y;
+
 	i = -1;
 	while (var[++i])
 		if (var[i] == '=')
 			break ;
+	if (var[0] == '=' || (var[0] >= '0' && var[0] <= '9'))
+		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
 	y = -1;
 	while (++y < i)
-		if (var[y] == ' ')
+		if (check_more_special_char(var[y]) == KO)
 			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
-	if (export_replacement(minishell, minishell->builtins->export, &var) == OK)
-		return (OK);
-	else
-	{
-		new_export = ft_lstnew_libft(ft_strdup(var));
-		if (!new_export)
-			return (ft_putstr_fd(LSTNEW_ERR, STDERR_FILENO), KO);
-		ft_lstadd_back_libft(export_head, new_export);
-	}
+	minishell->last_status = 1;
 	return (OK);
 }
 
-int	export_replacement(t_data *minishell, t_list *export_head, char **var)
+int	export_replacement_env(char ***env_or_export, char **var)
 {
 	char	*tmp_var;
 	int		i;
@@ -54,52 +102,23 @@ int	export_replacement(t_data *minishell, t_list *export_head, char **var)
 	if (ft_strlen(tmp_var) != (size_t)i)
 		tmp_var[i + 1] = '\0';
 	i = -1;
-	while (minishell->builtins->env[++i])
+	while ((*env_or_export)[++i])
 	{
-		if (ft_strncmp(minishell->builtins->env[i], tmp_var,
-				ft_strlen(tmp_var)) == 0)
+		if (ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
 		{
-			free(minishell->builtins->env[i]);
-			minishell->builtins->env[i] = *var;
+			free((*env_or_export)[i]);
+			(*env_or_export)[i] = ft_strdup(*var);
 			free(tmp_var);
-			if (!minishell->builtins->env[i])
+			if (!(*env_or_export)[i])
 				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 			return (OK);
 		}
-	}
-	return (export_replacement_list(export_head, var, tmp_var));
-}
-/*
-si la variable a export existe deja, remplace par la nouvelle valeur
-*/
-
-int	export_replacement_list(t_list *export_head, char **var, char *tmp_var)
-{
-	t_list	*tmp;
-
-	tmp = export_head;
-	while (tmp)
-	{
-		if (ft_strncmp((char *)tmp->content, tmp_var, ft_strlen(tmp_var)) == 0)
-		{
-			free(((t_token *)tmp->content)->str);
-			((t_token *)tmp->content)->str = *var;
-			return (free(tmp_var), OK);
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
 	}
 	free(tmp_var);
 	return (KO);
 }
 /*
-si la variable a export existe deja,
-	remplace par la nouvelle valeur dans la liste export
-*/
-
-/*
-build lexoport de single quote
+si la variable a export existe deja, remplace par la nouvelle valeur
 */
 
 /*
@@ -143,3 +162,14 @@ export_replacement_list : check si la variable a export existe deja
 	et la remplace par la nouvelle valeur dans la liste export
 
 */
+
+int	has_equal(char *var)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+		if (var[i] == '=')
+			return (OK);
+	return (KO);
+}

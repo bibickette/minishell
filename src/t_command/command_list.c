@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// Ajoute une nouvelle redirection (entrée ou sortie) à un tableau
 char **add_redirection(char **redirections, char *redirection, int *size)
 {
 	char **new_redirections;
@@ -21,7 +20,6 @@ char **add_redirection(char **redirections, char *redirection, int *size)
 	return (new_redirections);
 }
 
-// Ajoute un fichier d'entrée ou de sortie
 char **add_file(char **files, char *file, int *size)
 {
 	char **new_files;
@@ -42,7 +40,6 @@ char **add_file(char **files, char *file, int *size)
 	return (new_files);
 }
 
-// Gère les redirections et pipes en fonction du type des tokens
 void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_command *content)
 {
 	int input_size = 0;
@@ -51,40 +48,34 @@ void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_c
 
 	while (*actual)
 	{
-		// Gestion des redirections de sortie
-		if ((*actual_content)->type == OUT_REDIR_TYPE || (*actual_content)->type == APPEND_FILE_TYPE)
+		if ((*actual_content)->type == OUT_REDIR_TYPE || (*actual_content)->type == HD_APPEND_TYPE)
 		{
-			// Ajout du type de redirection et du fichier de sortie
 			content->redirections = add_redirection(content->redirections, (*actual_content)->str, &redir_size);
-			increment_actual(actual, actual_content); // Passer au fichier de sortie
+			increment_actual(actual, actual_content);
 			if (*actual && (*actual_content)->type == OUTFILE_TYPE)
 			{
 				content->outputs = add_file(content->outputs, (*actual_content)->str, &output_size);
-				increment_actual(actual, actual_content); // Incrément après avoir traité le fichier
+				increment_actual(actual, actual_content);
 			}
 		}
-		// Gestion des redirections d'entrée
-		else if ((*actual_content)->type == IN_REDIR_TYPE)
+		else if ((*actual_content)->type == IN_REDIR_TYPE || (*actual_content)->type == HERE_DOC_TYPE)
 		{
-			// Ajout du type de redirection et du fichier d'entrée
 			content->redirections = add_redirection(content->redirections, (*actual_content)->str, &redir_size);
-			increment_actual(actual, actual_content); // Passer au fichier d'entrée
+			increment_actual(actual, actual_content);
 			if (*actual && (*actual_content)->type == INFILE_TYPE)
 			{
 				content->inputs = add_file(content->inputs, (*actual_content)->str, &input_size);
-				increment_actual(actual, actual_content); // Incrément après avoir traité le fichier
+				increment_actual(actual, actual_content);
 			}
 		}
-		else if ((*actual_content)->type == PIPE_TYPE) // Si c'est un pipe
+		else if ((*actual_content)->type == PIPE_TYPE)
 		{
 			content->pipe = 1;
-			increment_actual(actual, actual_content); // Passe au token suivant après le pipe
-			break; // Arrête la boucle si on rencontre un pipe (fin de la commande actuelle)
+			increment_actual(actual, actual_content);
+			break;
 		}
 		else
-		{
-			break; // Sortir de la boucle si ce n'est ni redirection ni pipe
-		}
+			break; 
 	}
 }
 
@@ -105,21 +96,13 @@ t_list	*command_listing(t_list *token)
 		content = ft_calloc(1, sizeof(t_command));
 		if (!content)
 			return (NULL);
-		
-		if (actual_content->type == CMD_TYPE) // Si c'est une commande
-		{
+		if (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
 			process_command(&actual, &actual_content, content);
-		}
-
 		if (actual)
-		{
-			process_arguments_and_options(&actual, &actual_content, content); // Gère les options et arguments
-		}
+			process_arguments_and_options(&actual, &actual_content, content);
 		if (actual)
-		{
-			process_redirection_and_pipe(&actual, &actual_content, content); // Gère les redirections et pipes
-		}
-		if (!command_list)
+			process_redirection_and_pipe(&actual, &actual_content, content);
+		if (!command_list && actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
 			command_list = ft_lstnew_libft(content);
 		else
 			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 18:57:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:47:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_builtins(t_builtin *builtins)
 		free(builtins->pwd);
 	builtins->pwd = 0;
 	if (builtins->export)
-		ft_lstclear_custom_bis(builtins->export);
+		free_double_char(builtins->export);
 	builtins->export = 0;
 	if (builtins)
 		free(builtins);

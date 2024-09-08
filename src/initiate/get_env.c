@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 17:26:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/06 14:33:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,36 @@ int	no_environment(t_data *minishell)
 
 int	load_env(t_data *minishell, char **env)
 {
-	int		env_size;
-	int		i;
+	int	env_size;
+	int	i;
 
 	env_size = 0;
 	while (env[env_size])
 		env_size++;
-	minishell->builtins->env = ft_calloc(env_size + 1, sizeof(char *));
-	if (!minishell->builtins->env)
-		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	i = -1;
 	while (++i < env_size)
-	{
-		minishell->builtins->env[i] = ft_strdup(env[i]);
-		if (!minishell->builtins->env[i])
-			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-	}
-	minishell->builtins->env[i] = 0;
+		if (char_add_back_tab(&minishell->builtins->env, env[i]) == KO)
+			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
+	// load_export_tab(minishell, env);
 	return (load_path(minishell, 1));
 }
+
+// int load_export_tab(t_data *minishell, char **env)
+// {
+// 	int	i;
+// 	char *value_export;
+// 	char *full_export;
+
+// 	i = -1;
+// 	full_export = NULL;
+// 	value_export = NULL;
+// 	while (env[++i])
+// 	{
+// 		value_export = ft_strnstr(env[i], "=", ft_strlen(env[i]));
+// 		if (char_add_back_tab(&minishell->builtins->export, env[i]) == KO)
+// 			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
+// 	}
+// }
 
 int	load_path(t_data *minishell, int flag)
 {

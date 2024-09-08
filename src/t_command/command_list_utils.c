@@ -79,7 +79,7 @@ char	**add_argument(char **args, char *new_arg, int *size)
 // Traite la commande principale
 void	process_command(t_list **actual, t_token **actual_content, t_command *content)
 {
-	if ((*actual_content)->type != CMD_TYPE)
+	if ((*actual_content)->type != CMD_TYPE && (*actual_content)->type != BUILTIN_TYPE)
 		return ;
 	content->command = ft_strdup((*actual_content)->str);
 	increment_actual(actual, actual_content);

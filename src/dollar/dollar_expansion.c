@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/02 01:08:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/04 23:47:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,6 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
 			return (expanded);
 		}
-	}
-	return (expansion_no_surround_list(var, minishell));
-}
-
-char	*expansion_no_surround_list(char *var, t_data *minishell)
-{
-	t_list	*tmp;
-	char	*expanded;
-
-	tmp = minishell->builtins->export;
-	while (tmp)
-	{
-		if (ft_strncmp((char *)tmp->content, var, ft_strlen(var)) == 0
-			&& ((char *)tmp->content)[ft_strlen(var)] == '=')
-		{
-			expanded = ft_strdup((char *)tmp->content + ft_strlen(var) + 1);
-			if (!expanded)
-				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
-			return (expanded);
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
 	}
 	expanded = ft_strdup("");
 	if (!expanded)

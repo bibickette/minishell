@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 18:10:24 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:50:18 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
+# define ENV 1
+# define EXPORT 2
+
 /* quote type */
 # define N_QUOTE 0
 # define S_QUOTE 1
@@ -80,13 +83,12 @@
 # define IN_REDIR_TYPE 8  // <
 # define OUT_REDIR_TYPE 9 // >
 /* heredoc */
-# define HERE_DOC_TYPE 10    // <<
+# define HERE_DOC_TYPE 10   // <<
 # define HD_LIMITER_TYPE 11 // EOF
 # define HD_APPEND_TYPE 12  // >>
 # define APPEND_FILE_TYPE 13
 /* other */
-# define PIPE_TYPE 14   // |
-# define DOLLAR_TYPE 15 // $
+# define PIPE_TYPE 14 // |
 
 # define BUILT_NO_OPTION 16
 # define BUILT_W_OPT 17
@@ -132,7 +134,7 @@
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 # define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
-
+# define ADD_BACK_TAB_ERR "Minishell Error : Malloc in function char_add_back_tab\n"
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"
 # define HERE_DOC ".here_doc"
@@ -170,8 +172,7 @@ typedef struct s_builtin
 {
 	char		**env;
 	char		*pwd;
-	t_list		*export;
-	t_list		*real_export;
+	char		**export;
 }				t_builtin;
 
 typedef struct s_command
