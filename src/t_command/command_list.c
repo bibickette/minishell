@@ -6,17 +6,18 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:10:58 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 17:49:46 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:08:26 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **add_redirection(char **redirections, char *redirection, int *size)
+char	**add_redirection(char **redirections, char *redirection, int *size)
 {
-	char **new_redirections;
-	int i = 0;
+	char	**new_redirections;
+	int	i;
 
+	i = 0;
 	new_redirections = ft_calloc(*size + 2, sizeof(char *));
 	if (!new_redirections)
 		return (NULL);
@@ -28,15 +29,16 @@ char **add_redirection(char **redirections, char *redirection, int *size)
 	new_redirections[i] = ft_strdup(redirection);
 	new_redirections[++i] = NULL;
 	(*size)++;
-	free(redirections);
+	free_double_char(redirections);
 	return (new_redirections);
 }
 
-char **add_file(char **files, char *file, int *size)
+char	**add_file(char **files, char *file, int *size)
 {
-	char **new_files;
-	int i = 0;
+	char	**new_files;
+	int	i;
 
+	i = 0;
 	new_files = ft_calloc(*size + 2, sizeof(char *));
 	if (!new_files)
 		return (NULL);

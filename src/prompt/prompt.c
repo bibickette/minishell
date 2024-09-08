@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 18:12:44 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:05:13 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,14 @@ void	prompt(t_list *token, t_data *minishell)
 					minishell->command = double_tab_command(minishell, minishell->command_list);
 					print_double_tab(minishell->command);
 					printf("la commande s'execute ICI\n");
-					print_double_tab(minishell->command);
 					// execve_one_cmd(minishell, "export", token);
 					free_files_tab(minishell, minishell->files);
-					free_command_list(minishell->command_list);
-					if (minishell->command)
-						free(minishell->command);
 					minishell->nb_files = 0;
 				}
 			}
 		}
+		free_command_list(minishell->command_list);
+		free(minishell->command);
 		ft_lstclear_custom(&token, free);
 		ft_lstclear_custom(&minishell->brut_list, free);
 		free(prompt);
