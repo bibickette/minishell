@@ -6,7 +6,7 @@
 /*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 15:49:21 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:47:01 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ char	**double_tab_command(t_data *minishell, t_list *command_list)
 			content = (t_command *)actual->content;
 		i++;
 	}
+	tab_command[i] = NULL;
 	return (tab_command);
 }

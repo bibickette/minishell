@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 17:15:49 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 17:49:13 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_
 void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_command *content);
 char	**add_redirection(char **redirections, char *redirection, int *size);
 char	**add_file(char **files, char *file, int *size);
-void	process_command(t_list **actual, t_token **actual_content, t_command *content);
+void	process_command(t_token **actual_content, t_command *content);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
@@ -261,8 +261,6 @@ void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 
 t_list	*command_listing(t_list *token);
 void	process_options(t_list **actual, t_token **actual_content,
-			t_command *content);
-void	process_command(t_list **actual, t_token **actual_content,
 			t_command *content);
 char	**add_argument(char **args, char *new_arg, int *size);
 char	**add_option(char **options, char *new_option, int *size);

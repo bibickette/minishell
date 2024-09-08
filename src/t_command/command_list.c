@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:10:58 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 16:10:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 17:49:46 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_list	*command_listing(t_list *token)
 			if (!content)
 				return (NULL);
 			else if (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
-				process_command(&actual, &actual_content, content);
+				process_command(&actual_content, content);
 			else if (actual && (actual_content->type == ARG_TYPE || actual_content->type == OPT_TYPE))
 				process_arguments_and_options(&actual, &actual_content, content);
 			else if (actual && (actual_content->type == IN_REDIR_TYPE || actual_content->type == OUT_REDIR_TYPE || \
