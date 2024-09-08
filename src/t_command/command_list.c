@@ -102,7 +102,7 @@ t_list	*command_listing(t_list *token)
 			process_arguments_and_options(&actual, &actual_content, content);
 		if (actual)
 			process_redirection_and_pipe(&actual, &actual_content, content);
-		if (!command_list && actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE)
+		if (!command_list && (actual_content->type == CMD_TYPE || actual_content->type == BUILTIN_TYPE))
 			command_list = ft_lstnew_libft(content);
 		else
 			ft_lstadd_back_libft(&command_list, ft_lstnew_libft(content));
