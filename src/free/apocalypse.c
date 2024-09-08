@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/04 23:47:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 17:58:40 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	apocalypse(t_data *minishell)
 	if (minishell->path)
 		free_double_char(minishell->path);
 	minishell->path = 0;
+	if (minishell->command)
+		free_double_char(minishell->command);
 	if (minishell->here_doc == OK)
 		unlink(HERE_DOC);
 	if (minishell)
