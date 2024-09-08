@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 16:10:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 17:23:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	prompt(t_list *token, t_data *minishell)
 			dupplicate_list(token, &minishell->brut_list);
 			set_index_again(token, minishell->brut_list);
 			expand_everything(minishell, token);
+			// separate_if_needed(minishell, token);
 			if (lf_spechar_list(minishell, token) == OK)
 			{
 				start_join_token_if_needed(token, prompt, minishell->brut_list);
@@ -45,7 +46,6 @@ void	prompt(t_list *token, t_data *minishell)
 					print_double_tab(minishell->command);
 					printf("la commande s'execute ICI\n");
 					print_double_tab(minishell->command);
-					// export_cmd_w_arg("ABCDE", minishell);
 					// execve_one_cmd(minishell, "export", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);

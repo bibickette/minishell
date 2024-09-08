@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 16:12:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/08 17:15:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void	set_index_again(t_list *token, t_list *brut_list);
 
 int		set_entire_command(t_list *command_list);
 int		go_next(t_list **actual, t_command **actual_command);
+
+/* separate token if needed */
+int has_space(char *str);
+void separate_if_needed(t_data *minishell, t_list *token);
+int separate_token(t_list **token, t_list *before, t_list *to_separate, t_list *after);
+
 
 /* type of token */
 void	set_type_operator(t_token *last_token);
