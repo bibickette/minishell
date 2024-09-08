@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_strct.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 13:07:10 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:40:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
 # define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
 # define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
-# define NOT_ENOUGH_ARG "Minishell Error : Not enough arguments\n"
+# define NOT_ENOUGH_ARG "Minishell Error : Unset: Not enough arguments\n"
+# define ECHO_ERR "Minishell Error : Echo: invalid option\n"
 
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"

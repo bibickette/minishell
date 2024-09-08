@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/08 15:05:59 by yantoine         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/08 15:43:57 by phwang           ###   ########.fr       */
+>>>>>>> bibi_pouet
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +121,7 @@ void	set_builtin_type(t_token *current);
 void	reset_operator_type(t_token *current);
 void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
+int	reset_arg_if_echo(t_list *head);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_every_condition(t_list *tmp);
@@ -281,6 +286,7 @@ void	free_files_tab(t_data *minishell, t_file *files);
 
 /* temporary */
 void	print_all_files(t_file *files);
+void	print_double_tab(char **tab);
 
 /**********************************************/
 
