@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 16:25:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:27:41 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	prompt(t_list *token, t_data *minishell)
 			dupplicate_list(token, &minishell->brut_list);
 			set_index_again(token, minishell->brut_list);
 			expand_everything(minishell, token);
+			// separate_if_needed(minishell, token);
 			if (lf_spechar_list(minishell, token) == OK)
 			{
 				start_join_token_if_needed(token, prompt, minishell->brut_list);
@@ -44,8 +45,8 @@ void	prompt(t_list *token, t_data *minishell)
 					minishell->command = double_tab_command(minishell, minishell->command_list);
 					print_double_tab(minishell->command);
 					printf("la commande s'execute ICI\n");
-					//export_cmd_w_arg("ABCDE", minishell);
-					//execve_one_cmd(minishell, "export", token);
+					print_double_tab(minishell->command);
+					// execve_one_cmd(minishell, "export", token);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list);
 					free_double_char(minishell->command);
@@ -60,7 +61,6 @@ void	prompt(t_list *token, t_data *minishell)
 }
 
 /*
-<<<<<<< HEAD
 note sur env et export :
 si la variable na pas	de = alors elle ne sera pas intégré dans env
 elle le sera seulement dans export
@@ -71,8 +71,4 @@ elle est export dans export avec var=""
 
 si le premier char cest =, renvoyer erreur ; ca fait un last status = 1
 
-=======
-faire un in tab file et out tab file
-essayer dopen les files dans le execve, si un in foire, on cree pas le out
->>>>>>> merge-bibi
 */

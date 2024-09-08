@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 15:05:59 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:15:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ void	set_index_again(t_list *token, t_list *brut_list);
 int		set_entire_command(t_list *command_list);
 int		go_next(t_list **actual, t_command **actual_command);
 
+/* separate token if needed */
+int has_space(char *str);
+void separate_if_needed(t_data *minishell, t_list *token);
+int separate_token(t_list **token, t_list *before, t_list *to_separate, t_list *after);
+
+
 /* type of token */
 void	set_type_operator(t_token *last_token);
 void	set_token_type(t_list *head);
@@ -117,6 +123,7 @@ void	set_builtin_type(t_token *current);
 void	reset_operator_type(t_token *current);
 void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
+int	reset_arg_if_echo(t_list *head);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_every_condition(t_list *tmp);
@@ -281,6 +288,7 @@ void	free_files_tab(t_data *minishell, t_file *files);
 
 /* temporary */
 void	print_all_files(t_file *files);
+void	print_double_tab(char **tab);
 
 /**********************************************/
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_list_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/08 16:11:13 by phwang            #+#    #+#             */
+/*   Updated: 2024/09/08 17:34:08 by yantoine         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_command *content)
@@ -72,5 +84,4 @@ void	process_command(t_list **actual, t_token **actual_content, t_command *conte
 	if ((*actual_content)->type != CMD_TYPE && (*actual_content)->type != BUILTIN_TYPE)
 		return ;
 	content->command = ft_strdup((*actual_content)->str);
-	increment_actual(actual, actual_content);
 }
