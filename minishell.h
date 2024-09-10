@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 19:35:04 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 20:04:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,9 +237,7 @@ void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
 void	exceve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
-void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
-			t_list *token);
-int do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
+void do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,

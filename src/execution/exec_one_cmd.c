@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 19:52:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 20:16:04 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,32 @@
 int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 {
 	int		pid;
-	char **check;
-	check = ft_split(cmd_arg, ' ');
-	if(is_builtin(check[0]) == OK)
+	char	**arg;
+	int		ret;
+
+	arg = ft_split(cmd_arg, ' ');
+	if (is_builtin(arg[0]) == OK)
 	{
-		
+		ret = execve_builtin(minish, arg, token);
+		minish->last_status = OK;
+		if (ret == KO || ret == M_KO)
+		{
+			if (ret == M_KO)
+				minish->last_status = 1;
+		}
+		free_double_char(arg);
 	}
-	pid = fork();
-	do_single_fork(minish, token, &pid, cmd_arg);
-	return (get_status_process(minish, &minish->last_status, pid));
+	else
+	{
+		free_double_char(arg);
+		pid = fork();
+		do_single_fork(minish, token, &pid, cmd_arg);
+		return (get_status_process(minish, &minish->last_status, pid));
+	}
+	return (OK);
 }
 
-int do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
+void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 {
 	char	*path;
 	char	**arg;
@@ -34,7 +48,10 @@ int do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	arg = NULL;
 	path = NULL;
 	if (*pid == KO)
-		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO), errno);
+	{
+		minish->last_status = errno;
+		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO));
+	}
 	if (*pid == 0)
 	{
 		path = split_n_path(minish, cmd_arg, &arg, token);
@@ -44,14 +61,13 @@ int do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 			exceve_error_free(minish, arg, path, token);
 			exit(EXIT_FAILURE);
 		}
-		if(minish->nb_files > 0)
+		if (minish->nb_files > 0)
 			close_all_files(minish->files);
 		if (execve(path, arg, minish->builtins->env) == KO)
 			execve_error(minish, path, arg, token);
 		// execve_builtin_or_not(minish, arg, path, token);
 		exit(EXIT_SUCCESS);
 	}
-	return (OK);
 }
 
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
@@ -87,7 +103,7 @@ void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
 
 int	get_status_process(t_data *minishell, int *status, pid_t pid)
 {
-	if(minishell->nb_files > 0)
+	if (minishell->nb_files > 0)
 		close_all_files(minishell->files);
 	waitpid(pid, &minishell->last_status, 0);
 	minishell->last_status = WEXITSTATUS(*status);
@@ -107,6 +123,7 @@ void	exceve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 	free_double_char(arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);
-	free(path);
+	if (path)
+		free(path);
 	apocalypse(minish);
 }
