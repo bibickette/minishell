@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 22:05:44 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 20:47:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 23:05:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	redirection_in(t_data *minishell, t_file *files)
 	return (OK);
 }
 
-int	redirection_out(t_data *minishell, t_file *files)
+int	redirection_out(t_data *minishell, t_file *files, int std_out)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ int	redirection_out(t_data *minishell, t_file *files)
 		{
 			if (files[i].fd != KO)
 			{
-				if (dup2(files[i].fd, STDOUT_FILENO) < 0)
+				if (dup2(files[i].fd, std_out) < 0)
 					return (perror(DUP_ERR), errno);
 			}
 			else

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 20:25:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:58:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void	cd_cmd(char *path);
 int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
 int		redirection_in(t_data *minishell, t_file *files);
-int		redirection_out(t_data *minishell, t_file *files);
+int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);

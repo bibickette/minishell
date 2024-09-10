@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 21:18:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 23:43:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 
 	std_in = dup(STDIN_FILENO);
 	std_out = dup(STDOUT_FILENO);
+	// dup2(STDOUT_FILENO, std_out);
+	// std_out = STDOUT_FILENO;
+	printf("std_in : %d\n", std_in);
+	printf("std_out : %d\n", std_out);
 	if (redirection_in(minish, minish->files) != OK || redirection_out(minish,
-			minish->files) != OK)
+			minish->files, STDOUT_FILENO) != OK)
 		minish->last_status = 1;
 	else
 	{
@@ -50,8 +54,11 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 		if (ret == KO || ret == M_KO)
 			minish->last_status = 1;
 	}
+	// close(STDOUT_FILENO);
+	// close(STDIN_FILENO);
 	dup2(std_in, STDIN_FILENO);
 	dup2(std_out, STDOUT_FILENO);
+	// open("/dev/pts/0", O_RDONLY);
 	close(std_in);
 	close(std_out);
 	free_double_char(arg);
@@ -73,7 +80,7 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	{
 		path = split_n_path(minish, cmd_arg, &arg, token);
 		if (redirection_in(minish, minish->files) != OK
-			|| redirection_out(minish, minish->files) != OK)
+			|| redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
 		{
 			exceve_error_free(minish, arg, path, token);
 			exit(EXIT_FAILURE);
