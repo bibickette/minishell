@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 18:58:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:13:27 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,10 +280,10 @@ int		have_twin(char *prompt);
 /* Auto destruction minishell*/
 void	apocalypse(t_data *minishell);
 void	free_builtins(t_builtin *builtins);
-void	free_command_list(t_list *command_list);
+void	free_command_list(t_list *command_list, t_data *minishell);
 void	free_command(t_command *command);
 void	free_lists(t_data *minishell);
-void	free_double_char(char **array);
+void	free_double_char(char ***array);
 void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);

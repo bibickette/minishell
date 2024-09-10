@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 01:13:50 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/29 19:23:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:01:23 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	build_expand_n_replace(char **str_expanded, char ***expanded_exported,
 		if (!(*str_expanded))
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	}
-	free_double_char((*expanded_exported));
+	free_double_char(expanded_exported);
 	if ((*str_expanded)[ft_strlen((*str_expanded)) - 1] == ' ')
 		(*str_expanded)[ft_strlen((*str_expanded)) - 1] = '\0';
 	free(((t_token *)tmp_head->content)->str);

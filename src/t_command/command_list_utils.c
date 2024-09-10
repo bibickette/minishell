@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:11:13 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:37:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:30:11 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	increment_actual(t_list **actual, t_token **actual_content)
 		*actual = (*actual)->next;
 	if (*actual)
 		*actual_content = (*actual)->content;
+	else
+		*actual_content = NULL;
 }
 
 char	**add_option(char **options, char *new_option, int *size)
@@ -59,7 +61,7 @@ char	**add_option(char **options, char *new_option, int *size)
 	new_options[i] = ft_strdup(new_option);
 	new_options[++i] = NULL;
 	(*size)++;
-	free(options);
+	free_double_char(&options);
 	return (new_options);
 }
 

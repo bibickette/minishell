@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 14:34:54 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/10 22:13:41 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	exceve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 {
 	close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
-	free_command_list(minish->command_list);
-	free_double_char(arg);
+	free_command_list(minish->command_list, minish);
+	free_double_char(&arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);
 	free(path);

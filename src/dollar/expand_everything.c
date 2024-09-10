@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 19:58:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:01:53 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
 	}
 	if (set_dollar_n_expand(minishell, dollar_tab, &expanded_exported) == KO)
 	{
-		free_double_char(expanded_exported);
+		free_double_char(&expanded_exported);
 		free(str_expanded);
 		return (KO);
 	}

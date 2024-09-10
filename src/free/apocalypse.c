@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 18:46:57 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/10 22:03:56 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	apocalypse(t_data *minishell)
 	free_builtins(minishell->builtins);
 	free_lists(minishell);
 	if (minishell->path)
-		free_double_char(minishell->path);
+		free_double_char(&(minishell->path));
 	minishell->path = 0;
 	if (minishell->here_doc == OK)
 		unlink(HERE_DOC);
@@ -31,13 +31,13 @@ void	apocalypse(t_data *minishell)
 void	free_builtins(t_builtin *builtins)
 {
 	if (builtins->env)
-		free_double_char(builtins->env);
+		free_double_char(&(builtins->env));
 	builtins->env = 0;
 	if (builtins->pwd)
 		free(builtins->pwd);
 	builtins->pwd = 0;
 	if (builtins->export)
-		free_double_char(builtins->export);
+		free_double_char(&(builtins->export));
 	builtins->export = 0;
 	if (builtins)
 		free(builtins);

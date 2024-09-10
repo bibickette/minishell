@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:56:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:42:38 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:03:00 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	handle_multiple_dollar(t_data *minishell, char ***dollar_tab,
 	(*expanded_exported) = ft_strdup("");
 	if (!(*expanded_exported))
 	{
-		free_double_char((*dollar_tab));
+		free_double_char(dollar_tab);
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	}
 	while ((*dollar_tab)[++z])
@@ -34,11 +34,11 @@ int	handle_multiple_dollar(t_data *minishell, char ***dollar_tab,
 				(*dollar_tab)[z]);
 		if (!(*expanded_exported))
 		{
-			free_double_char((*dollar_tab));
+			free_double_char(dollar_tab);
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 		}
 	}
-	free_double_char((*dollar_tab));
+	free_double_char(dollar_tab);
 	return (OK);
 }
 
@@ -121,7 +121,7 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 		(*expanded_exported) = ft_strdup("");
 		if (!(*expanded_exported))
 		{
-			free_double_char((*dollar_tab));
+			free_double_char(dollar_tab);
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 		}
 	}
@@ -129,7 +129,7 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 	{
 		if (add_doll_all_tab(minishell, dollar_tab, (*expanded_exported)) == KO)
 		{
-			free_double_char((*dollar_tab));
+			free_double_char(dollar_tab);
 			return (KO);
 		}
 	}
