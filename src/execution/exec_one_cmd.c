@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 20:16:04 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 21:18:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,10 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 {
 	int		pid;
 	char	**arg;
-	int		ret;
 
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
-	{
-		ret = execve_builtin(minish, arg, token);
-		minish->last_status = OK;
-		if (ret == KO || ret == M_KO)
-		{
-			if (ret == M_KO)
-				minish->last_status = 1;
-		}
-		free_double_char(arg);
-	}
+		handle_builtin(minish, arg, token);
 	else
 	{
 		free_double_char(arg);
@@ -38,6 +28,33 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 		return (get_status_process(minish, &minish->last_status, pid));
 	}
 	return (OK);
+}
+
+void	handle_builtin(t_data *minish, char **arg, t_list *token)
+{
+	int	ret;
+	int std_in;
+	int std_out;
+
+	std_in = dup(STDIN_FILENO);
+	std_out = dup(STDOUT_FILENO);
+	if (redirection_in(minish, minish->files) != OK || redirection_out(minish,
+			minish->files) != OK)
+		minish->last_status = 1;
+	else
+	{
+		ret = execve_builtin(minish, arg, token);
+		if(minish->nb_files > 0)
+			close_all_files(minish->files);
+		minish->last_status = OK;
+		if (ret == KO || ret == M_KO)
+			minish->last_status = 1;
+	}
+	dup2(std_in, STDIN_FILENO);
+	dup2(std_out, STDOUT_FILENO);
+	close(std_in);
+	close(std_out);
+	free_double_char(arg);
 }
 
 void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
@@ -65,7 +82,6 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 			close_all_files(minish->files);
 		if (execve(path, arg, minish->builtins->env) == KO)
 			execve_error(minish, path, arg, token);
-		// execve_builtin_or_not(minish, arg, path, token);
 		exit(EXIT_SUCCESS);
 	}
 }
