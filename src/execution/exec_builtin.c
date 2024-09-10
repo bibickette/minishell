@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 23:46:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:55:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,14 @@ void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
 {
 	int	ret;
 
-	if (is_builtin(arg[0]) == OK)
-	{
 		ret = execve_builtin(minish, arg, token);
+		exceve_error_free(minish, arg, path, token);
+		minish->last_status = OK	;
 		if (ret == KO || ret == M_KO)
 		{
-			exceve_error_free(minish, arg, path, token);
 			if (ret == M_KO)
-				exit(127);
-			else
-				exit(EXIT_FAILURE);
+				minish->last_status = 1;
 		}
-		exceve_error_free(minish, arg, path, token);
-	}
-	else if (execve(path, arg, minish->builtins->env) == KO)
-		execve_error(minish, path, arg, token);
 }
 
 int	execve_builtin(t_data *minishell, char **arg, t_list *token)

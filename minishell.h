@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 18:58:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:35:04 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ void	exceve_error_free(t_data *minish, char **arg, char *path,
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
 void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
 			t_list *token);
-
+int do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
@@ -262,7 +262,7 @@ void	*ft_realloc(void *ptr, size_t size);
 char	*cpy_twin(char **src, char buffer[BSIZE]);
 int		handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
-char	*ft_strnstr_minish(const char *s1, const char *s2, size_t len);
+char	*ft_strnstr_minish(char *s1,char *s2, size_t len);
 
 t_list	*command_listing(t_list *token);
 void	process_options(t_list **actual, t_token **actual_content,

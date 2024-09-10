@@ -1,0 +1,12 @@
+total 524
+drwxrwxr-x  5 paulinette paulinette   4096 sept. 10 19:33 LIBFT
+-rw-rw-r--  1 paulinette paulinette    702 sept.  1 23:09 Makefile
+-rwxrwxr-x  1 paulinette paulinette 484880 sept. 10 19:46 minishell
+-rw-rw-r--  1 paulinette paulinette  11558 sept. 10 19:35 minishell.h
+-rw-rw-r--  1 paulinette paulinette   6236 sept. 10 18:37 minishell_strct.h
+drwxrwxr-x 13 paulinette paulinette   4096 sept. 10 19:33 obj
+-rw-rw-r--  1 paulinette paulinette     86 sept.  3 16:22 other.supp
+-rw-r--r--  1 paulinette paulinette      0 sept. 10 19:46 outfile
+-rw-rw-r--  1 paulinette paulinette     86 sept.  8 16:09 readline.supp
+-rw-rw-r--  1 paulinette paulinette     27 juil. 13 20:44 README.md
+drwxrwxr-x 13 paulinette paulinette   4096 sept.  8 17:36 src
