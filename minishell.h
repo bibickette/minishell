@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 17:49:13 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:49:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	close_all_files(t_file *files);
 
 /* Built-in commands */
 int		is_builtin(char *command);
-char		**double_tab_command(t_data *minishell, t_list *command_list);
+char		**double_tab_command(t_list *command_list);
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
@@ -258,6 +258,7 @@ void	*ft_realloc(void *ptr, size_t size);
 char	*cpy_twin(char **src, char buffer[BSIZE]);
 int		handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
+char	*ft_strnstr_minish(const char *s1, const char *s2, size_t len);
 
 t_list	*command_listing(t_list *token);
 void	process_options(t_list **actual, t_token **actual_content,

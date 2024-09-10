@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 15:40:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:18:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@
 /*************************************/
 
 # define HANDLE_ERROR "Minishell Error Code :"
+# define STRNSTR_ERR "Minishell Error : Can't find anything in ft_strnstr\n"
 
 /* builtins error */
 # define PWD_ERR "Minishell Error : Pwd"
@@ -138,6 +139,7 @@
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 # define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
 # define ADD_BACK_TAB_ERR "Minishell Error : Malloc in function char_add_back_tab\n"
+
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"
 # define HERE_DOC ".here_doc"

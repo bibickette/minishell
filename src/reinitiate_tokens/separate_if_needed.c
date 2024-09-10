@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:28:35 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 17:20:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 17:13:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,24 @@ void separate_if_needed(t_data *minishell, t_list *token)
 {
 	t_list *tmp;
 	t_list *before;
+	t_list *after;
 	before = NULL;
 	tmp  = token;
+	after = tmp->next;
 	while(tmp)
 	{
 		if(((t_token *)tmp->content)->quote == N_QUOTE)
 		{
 			if(has_space(((t_token *)tmp->content)->str) == OK)
 			{
-				separate_token(&token, before, tmp, tmp->next);
+				separate_token(&token, before, tmp, after);
 			}
 		}
-		if(tmp->next == NULL)
+		if(after == NULL)
 			break;
 		before = tmp;
-		tmp = tmp->next;
+		tmp = after;
+		after = after->next;
 	}
 	// print_token(minishell->token);
 }
@@ -38,41 +41,39 @@ void separate_if_needed(t_data *minishell, t_list *token)
 int separate_token(t_list **token, t_list *before, t_list *to_separate, t_list *after)
 {
 	char **separated;
-	int i = -1;
-	t_list **new_list;
+	t_list *new_list;
 	t_list *new_element;
+	int y;
 	
+	y = 0;
 	new_list = NULL;
 	new_element = NULL;
 	separated = ft_split(((t_token *)to_separate->content)->str, ' ');
 	if(!separated)
 		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-	while(separated[++i])
+	free(((t_token *)to_separate->content)->str);
+	((t_token *)to_separate->content)->str = ft_strdup(separated[0]);
+	while (separated[++y])
+		add_token(&new_list, separated[y]);
+	y = 0;
+	t_list *tmp;
+	tmp = new_list;
+	t_list *other_tmp;
+	other_tmp = to_separate;
+	while(tmp)
 	{
-		// new_element = ft_lstnew_custom(separated[i]);
-		// ((t_token *)new_element->content)->index = ((t_token *)to_separate->content)->index;
-		// if(!new_list)
-		// 	return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-		ft_lstadd_back_libft(new_list, ft_lstnew_custom(separated[i]));
+		other_tmp->next = tmp;
+		((t_token *)tmp->content)->index = ((t_token *)to_separate->content)->index;
+		((t_token *)tmp->content)->quote = ((t_token *)to_separate->content)->quote;
+		if(tmp->next == NULL)
+			break;
+		other_tmp = tmp;
+		tmp = tmp->next;
 	}
-	ft_lstiter(*new_list, print_token);
-	if(!before && !after)
-	{
-		*token = *new_list;
-	}
-	if(before)
-	{
-		before->next = *new_list;
-		printf("before: %s\n", ((t_token *)before->content)->str);
-	}
-	// printf("quote to separate: %s\n", ((t_token *)to_separate->content)->str);
-	else if(after)
-	{
-		ft_lstlast(*new_list)->next = after;
-		printf("next_one: %s\n", ((t_token *)after->content)->str);
-	}
+	free_double_char(separated);
+	if(after)
+		ft_lstlast(new_list)->next = after;
 	return (OK);
-	
 }
 
 int has_space(char *str)

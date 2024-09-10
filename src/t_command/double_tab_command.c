@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_tab_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/08 18:05:42 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:18:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	size_list(t_list *command_list)
 	return (size);
 }
 
-char	**double_tab_command(t_data *minishell, t_list *command_list)
+char	**double_tab_command(t_list *command_list)
 {
 	int					i;
 	int					size;
