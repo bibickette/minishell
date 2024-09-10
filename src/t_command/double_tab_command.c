@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 15:18:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:37:25 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	size_list(t_list *command_list)
 
 char	**double_tab_command(t_list *command_list)
 {
-	int					i;
-	int					size;
-	char				**tab_command;
-	t_list			*actual;
+	int			i;
+	int			size;
+	char		**tab_command;
+	t_list		*actual;
 	t_command	*content;
 
 	i = 0;

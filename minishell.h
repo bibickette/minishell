@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 17:49:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:58:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ int		check_operator(char *str);
 
 /* Commande listing */
 t_list	*command_listing(t_list *token);
-void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_command *content);
-void	process_redirection_and_pipe(t_list **actual, t_token **actual_content, t_command *content);
+void	process_arguments_and_options(t_list **actual, t_token **actual_content,
+			t_command *content);
+void	process_redirection_and_pipe(t_list **actual, t_token **actual_content,
+			t_command *content);
 char	**add_redirection(char **redirections, char *redirection, int *size);
 char	**add_file(char **files, char *file, int *size);
 void	process_command(t_token **actual_content, t_command *content);
@@ -108,10 +110,10 @@ int		set_entire_command(t_list *command_list);
 int		go_next(t_list **actual, t_command **actual_command);
 
 /* separate token if needed */
-int has_space(char *str);
-void separate_if_needed(t_data *minishell, t_list *token);
-int separate_token(t_list **token, t_list *before, t_list *to_separate, t_list *after);
-
+int		has_space(char *str);
+int		separate_if_needed(t_data *minishell, t_list *token);
+int		separate_token(t_list *to_separate, t_list *after);
+void	put_separate_list_in_token(t_list *new_list, t_list *to_separate);
 
 /* type of token */
 void	set_type_operator(t_token *last_token);
@@ -123,9 +125,11 @@ void	set_builtin_type(t_token *current);
 void	reset_operator_type(t_token *current);
 void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
-int	reset_arg_if_echo(t_list *head);
+int		reset_arg_if_echo(t_list *head);
+int		is_arg_for_echo(t_list *tmp);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
+int		check_builtin(t_list *token);
 int		check_every_condition(t_list *tmp);
 int		check_builtin_condition(t_list *tmp);
 int		check_every_builtin_n_type(t_list *token);
@@ -196,7 +200,7 @@ void	close_all_files(t_file *files);
 
 /* Built-in commands */
 int		is_builtin(char *command);
-char		**double_tab_command(t_list *command_list);
+char	**double_tab_command(t_list *command_list);
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);

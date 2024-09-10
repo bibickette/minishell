@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 21:20:13 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 23:25:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:02:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	join_token(t_list *token, int token_nb)
 		if (tmp_head->next
 			&& ((t_token *)tmp_head->next->content)->index == token_nb)
 		{
-			((t_token *)tmp_head->content)->str = strjoin_wfree(((t_token *)tmp_head->content)->str,
+			((t_token *)tmp_head->content)->str = \
+			strjoin_wfree(((t_token *)tmp_head->content)->str,
 					((t_token *)tmp_head->next->content)->str);
 			if (!((t_token *)tmp_head->content)->str)
 				return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:25:24 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:05:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:37:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,7 @@ int	load_new_prompt(char **new_prompt, char **tmp_prompt, char *token_str)
 	*new_prompt = ft_strnstr_minish(*tmp_prompt, token_str,
 			ft_strlen(*tmp_prompt));
 	if (!*new_prompt)
-	{
-	printf("token_str : %s\n", token_str);
-	printf("tmp_prompt : %s\n", *tmp_prompt);
-	printf("new_prompt : %s\n", *new_prompt);
-		printf("ICI -------------------\n");
 		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-	}
 	*tmp_prompt = *new_prompt;
 	return (OK);
 }
@@ -86,4 +80,3 @@ int	increment_lists(t_list **brut_list)
 	*brut_list = (*brut_list)->next;
 	return (OK);
 }
-

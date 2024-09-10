@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:18:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:37:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,16 +182,15 @@ typedef struct s_builtin
 
 typedef struct s_command
 {
-    char		*command;
-    char		**option;
-    char		**arg;
-    char		**outputs;
-    char		**inputs;
-    char		*entire_command;
-    int			pipe;
-    char		**redirections;
+	char		*command;
+	char		**option;
+	char		**arg;
+	char		**outputs;
+	char		**inputs;
+	char		*entire_command;
+	int			pipe;
+	char		**redirections;
 }				t_command;
-
 
 typedef struct s_minishell
 {

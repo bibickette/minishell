@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 16:20:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:01:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,28 @@
 
 int	check_token_operator_order(t_list *token, t_data *minishell)
 {
-	t_list	*tmp;
-
-	tmp = token;
-	if(reset_arg_if_echo(token) == KO)
+	if (reset_arg_if_echo(token) == KO || check_builtin(token) == KO
+		|| check_every_builtin_n_type(token) == KO)
 	{
 		minishell->last_status = 1;
 		return (KO);
 	}
+	return (OK);
+}
+
+int	check_builtin(t_list *token)
+{
+	t_list	*tmp;
+
+	tmp = token;
 	while (tmp)
 	{
 		if (check_every_condition(tmp) == KO
 			|| check_builtin_condition(tmp) == KO)
-		{
-			minishell->last_status = 1;
 			return (KO);
-		}
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
-	}
-	if (check_every_builtin_n_type(token) == KO)
-	{
-		minishell->last_status = 1;
-		return (KO);
 	}
 	return (OK);
 }
@@ -87,7 +85,8 @@ int	check_builtin_condition(t_list *tmp)
 {
 	if (tmp->next && ((((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPTION
-					|| ((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG)
+					|| ((t_token *)tmp->content)->builtin_type == \
+					BUILT_NO_OPT_ARG) \
 				&& ((t_token *)tmp->next->content)->type == OPT_TYPE)
 			|| (((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG

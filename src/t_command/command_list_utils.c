@@ -6,25 +6,30 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:11:13 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/08 17:48:08 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:37:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_arguments_and_options(t_list **actual, t_token **actual_content, t_command *content)
+void	process_arguments_and_options(t_list **actual, t_token **actual_content,
+		t_command *content)
 {
-	int	arg_size = 0;
-	int	opt_size = 0;
+	int	arg_size;
+	int	opt_size;
 
+	arg_size = 0;
+	opt_size = 0;
 	while (*actual)
 	{
 		if ((*actual_content)->type == ARG_TYPE)
-			content->arg = add_argument(content->arg, (*actual_content)->str, &arg_size);
+			content->arg = add_argument(content->arg, (*actual_content)->str,
+					&arg_size);
 		else if ((*actual_content)->type == OPT_TYPE)
-			content->option = add_option(content->option, (*actual_content)->str, &opt_size);
+			content->option = add_option(content->option,
+					(*actual_content)->str, &opt_size);
 		else
-			break;
+			break ;
 		increment_actual(actual, actual_content);
 	}
 }
@@ -81,7 +86,8 @@ char	**add_argument(char **args, char *new_arg, int *size)
 
 void	process_command(t_token **actual_content, t_command *content)
 {
-	if ((*actual_content)->type != CMD_TYPE && (*actual_content)->type != BUILTIN_TYPE)
+	if ((*actual_content)->type != CMD_TYPE
+		&& (*actual_content)->type != BUILTIN_TYPE)
 		return ;
 	content->command = ft_strdup((*actual_content)->str);
 }

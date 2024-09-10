@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 17:20:22 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:59:59 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,24 @@ void	reset_cmd_pipe(t_list *head)
 
 int	reset_arg_if_echo(t_list *head)
 {
-	t_list *tmp;
+	t_list	*tmp;
+
 	tmp = head;
-	while(tmp)
+	while (tmp)
 	{
-		if((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
 			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
 		{
 			if (tmp->next == NULL)
 				return (OK);
 			tmp = tmp->next;
-			if(((t_token *)tmp->content)->str[0] == '-')
+			if (((t_token *)tmp->content)->str[0] == '-')
 			{
-				if(ft_strcmp(((t_token *)tmp->content)->str, "-e") == 0
-				|| ft_strcmp(((t_token *)tmp->content)->str, "-E") == 0)
-					return(ft_putstr_fd(ECHO_ERR, STDERR_FILENO), KO);
-				else if (ft_strcmp(((t_token *)tmp->content)->str, "-n") == 0) // need to be changed for check if only n in the flag
+				if (ft_strcmp(((t_token *)tmp->content)->str, "-e") == 0
+					|| ft_strcmp(((t_token *)tmp->content)->str, "-E") == 0)
+					return (ft_putstr_fd(ECHO_ERR, STDERR_FILENO), KO);
+				else if (ft_strcmp(((t_token *)tmp->content)->str, "-n") == 0)
+					// need to be changed for check if only n in the flag
 					((t_token *)tmp->content)->type = OPT_TYPE;
 				else
 					((t_token *)tmp->content)->type = ARG_TYPE;
@@ -69,31 +71,36 @@ int	reset_arg_if_echo(t_list *head)
 			if (tmp->next == NULL)
 				return (OK);
 			tmp = tmp->next;
-			while(tmp)
+			while (tmp)
 			{
-				if(((t_token *)tmp->content)->type != ARG_TYPE
-				&& ((t_token *)tmp->content)->type !=  INFILE_TYPE
-				&& ((t_token *)tmp->content)->type !=  OUTFILE_TYPE
-				&& ((t_token *)tmp->content)->type !=  HD_LIMITER_TYPE
-				&& ((t_token *)tmp->content)->type !=  APPEND_FILE_TYPE
-				&& ((t_token *)tmp->content)->type !=  IN_REDIR_TYPE
-				&& ((t_token *)tmp->content)->type !=  OUT_REDIR_TYPE
-				&& ((t_token *)tmp->content)->type !=  HERE_DOC_TYPE
-				&& ((t_token *)tmp->content)->type !=  HD_APPEND_TYPE)
+				if (is_arg_for_echo(tmp) == OK)
 					((t_token *)tmp->content)->type = ARG_TYPE;
-				if(tmp->next == NULL)
-					break;
+				if (tmp->next == NULL)
+					break ;
 				tmp = tmp->next;
 			}
 		}
-		if(tmp->next == NULL)
-			break;
-		tmp=tmp->next;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
 	}
 	return (OK);
 }
 
-
+int	is_arg_for_echo(t_list *tmp)
+{
+	if (((t_token *)tmp->content)->type != ARG_TYPE
+		&& ((t_token *)tmp->content)->type != INFILE_TYPE
+		&& ((t_token *)tmp->content)->type != OUTFILE_TYPE
+		&& ((t_token *)tmp->content)->type != HD_LIMITER_TYPE
+		&& ((t_token *)tmp->content)->type != APPEND_FILE_TYPE
+		&& ((t_token *)tmp->content)->type != IN_REDIR_TYPE
+		&& ((t_token *)tmp->content)->type != OUT_REDIR_TYPE
+		&& ((t_token *)tmp->content)->type != HERE_DOC_TYPE
+		&& ((t_token *)tmp->content)->type != HD_APPEND_TYPE)
+		return (OK);
+	return (KO);
+}
 
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 {

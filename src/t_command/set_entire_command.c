@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:37:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 18:12:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:33:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 	else if (!buffer && d_tab)
 	{
 		i = 0;
-		printf("buffer NULL\n");
+		// printf("buffer NULL\n");
 		buffer = ft_strdup(d_tab[0]);
 		while (d_tab[++i])
 		{
@@ -68,7 +68,7 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 			join = ft_strjoin(buffer, d_tab[i]);
 			free(buffer);
 			buffer = join;
-			printf("buffer: %s\n", buffer);
+			// printf("buffer: %s\n", buffer);
 		}
 		return (buffer);
 	}
@@ -83,7 +83,7 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 			join = ft_strjoin(buffer, d_tab[i]);
 			free(buffer);
 			buffer = join;
-			printf("buffer: %s\n", buffer);
+			// printf("buffer: %s\n", buffer);
 		}
 		return (buffer);
 	}
