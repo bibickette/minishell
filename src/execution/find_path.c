@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/04 21:53:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 01:47:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,28 @@ char	*find_path(char *cmd, char **path)
 		free(path_cmd);
 	}
 	return (NULL);
+}
+
+char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
+		t_list *token)
+{
+	char	*path;
+
+	*arg = ft_split(cmd_arg, ' ');
+	if (!arg)
+	{
+		ft_putstr_fd(SPLIT_ERR, STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	if (is_builtin((*arg)[0]) == OK)
+		path = ft_strdup((*arg)[0]);
+	else
+		path = find_path(*arg[0], minishell->path);
+	if (!path)
+	{
+		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
+		exceve_error_free(minishell, *arg, path, token);
+		exit(127);
+	}
+	return (path);
 }

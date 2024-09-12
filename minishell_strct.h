@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:37:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 01:05:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,10 @@
 # define STATUS_ERR "A process hasn't ended well\n"
 # define FORK_ERR "Minishell Error : Fork"
 # define DUP_ERR "Minishell Error : Dup2"
+# define DUP_SIMPLE_ERR "Minishell Error : Dup"
 # define EXECVE_ERR "Minishell Error : Execve"
 # define CMD_NOT_FOUND "Minishell Error : Command not found\n"
+# define CLOSE_ERR "Minishell Error : Close"
 
 /* environment errors */
 # define ROOT_ENV "/etc/environment"

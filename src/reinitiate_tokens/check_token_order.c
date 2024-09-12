@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 19:01:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 01:47:03 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	check_builtin(t_list *token)
 	tmp = token;
 	while (tmp)
 	{
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
+		{
+			if (check_next_token_echo(tmp) == KO)
+				return (KO);
+			return (OK);
+		}
 		if (check_every_condition(tmp) == KO
 			|| check_builtin_condition(tmp) == KO)
 			return (KO);
@@ -85,8 +92,7 @@ int	check_builtin_condition(t_list *tmp)
 {
 	if (tmp->next && ((((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPTION
-					|| ((t_token *)tmp->content)->builtin_type == \
-					BUILT_NO_OPT_ARG) \
+					|| ((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG)
 				&& ((t_token *)tmp->next->content)->type == OPT_TYPE)
 			|| (((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 22:58:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 01:49:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int		check_builtin(t_list *token);
 int		check_every_condition(t_list *tmp);
 int		check_builtin_condition(t_list *tmp);
 int		check_every_builtin_n_type(t_list *token);
+int		check_next_token_echo(t_list *token);
 
 int		lf_spechar_list(t_data *minishell, t_list *token);
 int		check_special_char(char *prompt);
@@ -227,7 +228,6 @@ void	unset_cmd(t_builtin *builtins, char *var);
 void	cd_cmd(char *path);
 
 /* Execution */
-int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
 int		redirection_in(t_data *minishell, t_file *files);
 int		redirection_out(t_data *minishell, t_file *files, int std_out);
