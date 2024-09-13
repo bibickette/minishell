@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:37:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/11 22:50:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 13:09:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ int	set_entire_command(t_list *command_list)
 		while (actual && actual->content)
 		{
 			actual_command->entire_command = join_command(actual_command);
-			printf("entire_command: %s\n", actual_command->entire_command);
+			// printf("entire_command: %s\n", actual_command->entire_command);
 			ret = go_next(&actual, &actual_command);
-			printf("ret: %d\n", ret);
+			// printf("ret: %d\n", ret);
 			if (ret == 0)
 				break ;
 		}

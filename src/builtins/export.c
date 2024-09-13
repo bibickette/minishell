@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 22:19:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:04:31 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 {
 	char	*key_export;
 
+	key_export = NULL;
 	if (check_export_format(var, minishell) == KO)
 		return (KO);
 	if (has_equal(var) == OK)
 	{
-		if (export_in_env(var, minishell) == KO)
-			return (KO);
-		if (export_in_export(var, &key_export, minishell) == KO)
+		if (export_in_env(var, minishell) == KO || export_in_export(var,
+				&key_export, minishell) == KO)
 			return (KO);
 	}
 	else if (export_in_export(var, &key_export, minishell) == KO)
@@ -95,7 +95,7 @@ int	replace_in_tab(char ***env_or_export, char *tmp_var, char **var)
 int	the_big_condition(char ***env_or_export, char *tmp_var, int i)
 {
 	if ((ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0
-		&& ft_strlen((*env_or_export)[i]) == ft_strlen(tmp_var)))
+			&& ft_strlen((*env_or_export)[i]) == ft_strlen(tmp_var)))
 		return (OK);
 	else if (has_equal(tmp_var) == OK && has_equal((*env_or_export)[i]) == OK
 		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
@@ -106,10 +106,10 @@ int	the_big_condition(char ***env_or_export, char *tmp_var, int i)
 		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)) == 0)
 		return (OK);
 	else if ((has_equal((*env_or_export)[i]) == KO
-		&& ft_strlen(tmp_var) > ft_strlen((*env_or_export)[i])
-		&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
-		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
-			- 1) == 0))
+			&& ft_strlen(tmp_var) > ft_strlen((*env_or_export)[i])
+			&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
+			&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
+				- 1) == 0))
 		return (OK);
 	return (KO);
 }

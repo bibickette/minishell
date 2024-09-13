@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 20:16:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 13:44:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 	{
 		if (!arg[1])
 			export_cmd_no_arg(minishell->builtins->export);
-		else
-			while (arg[++i])
-				export_cmd_w_arg(arg[i], minishell);
+		else if(export_all_arg(minishell, token) == KO)
+			return (KO);
 	}
 	else if (ft_strcmp(arg[0], "unset") == 0)
 	{
@@ -39,13 +38,47 @@ int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 	}
 	else if (ft_strcmp(arg[0], "cd") == 0)
 	{
+		if (arg[2])
+			return (ft_putstr_fd(TOO_MANY_ARG, STDERR_FILENO), KO);
 		cd_cmd(arg[1]);
 	}
 	else if (ft_strcmp(arg[0], "echo") == 0)
 		echo_cmd(token, STDOUT_FILENO);
-	else if (ft_strcmp(arg[0], "exit") == 0)
-		return (M_KO);
 	else if (ft_strcmp(arg[0], "history") == 0)
 		display_history(minishell);
+	return (OK);
+}
+
+int	export_all_arg(t_data *minishell, t_list *token)
+{
+	t_list	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			&& ft_strcmp(((t_token *)tmp->content)->str, "export") == 0)
+		{
+			if (tmp->next == NULL)
+				return (OK);
+			tmp = tmp->next;
+			while (tmp)
+			{
+				if (((t_token *)tmp->content)->type == CMD_TYPE
+					|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
+					return (OK);
+				else if (((t_token *)tmp->content)->type == ARG_TYPE)
+					if (export_cmd_w_arg(((t_token *)tmp->content)->str,
+							minishell) == KO)
+						return (KO);
+				if (tmp->next == NULL)
+					return (OK);
+				tmp = tmp->next;
+			}
+		}
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
 	return (OK);
 }

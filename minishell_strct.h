@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 01:05:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 16:17:53 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@
 # define BUFF_OVERFLOW 2
 # define BSIZE 4096
 
-# define ENV 1
-# define EXPORT 2
+# define READ 0
+# define WRITE 1
 
 /* quote type */
 # define N_QUOTE 0
@@ -110,9 +110,9 @@
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
 # define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
 # define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
-# define NOT_ENOUGH_ARG "Minishell Error : Unset: Not enough arguments\n"
-# define ECHO_ERR "Minishell Error : Echo: invalid option\n"
-
+# define NOT_ENOUGH_ARG "Minishell Error - UNSET : Not enough arguments\n"
+# define ECHO_ERR "Minishell Error - ECHO : Invalid option\n"
+# define TOO_MANY_ARG "Minishell Error - CD : Too many arguments\n"
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
@@ -122,11 +122,12 @@
 
 /* process */
 # define STATUS_ERR "A process hasn't ended well\n"
+# define PIPE_ERR "Minishell Error : Pipe"
 # define FORK_ERR "Minishell Error : Fork"
 # define DUP_ERR "Minishell Error : Dup2"
 # define DUP_SIMPLE_ERR "Minishell Error : Dup"
 # define EXECVE_ERR "Minishell Error : Execve"
-# define CMD_NOT_FOUND "Minishell Error : Command not found\n"
+# define CMD_NOT_FOUND "Minishell Error : Command not found : "
 # define CLOSE_ERR "Minishell Error : Close"
 
 /* environment errors */
@@ -209,6 +210,10 @@ typedef struct s_minishell
 	t_file		*files;
 	int			nb_files;
 
+	int			**pipe_fd;
+	int			*pid_tab;
+	int			nb_cmd;
+	
 	char		**path;
 	int			last_status;
 	int			here_doc;

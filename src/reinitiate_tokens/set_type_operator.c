@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:59:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:35:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ int	reset_arg_if_echo(t_list *head)
 	tmp = head;
 	while (tmp)
 	{
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			&& ft_strcmp(((t_token *)tmp->content)->str, "cd") == 0)
+		{
+			if (tmp->next == NULL)
+				return (OK);
+			tmp = tmp->next;
+			if (((t_token *)tmp->content)->str[0] == '-' && ft_strlen(((t_token *)tmp->content)->str) == 1)
+				((t_token *)tmp->content)->type = ARG_TYPE;
+		}
 		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
 			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
 		{

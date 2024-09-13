@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 01:47:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 16:09:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ char	*find_path(char *cmd, char **path)
 		return (NULL);
 	while (path[++i])
 	{
+		if(!cmd)
+			return (NULL);
 		path_cmd = ft_strjoin(path[i], cmd);
 		if (!path_cmd)
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), NULL);
 		if (access(path_cmd, F_OK | X_OK) == 0)
 			return (path_cmd);
-		free(path_cmd);
+		free(path_cmd);	
 	}
 	return (NULL);
 }
@@ -51,7 +53,9 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 	if (!path)
 	{
 		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
-		exceve_error_free(minishell, *arg, path, token);
+		ft_putstr_fd((*arg)[0], STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		execve_error_free(minishell, *arg, path, token);
 		exit(127);
 	}
 	return (path);

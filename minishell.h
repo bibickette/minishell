@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 01:49:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 17:44:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	process_redirection_and_pipe(t_list **actual, t_token **actual_content,
 char	**add_redirection(char **redirections, char *redirection, int *size);
 char	**add_file(char **files, char *file, int *size);
 void	process_command(t_token **actual_content, t_command *content);
+char	**double_tab_command(t_list *command_list);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
@@ -190,7 +191,7 @@ int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_all_infile(t_data *minishell, t_file *file);
 int		open_all_outfile(t_file *file);
-
+int		open_all_files(t_data *minishell);
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
 
@@ -200,8 +201,9 @@ int		open_append_outfile(t_file *file);
 void	close_all_files(t_file *files);
 
 /* Built-in commands */
+int		export_all_arg(t_data *minishell, t_list *token);
 int		is_builtin(char *command);
-char	**double_tab_command(t_list *command_list);
+
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
@@ -229,12 +231,12 @@ void	cd_cmd(char *path);
 
 /* Execution */
 char	*find_path(char *cmd, char **path);
-int		redirection_in(t_data *minishell, t_file *files);
+int		redirection_in(t_data *minishell, t_file *files, int std_in);
 int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
-void	exceve_error_free(t_data *minish, char **arg, char *path,
+void	execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
 void	handle_builtin(t_data *minish, char **arg, t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
@@ -243,6 +245,14 @@ int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 			t_list *token);
+
+void	execve_pipe(t_data *minish, t_list *token);
+int		init_pipe(t_data *minishell);
+void	wait_all_get_status(t_data *minishell);
+void	close_all_pipes(t_data *minishell);
+void	child_process(t_data *minishell, t_list *token, int cmd);
+void ultimate_free_exit(t_data *minishell, t_list *token);
+void free_pipe_pid(t_data *minishell);
 
 /**********************************************/
 

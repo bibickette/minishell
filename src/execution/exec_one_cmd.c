@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 01:49:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:11:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 	int		pid;
 	char	**arg;
 
+	if(!cmd_arg)
+		return (OK);
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
 		handle_builtin(minish, arg, token);
@@ -44,7 +46,7 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 	}
 	if (redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
 	{
-		minish->last_status = 1;
+		minish->last_status = errno;
 		close_all_files(minish->files);
 		if (close(out) < 0)
 		{
@@ -87,10 +89,10 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	if (*pid == 0)
 	{
 		path = split_n_path(minish, cmd_arg, &arg, token);
-		if (redirection_in(minish, minish->files) != OK
+		if (open_all_files(minish) == KO  || redirection_in(minish, minish->files, STDIN_FILENO) != OK
 			|| redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
 		{
-			exceve_error_free(minish, arg, path, token);
+			execve_error_free(minish, arg, path, token);
 			exit(EXIT_FAILURE);
 		}
 		if (minish->nb_files > 0)
@@ -103,20 +105,40 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
 {
-	exceve_error_free(minishell, arg, path, token);
+	execve_error_free(minishell, arg, path, token);
 	perror(EXECVE_ERR);
-	exit(126);
+	exit(errno);
 }
 
-void	exceve_error_free(t_data *minish, char **arg, char *path, t_list *token)
+void	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 {
-	close_all_files(minish->files);
+	if(minish->command[1])
+	{
+		close_all_pipes(minish);
+		free_pipe_pid(minish);
+	}
+	if(minish->nb_files > 0)
+		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
 	free_command_list(minish->command_list);
+	free(minish->command);
 	free_double_char(arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);
 	if (path)
 		free(path);
 	apocalypse(minish);
+}
+
+void ultimate_free_exit(t_data *minishell, t_list *token)
+{
+	close_all_pipes(minishell);
+	close_all_files(minishell->files);
+	ft_lstclear_custom(&token, free);
+	ft_lstclear_custom(&minishell->brut_list, free);
+	free_files_tab(minishell, minishell->files);
+	free_command_list(minishell->command_list);
+	free(minishell->command);
+	apocalypse(minishell);
+	exit(EXIT_FAILURE);	
 }

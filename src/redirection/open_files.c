@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_exit.c                                      :+:      :+:    :+:   */
+/*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 15:08:07 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 13:02:52 by phwang           ###   ########.fr       */
+/*   Created: 2024/09/13 16:36:12 by phwang            #+#    #+#             */
+/*   Updated: 2024/09/13 16:40:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_exit(t_data *minishell, char *prompt)
+int	open_all_files(t_data *minishell)
 {
-	if (prompt)
-		free(prompt);
-	apocalypse(minishell);
-	exit(0);
-}
-
-void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token)
-{
-	if (!token)
-		return ;
-	if (ft_strcmp(((t_token *)token->content)->str, "exit") == 0)
-	{
-		ft_lstclear_custom(&token, free);
-		ft_lstclear_custom(&minishell->brut_list, free);
-		handle_exit(minishell, prompt);
-	}
+	int i;
+	
+	i = -1;
+	while (++i < minishell->nb_files)
+		if (open_all_infile(minishell, &minishell->files[i]) == KO
+			|| open_all_outfile(&minishell->files[i]) == KO)
+			return (KO);
+	return (OK);
 }

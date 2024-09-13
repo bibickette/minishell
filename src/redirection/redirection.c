@@ -6,22 +6,18 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 22:05:44 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 23:05:26 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 16:34:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redirection_in(t_data *minishell, t_file *files)
+int	redirection_in(t_data *minishell, t_file *files, int std_in)
 {
 	int	i;
 
-	i = -1;
 	if (!files || minishell->nb_files == 0)
 		return (OK);
-	while (++i < minishell->nb_files)
-		if (open_all_infile(minishell, &minishell->files[i]) == KO)
-			return (KO);
 	i = -1;
 	while (files[++i].name)
 	{
@@ -29,7 +25,7 @@ int	redirection_in(t_data *minishell, t_file *files)
 		{
 			if (files[i].fd != KO)
 			{
-				if (dup2(files[i].fd, STDIN_FILENO) < 0)
+				if (dup2(files[i].fd, std_in) < 0)
 					return (perror(DUP_ERR), errno);
 			}
 			else
@@ -43,12 +39,8 @@ int	redirection_out(t_data *minishell, t_file *files, int std_out)
 {
 	int	i;
 
-	i = -1;
 	if (!files || minishell->nb_files == 0)
 		return (OK);
-	while (++i < minishell->nb_files)
-		if (open_all_outfile(&minishell->files[i]) == KO)
-			return (KO);
 	i = -1;
 	while (files[++i].name)
 	{
