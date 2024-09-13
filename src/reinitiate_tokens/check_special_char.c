@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 01:47:01 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:47:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	lf_spechar_list(t_data *minishell, t_list *token)
 		{
 			if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
 				&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
-					return (OK);
+				return (OK);
 			else if (check_special_char(((t_token *)tmp->content)->str) == KO)
 			{
 				minishell->last_status = 2;

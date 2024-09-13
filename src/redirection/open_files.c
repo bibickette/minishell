@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:36:12 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 16:40:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:44:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	open_all_files(t_data *minishell)
 {
-	int i;
-	
+	int	i;
+
 	i = -1;
 	while (++i < minishell->nb_files)
 		if (open_all_infile(minishell, &minishell->files[i]) == KO

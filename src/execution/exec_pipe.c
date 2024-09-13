@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:06:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:43:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,43 +39,64 @@ void	execve_pipe(t_data *minish, t_list *token)
 
 void	child_process(t_data *minishell, t_list *token, int cmd)
 {
-	char **arg;
-	char *path;
+	char	**arg;
+	char	*path;
+
 	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
-	if(cmd == 0)
+	if (cmd == 0)
 	{
-		if(redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
-			ultimate_free_exit(minishell, token);
-		dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO);
+		if (redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
+			execve_error_free(minishell, arg, path, token);
+		if (dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO) < 0)
+		{
+			perror(DUP_ERR);
+			execve_error_free(minishell, arg, path, token);
+			exit(errno);
+		}
 	}
 	else if (cmd == minishell->nb_cmd - 1)
 	{
-		dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO);
-		if(redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
-			ultimate_free_exit(minishell, token);
+		if (dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO) < 0)
+		{
+			perror(DUP_ERR);
+			execve_error_free(minishell, arg, path, token);
+			exit(errno);
+		}
+		if (redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
+		{
+			execve_error_free(minishell, arg, path, token);
+			exit(errno);
+		}
 	}
 	else
 	{
-		dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO);
-		dup2(minishell->pipe_fd[cmd][WRITE], STDOUT_FILENO);
-	} 
-	close_all_pipes(minishell);
-	if(minishell->nb_files > 0)
-		close_all_files(minishell->files);
-
-	if(is_builtin(arg[0]) == OK)
-		handle_builtin(minishell, arg, token);
+		if (dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO) < 0
+			|| dup2(minishell->pipe_fd[cmd][WRITE], STDOUT_FILENO) < 0)
+		{
+			perror(DUP_ERR);
+			execve_error_free(minishell, arg, path, token);
+			exit(errno);
+		}
+	}
+	if (is_builtin(arg[0]) == OK)
+	{
+		execve_builtin(minishell, arg, token);
+		execve_error_free(minishell, arg, path, token);
+	}
 	else
 	{
+		close_all_pipes(minishell);
+		if (minishell->nb_files > 0)
+			close_all_files(minishell->files);
 		if (execve(path, arg, minishell->builtins->env) == KO)
 			execve_error(minishell, path, arg, token);
 	}
 	exit(EXIT_SUCCESS);
 }
 
-void free_pipe_pid(t_data *minishell)
+void	free_pipe_pid(t_data *minishell)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	free(minishell->pid_tab);

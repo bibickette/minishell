@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 16:09:57 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:43:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ char	*find_path(char *cmd, char **path)
 		return (NULL);
 	while (path[++i])
 	{
-		if(!cmd)
+		if (!cmd)
 			return (NULL);
 		path_cmd = ft_strjoin(path[i], cmd);
 		if (!path_cmd)
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), NULL);
 		if (access(path_cmd, F_OK | X_OK) == 0)
 			return (path_cmd);
-		free(path_cmd);	
+		free(path_cmd);
 	}
 	return (NULL);
 }

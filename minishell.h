@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 17:44:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:14:18 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,8 +251,7 @@ int		init_pipe(t_data *minishell);
 void	wait_all_get_status(t_data *minishell);
 void	close_all_pipes(t_data *minishell);
 void	child_process(t_data *minishell, t_list *token, int cmd);
-void ultimate_free_exit(t_data *minishell, t_list *token);
-void free_pipe_pid(t_data *minishell);
+void	free_pipe_pid(t_data *minishell);
 
 /**********************************************/
 

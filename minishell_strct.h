@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 16:17:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:47:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ typedef struct s_minishell
 	int			**pipe_fd;
 	int			*pid_tab;
 	int			nb_cmd;
-	
+
 	char		**path;
 	int			last_status;
 	int			here_doc;

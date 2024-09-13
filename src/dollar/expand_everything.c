@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 14:21:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:46:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	expand_everything(t_data *minishell, t_list *token)
 				start_expanding(minishell, &dollar_tab, tmp_head);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
 		{
-			if(((t_token *)tmp_head->content)->str[0])
+			if (((t_token *)tmp_head->content)->str[0])
 			{
 				tmp = ft_strdup(((t_token *)tmp_head->content)->str);
 				free(((t_token *)tmp_head->content)->str);

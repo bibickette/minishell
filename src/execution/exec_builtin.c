@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 13:44:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:28:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 	{
 		if (!arg[1])
 			export_cmd_no_arg(minishell->builtins->export);
-		else if(export_all_arg(minishell, token) == KO)
+		else if (export_all_arg(minishell, token) == KO)
 			return (KO);
 	}
 	else if (ft_strcmp(arg[0], "unset") == 0)
