@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 18:14:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 19:00:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,8 @@ int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 			t_list *token);
+int	has_path(char *cmd);
+char	*extract_cmd(char *cmd_arg);
 
 void	execve_pipe(t_data *minish, t_list *token);
 int		init_pipe(t_data *minishell);
