@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 22:03:56 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:43:42 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,5 @@ void	free_files_tab(t_data *minishell, t_file *files)
 	}
 	free(files);
 	files = 0;
+	minishell->nb_files = 0;
 }

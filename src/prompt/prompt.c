@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 22:13:56 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:49:06 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,27 @@ void	prompt(t_list *token, t_data *minishell)
 				set_index_again(token, minishell->brut_list);
 				expand_everything(minishell, token);
 				separate_if_needed(minishell, token);
-				if (lf_spechar_list(minishell, token) == OK)
+				start_join_token_if_needed(token, prompt, minishell->brut_list);
+				first_token_is_exit(prompt, minishell, token);
+				set_token_type(token);
+				reset_cmd_pipe(token);
+				if (lf_spechar_list(minishell, token) == OK
+					&& check_token_operator_order(token, minishell) == OK)
 				{
-					start_join_token_if_needed(token, prompt,
-						minishell->brut_list);
-					first_token_is_exit(prompt, minishell, token);
-					set_token_type(token);
-					reset_cmd_pipe(token);
-					if (check_token_operator_order(token, minishell) == OK)
-					{
-						take_all_files(minishell, token);
-						// if (minishell->nb_files > 0)
-						// 	print_all_files(minishell->files);
-						ft_lstiter(token, print_token);
-						minishell->command_list = command_listing(token);
-						set_entire_command(minishell->command_list);
-						minishell->command = double_tab_command(minishell->command_list);
-						print_double_tab(minishell->command);
-						printf("la commande s'execute ICI\n");
-						// execve_one_cmd(minishell, "export", token);
-						free_command_list(minishell->command_list, minishell);
-						free_files_tab(minishell, minishell->files);
-						minishell->nb_files = 0;
-					}
+					take_all_files(minishell, token);
+					ft_lstiter(token, print_token);
+					minishell->command_list = command_listing(token);
+					set_entire_command(minishell->command_list);
+					minishell->command = double_tab_command(minishell->command_list);
+					print_double_tab(minishell->command);
+					printf("la commande s'execute ICI\n");
+					if (minishell->command[1])
+						execve_pipe(minishell, token);
+					else
+						execve_one_cmd(minishell, minishell->command[0], token);
+					free_files_tab(minishell, minishell->files);
+					free_command_list(minishell->command_list, minishell);
+					free(minishell->command);
 				}
 			}
 		}

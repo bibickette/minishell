@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 22:13:41 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:48:48 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,81 +16,122 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 {
 	int		pid;
 	char	**arg;
+
+	if (!cmd_arg)
+		return (OK);
+	arg = ft_split(cmd_arg, ' ');
+	if (is_builtin(arg[0]) == OK)
+		handle_builtin(minish, arg, token);
+	else
+	{
+		free_double_char(&arg);
+		pid = fork();
+		do_single_fork(minish, token, &pid, cmd_arg);
+		return (get_status_process(minish, &minish->last_status, pid));
+	}
+	return (OK);
+}
+
+void	handle_builtin(t_data *minish, char **arg, t_list *token)
+{
+	int	ret;
+	int	out;
+
+	out = dup(STDOUT_FILENO);
+	if (out < 0)
+	{
+		perror(DUP_SIMPLE_ERR);
+		minish->last_status = errno;
+		return ;
+	}
+	if (redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
+	{
+		minish->last_status = errno;
+		close_all_files(minish->files);
+		if (close(out) < 0)
+		{
+			perror(CLOSE_ERR);
+			minish->last_status = errno;
+		}
+		return ;
+	}
+	ret = execve_builtin(minish, arg, token);
+	if (minish->nb_files > 0)
+		close_all_files(minish->files);
+	minish->last_status = OK;
+	if (ret == KO || ret == M_KO)
+		minish->last_status = 1;
+	if (dup2(out, STDOUT_FILENO) < 0)
+	{
+		perror(DUP_ERR);
+		minish->last_status = errno;
+	}
+	if (close(out) < 0)
+	{
+		perror(CLOSE_ERR);
+		minish->last_status = errno;
+	}
+	free_double_char(&arg);
+}
+
+void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
+{
 	char	*path;
+	char	**arg;
 
 	arg = NULL;
 	path = NULL;
-	pid = fork();
-	if (pid == KO)
-		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO), errno);
-	if (pid == 0)
+	if (*pid == KO)
 	{
-		path = split_n_path(minish, cmd_arg, &arg, token);
-		if (redirection_in(minish, minish->files) != OK
-			|| redirection_out(minish, minish->files) != OK)
+		minish->last_status = errno;
+		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO));
+	}
+	if (*pid == 0)
+	{
+		if(!cmd_arg[0])
 		{
-			exceve_error_free(minish, arg, path, token);
+			execve_error_free(minish, arg, path, token);	
 			exit(EXIT_FAILURE);
 		}
-		close_all_files(minish->files);
-		execve_builtin_or_not(minish, arg, path, token);
+		path = split_n_path(minish, cmd_arg, &arg, token);
+		if (open_all_files(minish) == KO || redirection_in(minish,
+				minish->files, STDIN_FILENO) != OK || redirection_out(minish,
+				minish->files, STDOUT_FILENO) != OK)
+		{
+			execve_error_free(minish, arg, path, token);
+			exit(EXIT_FAILURE);
+		}
+		if (minish->nb_files > 0)
+			close_all_files(minish->files);
+		if (execve(path, arg, minish->builtins->env) == KO)
+			execve_error(minish, path, arg, token);
 		exit(EXIT_SUCCESS);
 	}
-	return (get_status_process(minish, &minish->last_status, pid));
-}
-
-char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
-		t_list *token)
-{
-	char	*path;
-
-	*arg = ft_split(cmd_arg, ' ');
-	if (!arg)
-	{
-		ft_putstr_fd(SPLIT_ERR, STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-	if (is_builtin((*arg)[0]) == OK)
-		path = ft_strdup((*arg)[0]);
-	else
-		path = find_path(*arg[0], minishell->path);
-	if (!path)
-	{
-		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
-		exceve_error_free(minishell, *arg, path, token);
-		exit(127);
-	}
-	return (path);
 }
 
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
 {
-	exceve_error_free(minishell, arg, path, token);
+	execve_error_free(minishell, arg, path, token);
 	perror(EXECVE_ERR);
-	exit(126);
+	exit(errno);
 }
 
-int	get_status_process(t_data *minishell, int *status, pid_t pid)
+void	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 {
-	close_all_files(minishell->files);
-	waitpid(pid, &minishell->last_status, 0);
-	minishell->last_status = WEXITSTATUS(*status);
-	if (minishell->last_status != 0 && minishell->last_status != 127
-		&& minishell->last_status != 126
-		&& minishell->last_status != EXIT_FAILURE)
-		return (ft_putstr_fd(STATUS_ERR, STDERR_FILENO),
-			minishell->last_status);
-	return (minishell->last_status);
-}
-
-void	exceve_error_free(t_data *minish, char **arg, char *path, t_list *token)
-{
-	close_all_files(minish->files);
+	if (minish->command[1])
+	{
+		close_all_pipes(minish);
+		free_pipe_pid(minish);
+	}
+	if (minish->nb_files > 0)
+		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
 	free_command_list(minish->command_list, minish);
+	free(minish->command);
 	free_double_char(&arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);
-	free(path);
+	if (path)
+		free(path);
 	apocalypse(minish);
 }

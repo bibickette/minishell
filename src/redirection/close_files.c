@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:29:53 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/03 22:01:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:44:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	close_all_files(t_file *files)
 		return ;
 	while (files[++i].name)
 	{
-		close_one_fd(files[i].fd);
+		if (files[i].is_open == OK)
+			close_one_fd(files[i].fd);
 		files[i].is_open = KO;
 	}
 }
 
 void	close_one_fd(int fd)
 {
-	if (fd != STDIN_FILENO && fd != STDOUT_FILENO && fd != STDERR_FILENO
-		&& fd != KO)
-		close(fd);
+	if (fd > -1)
+		if (close(fd) < 0)
+			perror(CLOSE_ERR);
 }
 
 void	print_all_files(t_file *files)

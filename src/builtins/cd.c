@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 11:55:32 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/06 23:30:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:52:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	handle_special_char(char **new_path, char **old_pwd, char **path)
 		*new_path = getenv("HOME");
 		if (!(*new_path))
 		{
-			ft_putstr_fd("HOME not set\n", 3);
+			ft_putstr_fd("HOME not set\n", STDERR_FILENO);
 			free(*old_pwd);
 			return (1);
 		}
@@ -63,11 +63,12 @@ static int	handle_special_char(char **new_path, char **old_pwd, char **path)
 		*new_path = getenv("OLDPWD");
 		if (!(*new_path))
 		{
-			ft_putstr_fd("OLDPWD not set\n", 3);
+			ft_putstr_fd("OLDPWD not set\n", STDERR_FILENO);
 			free(*old_pwd);
 			return (1);
 		}
-		printf("%s\n", *new_path);
+		ft_putstr_fd(*new_path, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/10 22:13:27 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:51:05 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ int		load_path(t_data *minishell, int flag);
 char	*trim_end(char *path_env);
 
 /* prompt */
-void	display_prompt(void);
+void	display_prompt(t_data *minishell);
 void	display_intro(void);
 void	print_token(void *content);
 void	print_double_tab(char **tab);
+char	*readline_custom(t_builtin *builtins);
 
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
@@ -85,6 +86,7 @@ void	process_redirection_and_pipe(t_list **actual, t_token **actual_content,
 char	**add_redirection(char **redirections, char *redirection, int *size);
 char	**add_file(char **files, char *file, int *size);
 void	process_command(t_token **actual_content, t_command *content);
+char	**double_tab_command(t_list *command_list);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
@@ -127,12 +129,14 @@ void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 int		reset_arg_if_echo(t_list *head);
 int		is_arg_for_echo(t_list *tmp);
+int is_echo_flag(char *str);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_builtin(t_list *token);
 int		check_every_condition(t_list *tmp);
 int		check_builtin_condition(t_list *tmp);
 int		check_every_builtin_n_type(t_list *token);
+int		check_next_token_echo(t_list *token);
 
 int		lf_spechar_list(t_data *minishell, t_list *token);
 int		check_special_char(char *prompt);
@@ -189,7 +193,7 @@ int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_all_infile(t_data *minishell, t_file *file);
 int		open_all_outfile(t_file *file);
-
+int		open_all_files(t_data *minishell);
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
 
@@ -199,8 +203,9 @@ int		open_append_outfile(t_file *file);
 void	close_all_files(t_file *files);
 
 /* Built-in commands */
+int		export_all_arg(t_data *minishell, t_list *token);
 int		is_builtin(char *command);
-char	**double_tab_command(t_list *command_list);
+
 /* built-in export*/
 void	export_cmd_no_arg(char **export);
 int		export_cmd_w_arg(char *var, t_data *minishell);
@@ -227,23 +232,30 @@ void	unset_cmd(t_builtin *builtins, char *var);
 void	cd_cmd(char *path);
 
 /* Execution */
-int		get_fd(char *path);
 char	*find_path(char *cmd, char **path);
-int		redirection_in(t_data *minishell, t_file *files);
-int		redirection_out(t_data *minishell, t_file *files);
+int		redirection_in(t_data *minishell, t_file *files, int std_in);
+int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
-void	exceve_error_free(t_data *minish, char **arg, char *path,
+void	execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
+void	handle_builtin(t_data *minish, char **arg, t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
-void	execve_builtin_or_not(t_data *minish, char **arg, char *path,
-			t_list *token);
-
+void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 			t_list *token);
+int	has_path(char *cmd);
+char	*extract_cmd(char *cmd_arg);
+
+void	execve_pipe(t_data *minish, t_list *token);
+int		init_pipe(t_data *minishell);
+void	wait_all_get_status(t_data *minishell);
+void	close_all_pipes(t_data *minishell);
+void	child_process(t_data *minishell, t_list *token, int cmd);
+void	free_pipe_pid(t_data *minishell);
 
 /**********************************************/
 
@@ -262,7 +274,7 @@ void	*ft_realloc(void *ptr, size_t size);
 char	*cpy_twin(char **src, char buffer[BSIZE]);
 int		handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
-char	*ft_strnstr_minish(const char *s1, const char *s2, size_t len);
+char	*ft_strnstr_minish(char *s1, char *s2, size_t len);
 
 t_list	*command_listing(t_list *token);
 void	process_options(t_list **actual, t_token **actual_content,

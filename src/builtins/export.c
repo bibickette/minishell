@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 22:19:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:46:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 {
 	char	*key_export;
 
+	key_export = NULL;
 	if (check_export_format(var, minishell) == KO)
 		return (KO);
 	if (has_equal(var) == OK)
 	{
-		if (export_in_env(var, minishell) == KO)
-			return (KO);
-		if (export_in_export(var, &key_export, minishell) == KO)
+		if (export_in_env(var, minishell) == KO || export_in_export(var,
+				&key_export, minishell) == KO)
 			return (KO);
 	}
 	else if (export_in_export(var, &key_export, minishell) == KO)

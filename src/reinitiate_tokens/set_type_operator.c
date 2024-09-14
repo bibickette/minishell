@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:59:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 13:57:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ int	reset_arg_if_echo(t_list *head)
 	while (tmp)
 	{
 		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			&& ft_strcmp(((t_token *)tmp->content)->str, "cd") == 0)
+		{
+			if (tmp->next == NULL)
+				return (OK);
+			tmp = tmp->next;
+			if (((t_token *)tmp->content)->str[0] == '-'
+				&& ft_strlen(((t_token *)tmp->content)->str) == 1)
+				((t_token *)tmp->content)->type = ARG_TYPE;
+		}
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
 			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
 		{
 			if (tmp->next == NULL)
@@ -62,8 +72,7 @@ int	reset_arg_if_echo(t_list *head)
 				if (ft_strcmp(((t_token *)tmp->content)->str, "-e") == 0
 					|| ft_strcmp(((t_token *)tmp->content)->str, "-E") == 0)
 					return (ft_putstr_fd(ECHO_ERR, STDERR_FILENO), KO);
-				else if (ft_strcmp(((t_token *)tmp->content)->str, "-n") == 0)
-					// need to be changed for check if only n in the flag
+				else if (is_echo_flag(((t_token *)tmp->content)->str) == OK)
 					((t_token *)tmp->content)->type = OPT_TYPE;
 				else
 					((t_token *)tmp->content)->type = ARG_TYPE;
@@ -125,4 +134,19 @@ void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 	else if (((t_token *)current->content)->type == WORD_TYPE
 		&& (*cmd_on_pipe) == (*on_pipe_nb) + 1)
 		((t_token *)current->content)->type = ARG_TYPE;
+}
+
+int	is_echo_flag(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] != '-' || str[1] != 'n')
+		return (KO);
+	while (str[++i])
+	{
+		if (str[i] != 'n')
+			return (KO);
+	}
+	return (OK);
 }
