@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:43:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:04:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,12 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	}
 	if (*pid == 0)
 	{
-		if (open_all_infile(minish) == KO|| redirection_in(minish,
-				minish->files, STDIN_FILENO) != OK || !cmd_arg || !cmd_arg[0] || check_cmd_value(cmd_arg) == KO)
+		if (open_all_infile(minish) == KO || !cmd_arg || !cmd_arg[0]
+			|| check_cmd_value(cmd_arg) == KO)
 			exit(execve_error_free(minish, arg, path, token));
 		path = split_n_path(minish, cmd_arg, &arg, token);
-		if(open_all_outfile(minish) == KO || redirection_out(minish,
+		if (redirection_in(minish, minish->files, STDIN_FILENO) != OK
+			|| open_all_outfile(minish) == KO || redirection_out(minish,
 				minish->files, STDOUT_FILENO) != OK)
 			exit(execve_error_free(minish, arg, path, token));
 		if (minish->nb_files > 0)

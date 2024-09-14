@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:52:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:02:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	heredoc_create(t_data *minishell, char *limiter)
 	fd_doc = open(HERE_DOC, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_doc == -1)
 		return (ft_putstr_fd(INFILE_ERROR_FD, STDERR_FILENO));
-	minishell->here_doc = OK;
+	minishell->here_doc = KO;
 	line = 0;
 	limiter_tmp = ft_strjoin(limiter, "\n");
 	if (!limiter_tmp)
@@ -61,13 +61,13 @@ le limiter est lelement apres le << , lorsquíl est appelé,
 
 void handle_file_hd(t_data *minishell)
 {
-	if (minishell->here_doc == OK)
+	if (minishell->here_doc == KO)
 	{
 		if (unlink(HERE_DOC) < 0)
 		{
 			perror(UNLINK_ERR);
 			minishell->last_status = errno;
 		}
-		minishell->here_doc = KO;
+		minishell->here_doc = OK;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 15:52:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:56:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ int		load_path(t_data *minishell, int flag);
 char	*trim_end(char *path_env);
 
 /* prompt */
-void	display_prompt(void);
+void	display_prompt(t_data *minishell);
 void	display_intro(void);
 void	print_token(void *content);
 void	print_double_tab(char **tab);
+char	*readline_custom(t_builtin *builtins);
 
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
