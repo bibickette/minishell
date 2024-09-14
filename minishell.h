@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 19:00:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 13:56:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 int		reset_arg_if_echo(t_list *head);
 int		is_arg_for_echo(t_list *tmp);
+int is_echo_flag(char *str);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_builtin(t_list *token);

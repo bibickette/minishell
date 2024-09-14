@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:28:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 11:59:18 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	}
 	if (*pid == 0)
 	{
+		if(!cmd_arg[0])
+		{
+			execve_error_free(minish, arg, path, token);	
+			exit(EXIT_FAILURE);
+		}
 		path = split_n_path(minish, cmd_arg, &arg, token);
 		if (open_all_files(minish) == KO || redirection_in(minish,
 				minish->files, STDIN_FILENO) != OK || redirection_out(minish,

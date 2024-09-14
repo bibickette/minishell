@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:43:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 12:01:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 	char	**arg;
 	char	*path;
 
+	arg = NULL;
+	path = NULL;
+	if (!minishell->command[cmd][0])
+	{
+		execve_error_free(minishell, arg, path, token);
+		exit(EXIT_FAILURE);
+	}
 	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
 	if (cmd == 0)
 	{
