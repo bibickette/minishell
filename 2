@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 18:07:45 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:07:41 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 	}
 	else if (ft_strcmp(arg[0], "cd") == 0)
 	{
-		if (arg[2])
+		if (arg[2]) != 0)
 			return (ft_putstr_fd(TOO_MANY_ARG, STDERR_FILENO), KO);
 		cd_cmd(arg[1]);
 	}
