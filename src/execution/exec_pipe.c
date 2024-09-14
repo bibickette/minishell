@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 12:01:36 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:22:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,13 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 
 	arg = NULL;
 	path = NULL;
-	if (!minishell->command[cmd][0])
-	{
-		execve_error_free(minishell, arg, path, token);
-		exit(EXIT_FAILURE);
-	}
+	if (!minishell->command[cmd][0] || check_cmd_value(minishell->command[cmd]) == KO)
+		exit(execve_error_free(minishell, arg, path, token));
 	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
 	if (cmd == 0)
 	{
 		if (redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
-			execve_error_free(minishell, arg, path, token);
+			exit(execve_error_free(minishell, arg, path, token));
 		if (dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO) < 0)
 		{
 			perror(DUP_ERR);
@@ -70,10 +67,7 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 			exit(errno);
 		}
 		if (redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
-		{
-			execve_error_free(minishell, arg, path, token);
-			exit(errno);
-		}
+			exit(execve_error_free(minishell, arg, path, token));
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:53:54 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 22:05:04 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:29:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	load_file_tab(t_data *minishell, char **dico_files)
 	return (OK);
 }
 
-int	load_files_type(t_data *minishell, t_list *token)
+void	load_files_type(t_data *minishell, t_list *token)
 {
 	t_list	*tmp_head;
 	int		tab;
@@ -57,5 +57,4 @@ int	load_files_type(t_data *minishell, t_list *token)
 			break ;
 		tmp_head = tmp_head->next;
 	}
-	return (OK);
 }

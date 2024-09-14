@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 14:49:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:58:06 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,14 @@ void	prompt(t_list *token, t_data *minishell)
 					&& check_token_operator_order(token, minishell) == OK)
 				{
 					take_all_files(minishell, token);
-					ft_lstiter(token, print_token);
 					minishell->command_list = command_listing(token);
 					set_entire_command(minishell->command_list);
 					minishell->command = double_tab_command(minishell->command_list);
-					print_double_tab(minishell->command);
-					printf("la commande s'execute ICI\n");
 					if (minishell->command[1])
 						execve_pipe(minishell, token);
 					else
 						execve_one_cmd(minishell, minishell->command[0], token);
+					handle_file_hd(minishell);
 					free_files_tab(minishell, minishell->files);
 					free_command_list(minishell->command_list, minishell);
 					free(minishell->command);

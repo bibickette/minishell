@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 14:48:48 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:57:55 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 	int		pid;
 	char	**arg;
 
-	if (!cmd_arg)
-		return (OK);
+	// if (!cmd_arg)
+	// 	return (OK);
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
 		handle_builtin(minish, arg, token);
@@ -88,19 +88,13 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 	}
 	if (*pid == 0)
 	{
-		if(!cmd_arg[0])
-		{
-			execve_error_free(minish, arg, path, token);	
-			exit(EXIT_FAILURE);
-		}
+		if (open_all_infile(minish) == KO|| redirection_in(minish,
+				minish->files, STDIN_FILENO) != OK || !cmd_arg || !cmd_arg[0] || check_cmd_value(cmd_arg) == KO)
+			exit(execve_error_free(minish, arg, path, token));
 		path = split_n_path(minish, cmd_arg, &arg, token);
-		if (open_all_files(minish) == KO || redirection_in(minish,
-				minish->files, STDIN_FILENO) != OK || redirection_out(minish,
+		if(open_all_outfile(minish) == KO || redirection_out(minish,
 				minish->files, STDOUT_FILENO) != OK)
-		{
-			execve_error_free(minish, arg, path, token);
-			exit(EXIT_FAILURE);
-		}
+			exit(execve_error_free(minish, arg, path, token));
 		if (minish->nb_files > 0)
 			close_all_files(minish->files);
 		if (execve(path, arg, minish->builtins->env) == KO)
@@ -116,7 +110,7 @@ void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
 	exit(errno);
 }
 
-void	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
+int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 {
 	if (minish->command[1])
 	{
@@ -134,4 +128,18 @@ void	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 	if (path)
 		free(path);
 	apocalypse(minish);
+	return (EXIT_FAILURE);
+}
+
+int	check_cmd_value(char *str)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < ft_strlen(str))
+	{
+		if (str[i] != ' ')
+			return (OK);
+	}
+	return (KO);
 }
