@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:46:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 14:48:00 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	export_cmd_w_arg(char *var, t_data *minishell)
 {
 	char	*key_export;
-
+	int		ret;
+	
 	key_export = NULL;
-	if (check_export_format(var, minishell) == KO)
-		return (KO);
+	ret = check_export_format(var, minishell);
+	if (ret == KO || ret == M_KO)
+		return (ret);
 	if (has_equal(var) == OK)
 	{
 		if (export_in_env(var, minishell) == KO || export_in_export(var,
@@ -40,11 +42,11 @@ int	check_export_format(char *var, t_data *minishell)
 		if (var[i] == '=')
 			break ;
 	if (var[0] == '=' || (var[0] >= '0' && var[0] <= '9'))
-		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
+		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
 	y = -1;
 	while (++y < i)
 		if (check_more_special_char(var[y]) == KO)
-			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
+			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
 	minishell->last_status = 1;
 	return (OK);
 }

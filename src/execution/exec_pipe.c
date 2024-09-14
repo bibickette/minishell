@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 12:01:36 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 14:03:06 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 	if (cmd == 0)
 	{
 		if (redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
+		{
 			execve_error_free(minishell, arg, path, token);
+			exit(EXIT_FAILURE);
+		}
 		if (dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO) < 0)
 		{
 			perror(DUP_ERR);
@@ -72,7 +75,7 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 		if (redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
 		{
 			execve_error_free(minishell, arg, path, token);
-			exit(errno);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
