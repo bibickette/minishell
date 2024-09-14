@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:22:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:16:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	execve_pipe(t_data *minish, t_list *token)
 	if (init_pipe(minish) == KO)
 		return ;
 	i = -1;
-	open_all_files(minish);
+	// open_all_files(minish);
+	// open_all_outfile(minish);
 	while (++i < minish->nb_cmd)
 	{
 		minish->pid_tab[i] = fork();
@@ -46,10 +47,9 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 	path = NULL;
 	if (!minishell->command[cmd][0] || check_cmd_value(minishell->command[cmd]) == KO)
 		exit(execve_error_free(minishell, arg, path, token));
-	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
 	if (cmd == 0)
 	{
-		if (redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
+		if (open_all_infile(minishell) == KO || redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
 			exit(execve_error_free(minishell, arg, path, token));
 		if (dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO) < 0)
 		{
@@ -60,14 +60,14 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 	}
 	else if (cmd == minishell->nb_cmd - 1)
 	{
+		if (open_all_outfile(minishell) == KO || redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
+			exit(execve_error_free(minishell, arg, path, token));
 		if (dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO) < 0)
 		{
 			perror(DUP_ERR);
 			execve_error_free(minishell, arg, path, token);
 			exit(errno);
 		}
-		if (redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
-			exit(execve_error_free(minishell, arg, path, token));
 	}
 	else
 	{
@@ -79,6 +79,7 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 			exit(errno);
 		}
 	}
+	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
 	if (is_builtin(arg[0]) == OK)
 	{
 		execve_builtin(minishell, arg, token);
