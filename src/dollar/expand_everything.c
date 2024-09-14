@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:57:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:50:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	expand_everything(t_data *minishell, t_list *token)
 	t_list	*tmp_head;
 	char	**dollar_tab;
 	char	*str_token_before;
-	char	*tmp;
 
 	tmp_head = token;
 	str_token_before = NULL;
@@ -28,23 +27,33 @@ int	expand_everything(t_data *minishell, t_list *token)
 				if (start_expanding(minishell, &dollar_tab, tmp_head) == KO)
 					return (KO);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
-		{
-			if (((t_token *)tmp_head->content)->str[0])
-			{
-				tmp = ft_strdup(((t_token *)tmp_head->content)->str);
-				if (!tmp)
-					return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), M_KO);
-				free(((t_token *)tmp_head->content)->str);
-				((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");
-				free(tmp);
-			}
-		}
+			if (trim_token(tmp_head) == KO)
+				return (KO);
 		if (tmp_head->next == NULL)
 			break ;
 		str_token_before = ((t_token *)tmp_head->content)->str;
 		tmp_head = tmp_head->next;
 	}
 	return (OK);
+}
+
+int	trim_token(t_list *tmp_head)
+{
+	char	*tmp;
+
+	if (((t_token *)tmp_head->content)->str[0])
+	{
+		tmp = ft_strdup(((t_token *)tmp_head->content)->str);
+		if (!tmp)
+			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), M_KO);
+		free(((t_token *)tmp_head->content)->str);
+		((t_token *)tmp_head->content)->str = NULL;
+		((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");
+		free(tmp);
+		tmp = NULL;
+		return (OK);
+	}
+	return (KO);
 }
 
 int	right_condition_for_expand(t_list *tmp_head, char *str_token_before)
@@ -67,12 +76,14 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
 	if (!expanded_exported)
 	{
 		free(str_expanded);
+		str_expanded = 0;
 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 	}
 	if (set_dollar_n_expand(minishell, dollar_tab, &expanded_exported) == KO)
 	{
 		free_double_char(&expanded_exported);
 		free(str_expanded);
+		str_expanded = 0;
 		return (KO);
 	}
 	build_expand_n_replace(&str_expanded, &expanded_exported, tmp_head);

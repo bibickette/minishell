@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:25:04 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:44:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 {
 	char	*key_export;
 	int		ret;
-	
+
 	key_export = NULL;
 	ret = check_export_format(var, minishell);
 	if (ret == KO || ret == M_KO)
@@ -33,9 +33,9 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 	else
 	{
 		ret = export_in_export(var, &key_export, minishell);
-		if(ret == KO || ret == M_KO)
+		if (ret == KO || ret == M_KO)
 			return (ret);
-	}	
+	}
 	return (OK);
 }
 
@@ -90,14 +90,17 @@ int	replace_in_tab(char ***env_or_export, char *tmp_var, char **var)
 		if (the_big_condition(env_or_export, tmp_var, i) == OK)
 		{
 			free((*env_or_export)[i]);
+			(*env_or_export)[i] = 0;
 			(*env_or_export)[i] = ft_strdup(*var);
 			free(tmp_var);
+			tmp_var = NULL;
 			if (!(*env_or_export)[i])
 				return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), M_KO);
 			return (OK);
 		}
 	}
 	free(tmp_var);
+	tmp_var = NULL;
 	return (KO);
 }
 
@@ -116,9 +119,9 @@ int	the_big_condition(char ***env_or_export, char *tmp_var, int i)
 		return (OK);
 	else if ((has_equal((*env_or_export)[i]) == KO
 		&& ft_strlen(tmp_var) > ft_strlen((*env_or_export)[i])
-		&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
-		&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
-			- 1) == 0))
+			&& tmp_var[ft_strlen((*env_or_export)[i])] == '='
+			&& ft_strncmp((*env_or_export)[i], tmp_var, ft_strlen(tmp_var)
+				- 1) == 0))
 		return (OK);
 	return (KO);
 }

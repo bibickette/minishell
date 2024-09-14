@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:51:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:25:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,10 @@
 # define PWD_ERR "Minishell Error : Pwd"
 # define EXPORT_ERR "Minishell Error : Export : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR "Minishell Error : Malloc in function Dollar Expansion\n"
-# define EXPAND_MALLOC_ERR "Minishell Error : Malloc in function Expand Everything\n"
+# define DOLLAR_EXPANSION_ERR \
+	"Minishell Error : Malloc in function Dollar Expansion\n"
+# define EXPAND_MALLOC_ERR \
+	"Minishell Error : Malloc in function Expand Everything\n"
 # define NOT_ENOUGH_ARG "Minishell Error - UNSET : Not enough arguments\n"
 # define ECHO_ERR "Minishell Error - ECHO : Invalid option\n"
 # define TOO_MANY_ARG "Minishell Error - CD : Too many arguments\n"
@@ -119,7 +121,8 @@
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 # define SYNTAX_ERR "Minishell Error : Syntax error\n"
-# define BUILTIN_SYNTAX_ERR "Minishell Error : Builtin doesn't accept option/argument\n"
+# define BUILTIN_SYNTAX_ERR \
+	"Minishell Error : Builtin doesn't accept option/argument\n"
 
 /* process */
 # define STATUS_ERR "A process hasn't ended well\n"
@@ -143,7 +146,8 @@
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 # define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
-# define ADD_BACK_TAB_ERR "Minishell Error : Malloc in function char_add_back_tab\n"
+# define ADD_BACK_TAB_ERR \
+	"Minishell Error : Malloc in function char_add_back_tab\n"
 
 /* file errors */
 # define HERE_DOC_MSG "heredoc>"

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 20:37:23 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 13:09:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:22:00 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	init_variable(t_list **actual, t_command **actual_command,
 		t_list *command_list)
 {
-	// printf("init_variable\n");
 	*actual = command_list;
 	*actual_command = (t_command *)(*actual)->content;
 	return (1);
@@ -25,7 +24,6 @@ static char	*join_c(char *buffer, char *string)
 {
 	char	*join;
 
-	// printf("join_c\n");
 	if (!buffer && !string)
 		return (NULL);
 	else if (buffer && !string)
@@ -50,7 +48,6 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 	char	*join;
 	int		i;
 
-	// printf("join_double_tab\n");
 	if (!buffer && !d_tab)
 		return (NULL);
 	else if (buffer && !d_tab)
@@ -58,7 +55,6 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 	else if (!buffer && d_tab)
 	{
 		i = 0;
-		// printf("buffer NULL\n");
 		buffer = ft_strdup(d_tab[0]);
 		while (d_tab[++i])
 		{
@@ -68,7 +64,6 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 			join = ft_strjoin(buffer, d_tab[i]);
 			free(buffer);
 			buffer = join;
-			// printf("buffer: %s\n", buffer);
 		}
 		return (buffer);
 	}
@@ -83,7 +78,6 @@ static char	*join_double_tab(char *buffer, char **d_tab)
 			join = ft_strjoin(buffer, d_tab[i]);
 			free(buffer);
 			buffer = join;
-			// printf("buffer: %s\n", buffer);
 		}
 		return (buffer);
 	}
@@ -111,16 +105,13 @@ int	set_entire_command(t_list *command_list)
 	t_command	*actual_command;
 	int			ret;
 
-	// printf("set_entire_command\n");
 	if (command_list)
 	{
 		init_variable(&actual, &actual_command, command_list);
 		while (actual && actual->content)
 		{
 			actual_command->entire_command = join_command(actual_command);
-			// printf("entire_command: %s\n", actual_command->entire_command);
 			ret = go_next(&actual, &actual_command);
-			// printf("ret: %d\n", ret);
 			if (ret == 0)
 				break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:02:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:53:23 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	heredoc_create(t_data *minishell, char *limiter)
 			break ;
 		ft_putstr_fd(line, fd_doc);
 		free(line);
+		line = 0;
 	}
 }
 
@@ -46,7 +47,9 @@ int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)
 	{
 		close(fd_heredoc);
 		free(limiter_tmp);
+		limiter_tmp = 0;
 		free(line);
+		line = 0;
 		get_next_line(STDIN_FILENO, 1);
 		return (OK);
 	}
@@ -59,7 +62,7 @@ le limiter est lelement apres le << , lorsquíl est appelé,
 	ca met fin au here_doc
 */
 
-void handle_file_hd(t_data *minishell)
+void	handle_file_hd(t_data *minishell)
 {
 	if (minishell->here_doc == KO)
 	{

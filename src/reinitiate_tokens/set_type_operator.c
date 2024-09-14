@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 13:57:45 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:01:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,58 +42,6 @@ void	reset_cmd_pipe(t_list *head)
 			break ;
 		tmp = tmp->next;
 	}
-}
-
-int	reset_arg_if_echo(t_list *head)
-{
-	t_list	*tmp;
-
-	tmp = head;
-	while (tmp)
-	{
-		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
-			&& ft_strcmp(((t_token *)tmp->content)->str, "cd") == 0)
-		{
-			if (tmp->next == NULL)
-				return (OK);
-			tmp = tmp->next;
-			if (((t_token *)tmp->content)->str[0] == '-'
-				&& ft_strlen(((t_token *)tmp->content)->str) == 1)
-				((t_token *)tmp->content)->type = ARG_TYPE;
-		}
-		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
-			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
-		{
-			if (tmp->next == NULL)
-				return (OK);
-			tmp = tmp->next;
-			if (((t_token *)tmp->content)->str[0] == '-')
-			{
-				if (ft_strcmp(((t_token *)tmp->content)->str, "-e") == 0
-					|| ft_strcmp(((t_token *)tmp->content)->str, "-E") == 0)
-					return (ft_putstr_fd(ECHO_ERR, STDERR_FILENO), KO);
-				else if (is_echo_flag(((t_token *)tmp->content)->str) == OK)
-					((t_token *)tmp->content)->type = OPT_TYPE;
-				else
-					((t_token *)tmp->content)->type = ARG_TYPE;
-			}
-			if (tmp->next == NULL)
-				return (OK);
-			tmp = tmp->next;
-			while (tmp)
-			{
-				if (is_arg_for_echo(tmp) == OK)
-					((t_token *)tmp->content)->type = ARG_TYPE;
-				if (tmp->next == NULL)
-					break ;
-				tmp = tmp->next;
-			}
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-	return (OK);
 }
 
 int	is_arg_for_echo(t_list *tmp)
@@ -136,17 +84,17 @@ void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)
 		((t_token *)current->content)->type = ARG_TYPE;
 }
 
-int	is_echo_flag(char *str)
+int	is_cd(t_list *tmp)
 {
-	int	i;
-
-	i = 0;
-	if (str[0] != '-' || str[1] != 'n')
-		return (KO);
-	while (str[++i])
+	if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+		&& ft_strcmp(((t_token *)tmp->content)->str, "cd") == 0)
 	{
-		if (str[i] != 'n')
-			return (KO);
+		if (tmp->next == NULL)
+			return (OK);
+		tmp = tmp->next;
+		if (((t_token *)tmp->content)->str[0] == '-'
+			&& ft_strlen(((t_token *)tmp->content)->str) == 1)
+			((t_token *)tmp->content)->type = ARG_TYPE;
 	}
-	return (OK);
+	return (KO);
 }

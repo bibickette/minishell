@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:04:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:46:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 	int		pid;
 	char	**arg;
 
-	// if (!cmd_arg)
-	// 	return (OK);
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
 		handle_builtin(minish, arg, token);
@@ -44,6 +42,20 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 		minish->last_status = errno;
 		return ;
 	}
+	if (do_redir_builtin_one_cmd(minish, out) == KO)
+		return ;
+	ret = execve_builtin(minish, arg, token);
+	if (minish->nb_files > 0)
+		close_all_files(minish->files);
+	minish->last_status = OK;
+	if (ret == KO || ret == M_KO)
+		minish->last_status = 1;
+	put_back_in_term_n_close(minish, out);
+	free_double_char(&arg);
+}
+
+int	do_redir_builtin_one_cmd(t_data *minish, int out)
+{
 	if (redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
 	{
 		minish->last_status = errno;
@@ -53,14 +65,13 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 			perror(CLOSE_ERR);
 			minish->last_status = errno;
 		}
-		return ;
+		return (KO);
 	}
-	ret = execve_builtin(minish, arg, token);
-	if (minish->nb_files > 0)
-		close_all_files(minish->files);
-	minish->last_status = OK;
-	if (ret == KO || ret == M_KO)
-		minish->last_status = 1;
+	return (OK);
+}
+
+void	put_back_in_term_n_close(t_data *minish, int out)
+{
 	if (dup2(out, STDOUT_FILENO) < 0)
 	{
 		perror(DUP_ERR);
@@ -71,76 +82,4 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 		perror(CLOSE_ERR);
 		minish->last_status = errno;
 	}
-	free_double_char(&arg);
-}
-
-void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
-{
-	char	*path;
-	char	**arg;
-
-	arg = NULL;
-	path = NULL;
-	if (*pid == KO)
-	{
-		minish->last_status = errno;
-		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO));
-	}
-	if (*pid == 0)
-	{
-		if (open_all_infile(minish) == KO || !cmd_arg || !cmd_arg[0]
-			|| check_cmd_value(cmd_arg) == KO)
-			exit(execve_error_free(minish, arg, path, token));
-		path = split_n_path(minish, cmd_arg, &arg, token);
-		if (redirection_in(minish, minish->files, STDIN_FILENO) != OK
-			|| open_all_outfile(minish) == KO || redirection_out(minish,
-				minish->files, STDOUT_FILENO) != OK)
-			exit(execve_error_free(minish, arg, path, token));
-		if (minish->nb_files > 0)
-			close_all_files(minish->files);
-		if (execve(path, arg, minish->builtins->env) == KO)
-			execve_error(minish, path, arg, token);
-		exit(EXIT_SUCCESS);
-	}
-}
-
-void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
-{
-	execve_error_free(minishell, arg, path, token);
-	perror(EXECVE_ERR);
-	exit(errno);
-}
-
-int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
-{
-	if (minish->command[1])
-	{
-		close_all_pipes(minish);
-		free_pipe_pid(minish);
-	}
-	if (minish->nb_files > 0)
-		close_all_files(minish->files);
-	free_files_tab(minish, minish->files);
-	free_command_list(minish->command_list, minish);
-	free(minish->command);
-	free_double_char(&arg);
-	ft_lstclear_custom(&token, free);
-	ft_lstclear_custom(&minish->brut_list, free);
-	if (path)
-		free(path);
-	apocalypse(minish);
-	return (EXIT_FAILURE);
-}
-
-int	check_cmd_value(char *str)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < ft_strlen(str))
-	{
-		if (str[i] != ' ')
-			return (OK);
-	}
-	return (KO);
 }

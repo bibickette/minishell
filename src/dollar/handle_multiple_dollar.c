@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:56:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 22:03:00 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:15:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	add_doll_first_tab(t_data *minishell, char ***dollar_tab)
 	if (!tmp_expanded)
 		return (free(add_first_dol), KO);
 	free(add_first_dol);
+	add_first_dol = 0;
 	free((*dollar_tab)[0]);
+	(*dollar_tab)[0] = 0;
 	(*dollar_tab)[0] = ft_strdup(tmp_expanded);
 	if (!(*dollar_tab)[0])
 	{
@@ -98,7 +100,9 @@ int	do_the_expansion(t_data *minishell, char **dollar_tab)
 	if (!tmp_expanded)
 		return (free(tmp), KO);
 	free(tmp);
+	tmp = 0;
 	free((*dollar_tab));
+	*dollar_tab = 0;
 	(*dollar_tab) = ft_strdup(tmp_expanded);
 	if (!(*dollar_tab))
 	{
@@ -106,6 +110,7 @@ int	do_the_expansion(t_data *minishell, char **dollar_tab)
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	}
 	free(tmp_expanded);
+	tmp_expanded = 0;
 	return (OK);
 }
 
@@ -118,6 +123,7 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 	if (!(*dollar_tab)[0])
 	{
 		free((*expanded_exported));
+		(*expanded_exported) = 0;
 		(*expanded_exported) = ft_strdup("");
 		if (!(*expanded_exported))
 		{
@@ -125,13 +131,8 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 		}
 	}
-	else
-	{
-		if (add_doll_all_tab(minishell, dollar_tab, (*expanded_exported)) == KO)
-		{
-			free_double_char(dollar_tab);
-			return (KO);
-		}
-	}
+	else if (add_doll_all_tab(minishell, dollar_tab,
+			(*expanded_exported)) == KO)
+		return (free_double_char(dollar_tab), KO);
 	return (OK);
 }
