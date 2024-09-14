@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 13:56:49 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:52:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 int		reset_arg_if_echo(t_list *head);
 int		is_arg_for_echo(t_list *tmp);
-int is_echo_flag(char *str);
+int		is_echo_flag(char *str);
 
 int		check_token_operator_order(t_list *token, t_data *minishell);
 int		check_builtin(t_list *token);
@@ -148,7 +148,7 @@ char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 char	*expansion_no_surround(char *var, t_data *minishell);
 
 /* expand dollar  everything */
-void	expand_everything(t_data *minishell, t_list *token);
+int	expand_everything(t_data *minishell, t_list *token);
 int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);
 int		start_expanding(t_data *minishell, char ***dollar_tab,
 			t_list *tmp_head);
@@ -185,14 +185,17 @@ void	heredoc_create(t_data *minishell, char *limiter);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		take_all_files(t_data *minishell, t_list *token);
 int		count_n_allocate_files(t_data *minishell, t_list *token);
-int		load_files_type(t_data *minishell, t_list *token);
+void		load_files_type(t_data *minishell, t_list *token);
 int		char_add_back_tab(char ***original_tab, char *to_add);
 int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
-int		open_all_infile(t_data *minishell, t_file *file);
-int		open_all_outfile(t_file *file);
+int		open_infile_type(t_data *minishell, t_file *file);
+int		open_outfile_type(t_file *file);
 int		open_all_files(t_data *minishell);
+int open_all_infile(t_data *minishell);
+int open_all_outfile(t_data *minishell);
+
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
 
@@ -200,6 +203,7 @@ int		open_infile(t_file *file);
 int		open_outfile(t_file *file);
 int		open_append_outfile(t_file *file);
 void	close_all_files(t_file *files);
+void handle_file_hd(t_data *minishell);
 
 /* Built-in commands */
 int		export_all_arg(t_data *minishell, t_list *token);
@@ -237,7 +241,7 @@ int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
-void	execve_error_free(t_data *minish, char **arg, char *path,
+int	execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
 void	handle_builtin(t_data *minish, char **arg, t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
@@ -246,8 +250,9 @@ int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 			t_list *token);
-int	has_path(char *cmd);
+int		has_path(char *cmd);
 char	*extract_cmd(char *cmd_arg);
+int		check_cmd_value(char *str);
 
 void	execve_pipe(t_data *minish, t_list *token);
 int		init_pipe(t_data *minishell);
@@ -291,10 +296,10 @@ int		have_twin(char *prompt);
 /* Auto destruction minishell*/
 void	apocalypse(t_data *minishell);
 void	free_builtins(t_builtin *builtins);
-void	free_command_list(t_list *command_list);
+void	free_command_list(t_list *command_list, t_data *minishell);
 void	free_command(t_command *command);
 void	free_lists(t_data *minishell);
-void	free_double_char(char **array);
+void	free_double_char(char ***array);
 void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);

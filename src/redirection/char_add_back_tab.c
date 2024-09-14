@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:21:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/01 22:35:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:04:34 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	no_original_tab(char ***original_tab, char *to_add, char ***new_tab)
 		(*new_tab)[0] = ft_strdup(to_add);
 		if (!(*new_tab)[0])
 		{
-			free_double_char(*original_tab);
+			free_double_char(original_tab);
 			*original_tab = NULL;
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 		}
@@ -48,7 +48,7 @@ int	count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 		(*new_tab)[(*nb_tab)] = ft_strdup((*original_tab)[(*nb_tab)]);
 		if (!(*new_tab)[(*nb_tab)])
 		{
-			free_double_char(*original_tab);
+			free_double_char(original_tab);
 			*original_tab = NULL;
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 		}
@@ -71,14 +71,14 @@ int	char_add_back_tab(char ***original_tab, char *to_add)
 		new_tab[nb_tab] = ft_strdup(to_add);
 		if (!new_tab[nb_tab])
 		{
-			free_double_char(*original_tab);
+			free_double_char(original_tab);
 			*original_tab = NULL;
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 		}
 		nb_tab++;
 	}
 	new_tab[nb_tab] = NULL;
-	free_double_char(*original_tab);
+	free_double_char(original_tab);
 	(*original_tab) = new_tab;
 	return (OK);
 }

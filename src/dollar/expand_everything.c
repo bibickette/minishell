@@ -6,13 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:46:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:28:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_everything(t_data *minishell, t_list *token)
+int	expand_everything(t_data *minishell, t_list *token)
 {
 	t_list	*tmp_head;
 	char	**dollar_tab;
@@ -25,12 +25,15 @@ void	expand_everything(t_data *minishell, t_list *token)
 	{
 		if (right_condition_for_expand(tmp_head, str_token_before) == OK)
 			if (has_dollar(((t_token *)tmp_head->content)->str) == OK)
-				start_expanding(minishell, &dollar_tab, tmp_head);
+				if (start_expanding(minishell, &dollar_tab, tmp_head) == KO)
+					return (KO);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
 		{
 			if (((t_token *)tmp_head->content)->str[0])
 			{
 				tmp = ft_strdup(((t_token *)tmp_head->content)->str);
+				if (!tmp)
+					return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), M_KO);
 				free(((t_token *)tmp_head->content)->str);
 				((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");
 				free(tmp);
@@ -41,6 +44,7 @@ void	expand_everything(t_data *minishell, t_list *token)
 		str_token_before = ((t_token *)tmp_head->content)->str;
 		tmp_head = tmp_head->next;
 	}
+	return (OK);
 }
 
 int	right_condition_for_expand(t_list *tmp_head, char *str_token_before)
@@ -67,7 +71,7 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
 	}
 	if (set_dollar_n_expand(minishell, dollar_tab, &expanded_exported) == KO)
 	{
-		free_double_char(expanded_exported);
+		free_double_char(&expanded_exported);
 		free(str_expanded);
 		return (KO);
 	}

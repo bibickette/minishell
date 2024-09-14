@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:47:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:51:18 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@
 # define NOT_ENOUGH_ARG "Minishell Error - UNSET : Not enough arguments\n"
 # define ECHO_ERR "Minishell Error - ECHO : Invalid option\n"
 # define TOO_MANY_ARG "Minishell Error - CD : Too many arguments\n"
+
 /* parsing error */
 # define QUOTE_ERR "Minishell Error : Free quote\n"
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
@@ -129,6 +130,7 @@
 # define EXECVE_ERR "Minishell Error : Execve"
 # define CMD_NOT_FOUND "Minishell Error : Command not found : "
 # define CLOSE_ERR "Minishell Error : Close"
+# define UNLINK_ERR "Minishell Error : Unlink"
 
 /* environment errors */
 # define ROOT_ENV "/etc/environment"

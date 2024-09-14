@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 19:54:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:29:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	take_all_files(t_data *minishell, t_list *token)
 	if (count_n_allocate_files(minishell, token) == KO)
 		return (KO);
 	load_files_type(minishell, token);
-	if (!minishell->files || !minishell->files[0].name)
-		return (KO);
 	return (OK);
 }
 

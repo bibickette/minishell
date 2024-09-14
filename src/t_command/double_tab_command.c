@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:05:29 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 13:08:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:04:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ char	**double_tab_command(t_list *command_list)
 		return (NULL);
 	content = (t_command *)actual->content;
 	size = size_list(command_list);
-	// printf("size : %d\n", size);
 	tab_command = ft_calloc(size + 1, sizeof(char *));
 	while (actual)
 	{
 		tab_command[i] = content->entire_command;
-		// printf("ajout de commande %s \n", content->entire_command);
 		actual = actual->next;
 		if (actual && actual->content)
 			content = (t_command *)actual->content;

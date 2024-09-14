@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:10:58 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 18:37:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:27:29 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**add_redirection(char **redirections, char *redirection, int *size)
 	new_redirections[i] = ft_strdup(redirection);
 	new_redirections[++i] = NULL;
 	(*size)++;
-	free_double_char(redirections);
+	free_double_char(&redirections);
 	return (new_redirections);
 }
 
@@ -50,7 +50,7 @@ char	**add_file(char **files, char *file, int *size)
 	new_files[i] = ft_strdup(file);
 	new_files[++i] = NULL;
 	(*size)++;
-	free(files);
+	free_double_char(&files);
 	return (new_files);
 }
 
@@ -111,7 +111,7 @@ t_list	*command_listing(t_list *token)
 	while (actual)
 	{
 		content = ft_calloc(1, sizeof(t_command));
-		while (1)
+		while (actual_content)
 		{
 			if (!content)
 				return (NULL);
@@ -131,7 +131,7 @@ t_list	*command_listing(t_list *token)
 			else if (!command_list && (actual_content->type == CMD_TYPE
 					|| actual_content->type == BUILTIN_TYPE))
 				command_list = ft_lstnew_libft(content);
-			if (!actual || actual_content->type == PIPE_TYPE)
+			if (!actual || !actual_content || actual_content->type == PIPE_TYPE)
 				break ;
 			increment_actual(&actual, &actual_content);
 		}
