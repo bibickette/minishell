@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/15 14:03:07 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:45:33 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ void	pwd_cmd(t_builtin *builtins);
 /* built-in env */
 void	env_cmd(char **env);
 /* built-in echo */
-void	echo_cmd(char **args);
+void	echo_cmd(char **args, int fd_out);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
 /* built-in cd */

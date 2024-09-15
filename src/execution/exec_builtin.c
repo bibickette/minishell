@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/15 14:04:24 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:46:00 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	execve_builtin(t_data *minishell, char **arg, t_list *token)
 		cd_cmd(arg[1]);
 	}
 	else if (ft_strcmp(arg[0], "echo") == 0)
-		echo_cmd(arg);
+		echo_cmd(arg, STDOUT_FILENO);
 	else if (ft_strcmp(arg[0], "history") == 0)
 		display_history(minishell);
 	return (OK);
