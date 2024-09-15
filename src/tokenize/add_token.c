@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:03:30 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/03 21:26:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:30:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	add_token(t_list **token, char buffer[BSIZE])
 {
-	// trim_space(buffer);
 	if (*token == NULL)
 		*token = ft_lstnew_custom(buffer);
 	else

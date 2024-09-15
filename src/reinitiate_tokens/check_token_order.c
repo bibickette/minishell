@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 01:47:03 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:23:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	check_builtin_condition(t_list *tmp)
 {
 	if (tmp->next && ((((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPTION
-					|| ((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG)
+					|| ((t_token *)tmp->content)->builtin_type == \
+					BUILT_NO_OPT_ARG)
 				&& ((t_token *)tmp->next->content)->type == OPT_TYPE)
 			|| (((t_token *)tmp->content)->type == BUILTIN_TYPE
 				&& (((t_token *)tmp->content)->builtin_type == BUILT_NO_OPT_ARG

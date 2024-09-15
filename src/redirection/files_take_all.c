@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:29:49 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:57:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_n_allocate_files(t_data *minishell, t_list *token)
 		tmp_head = tmp_head->next;
 	}
 	if (minishell->nb_files == 0 || !dico_files)
-		return (KO);
+		return (OK);
 	return (load_file_tab(minishell, dico_files));
 }
 

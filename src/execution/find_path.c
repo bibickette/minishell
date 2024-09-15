@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 19:01:12 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:52:31 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*find_path(char *cmd, char **path)
 		if (access(path_cmd, F_OK | X_OK) == 0)
 			return (path_cmd);
 		free(path_cmd);
+		path_cmd = NULL;
 	}
 	return (NULL);
 }
@@ -46,6 +47,23 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 		ft_putstr_fd(SPLIT_ERR, STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
+	path = get_path(minishell, arg);
+	if (!path)
+	{
+		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
+		ft_putstr_fd((*arg)[0], STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		execve_error_free(minishell, *arg, path, token);
+		exit(127);
+	}
+	return (path);
+}
+
+char	*get_path(t_data *minishell, char ***arg)
+{
+	char	*path;
+
+	path = NULL;
 	if (is_builtin((*arg)[0]) == OK)
 		path = ft_strdup((*arg)[0]);
 	else if (has_path((*arg)[0]) == KO)
@@ -54,15 +72,8 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 	{
 		path = ft_strdup((*arg)[0]);
 		free((*arg)[0]);
+		(*arg)[0] = 0;
 		*arg[0] = extract_cmd(path);
-	}
-	if (!path)
-	{
-		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
-		ft_putstr_fd((*arg)[0], STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		execve_error_free(minishell, *arg, path, token);
-		exit(127);
 	}
 	return (path);
 }

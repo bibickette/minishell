@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:28:35 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 22:05:40 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:54:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	separate_token(t_list *to_separate,
 	if (!separated)
 		return (ft_putstr_fd(SPLIT_ERR, STDERR_FILENO), KO);
 	free(((t_token *)to_separate->content)->str);
+	((t_token *)to_separate->content)->str = NULL;
 	((t_token *)to_separate->content)->str = ft_strdup(separated[0]);
 	if (!((t_token *)to_separate->content)->str)
 	{

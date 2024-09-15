@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:24:30 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:26:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:53:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	put_quote_back(char **str, char quote)
 	with_quote[len + 1] = quote;
 	with_quote[len + 2] = '\0';
 	free(*str);
+	*str = 0;
 	*str = with_quote;
 	return (OK);
 }

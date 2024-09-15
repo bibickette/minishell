@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:22:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:20:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	execve_pipe(t_data *minish, t_list *token)
 	if (init_pipe(minish) == KO)
 		return ;
 	i = -1;
-	open_all_files(minish);
 	while (++i < minish->nb_cmd)
 	{
 		minish->pid_tab[i] = fork();
@@ -44,41 +43,11 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 
 	arg = NULL;
 	path = NULL;
-	if (!minishell->command[cmd][0] || check_cmd_value(minishell->command[cmd]) == KO)
+	if (!minishell->command[cmd][0]
+		|| check_cmd_value(minishell->command[cmd]) == KO)
 		exit(execve_error_free(minishell, arg, path, token));
+	do_the_dup(minishell, token, cmd);
 	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
-	if (cmd == 0)
-	{
-		if (redirection_in(minishell, minishell->files, STDIN_FILENO) != OK)
-			exit(execve_error_free(minishell, arg, path, token));
-		if (dup2(minishell->pipe_fd[0][WRITE], STDOUT_FILENO) < 0)
-		{
-			perror(DUP_ERR);
-			execve_error_free(minishell, arg, path, token);
-			exit(errno);
-		}
-	}
-	else if (cmd == minishell->nb_cmd - 1)
-	{
-		if (dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO) < 0)
-		{
-			perror(DUP_ERR);
-			execve_error_free(minishell, arg, path, token);
-			exit(errno);
-		}
-		if (redirection_out(minishell, minishell->files, STDOUT_FILENO) != OK)
-			exit(execve_error_free(minishell, arg, path, token));
-	}
-	else
-	{
-		if (dup2(minishell->pipe_fd[cmd - 1][READ], STDIN_FILENO) < 0
-			|| dup2(minishell->pipe_fd[cmd][WRITE], STDOUT_FILENO) < 0)
-		{
-			perror(DUP_ERR);
-			execve_error_free(minishell, arg, path, token);
-			exit(errno);
-		}
-	}
 	if (is_builtin(arg[0]) == OK)
 	{
 		execve_builtin(minishell, arg, token);
@@ -93,15 +62,4 @@ void	child_process(t_data *minishell, t_list *token, int cmd)
 			execve_error(minishell, path, arg, token);
 	}
 	exit(EXIT_SUCCESS);
-}
-
-void	free_pipe_pid(t_data *minishell)
-{
-	int	i;
-
-	i = -1;
-	free(minishell->pid_tab);
-	while (++i < minishell->nb_cmd - 1)
-		free(minishell->pipe_fd[i]);
-	free(minishell->pipe_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 21:20:13 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 19:02:40 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:54:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ void	stick_next_token(t_list *is_next_token, t_list **tmp_head,
 	if (is_next_token->next == NULL)
 	{
 		free(((t_token *)is_next_token->content)->str);
+		((t_token *)is_next_token->content)->str = NULL;
 		free(is_next_token->content);
+		is_next_token->content = 0;
 		free(is_next_token);
+		is_next_token = 0;
 		(*tmp_head)->next = NULL;
 	}
 	else
@@ -55,7 +58,10 @@ void	stick_next_token(t_list *is_next_token, t_list **tmp_head,
 		(*next_tmp) = is_next_token->next;
 		(*tmp_head)->next = (*next_tmp);
 		free(((t_token *)is_next_token->content)->str);
+		((t_token *)is_next_token->content)->str = NULL;
 		free(is_next_token->content);
+		is_next_token->content = 0;
 		free(is_next_token);
+		is_next_token = 0;
 	}
 }

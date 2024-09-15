@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:07:19 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 14:52:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:16:29 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 {
 	int	ret;
 
-	if(load_right_export(var, key_export) == M_KO)
+	if (load_right_export(var, key_export) == M_KO)
 		return (M_KO);
 	ret = export_replacement_tab(&minishell->builtins->export, key_export);
 	if (ret == M_KO)
 	{
 		free(*key_export);
+		*key_export = 0;
 		minishell->last_status = 1;
 		return (M_KO);
 	}
@@ -42,37 +43,43 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 
 int	load_right_export(char *var, char **key_export)
 {
-	char	*value_export;
-	int		i;
-
-	value_export = NULL;
 	if (has_equal(var) == OK)
-	{
-		i = -1;
-		while (var[++i])
-			if (var[i] == '=')
-				break ;
-		if (ft_strlen(var) != (size_t)i)
-		{
-			if (load_value_n_key_export(key_export, &value_export, &var) == KO)
-				return (M_KO);
-			(*key_export) = strjoin_wfree((*key_export), value_export);
-			free(value_export);
-			if (!(*key_export))
-				return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), M_KO);
-		}
-		else
-		{
-			(*key_export) = ft_strjoin(var, "\"\"");
-			if (!(*key_export))
-				return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), M_KO);
-		}
-	}
+		if (load_export_w_equal(var, key_export) == M_KO)
+			return (M_KO);
 	if (!(*key_export))
 	{
 		*key_export = ft_strdup(var);
 		if (!(*key_export))
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), M_KO);
+	}
+	return (OK);
+}
+
+int	load_export_w_equal(char *var, char **key_export)
+{
+	char	*value_export;
+	int		i;
+
+	value_export = NULL;
+	i = -1;
+	while (var[++i])
+		if (var[i] == '=')
+			break ;
+	if (ft_strlen(var) != (size_t)i)
+	{
+		if (load_value_n_key_export(key_export, &value_export, &var) == KO)
+			return (M_KO);
+		(*key_export) = strjoin_wfree((*key_export), value_export);
+		free(value_export);
+		value_export = 0;
+		if (!(*key_export))
+			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), M_KO);
+	}
+	else
+	{
+		(*key_export) = ft_strjoin(var, "\"\"");
+		if (!(*key_export))
+			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), M_KO);
 	}
 	return (OK);
 }

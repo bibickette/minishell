@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 18:40:09 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:52:06 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:45:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	pwd_cmd(t_builtin *builtins)
 {
 	if (builtins->pwd)
+	{
 		free(builtins->pwd);
+		builtins->pwd = NULL;
+	}
 	builtins->pwd = getcwd(NULL, 0);
 	if (!builtins->pwd)
 		return (perror(PWD_ERR));
@@ -30,7 +33,10 @@ char	*readline_custom(t_builtin *builtins)
 
 	prompt = NULL;
 	if (builtins->pwd)
+	{
 		free(builtins->pwd);
+		builtins->pwd = NULL;
+	}
 	builtins->pwd = getcwd(NULL, 0);
 	if (!builtins->pwd)
 		return (NULL);
@@ -39,6 +45,7 @@ char	*readline_custom(t_builtin *builtins)
 	{
 		prompt = readline(tmp);
 		free(tmp);
+		tmp = NULL;
 		return (prompt);
 	}
 	return (NULL);

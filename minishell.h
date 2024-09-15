@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 16:06:29 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:03:07 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 /*         Prompt functions          */
 /*************************************/
 
+void	the_execution(t_list *token, t_data *minishell);
+int		the_parser_set(t_list *token, t_data *minishell, char *prompt);
 /* initiate, get env */
 int		init_minishell(t_data **minishell);
 int		get_env(t_data *minishell, char **env);
@@ -128,6 +130,10 @@ void	reset_operator_type(t_token *current);
 void	reset_cmd_pipe(t_list *head);
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb);
 int		reset_arg_if_echo(t_list *head);
+int		set_the_reset_echo(t_list *tmp);
+
+int		is_cd(t_list *tmp);
+int		set_token_flag_echo(t_list *tmp);
 int		is_arg_for_echo(t_list *tmp);
 int		is_echo_flag(char *str);
 
@@ -149,7 +155,8 @@ char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 char	*expansion_no_surround(char *var, t_data *minishell);
 
 /* expand dollar  everything */
-int	expand_everything(t_data *minishell, t_list *token);
+int		expand_everything(t_data *minishell, t_list *token);
+int		trim_token(t_list *tmp_head);
 int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);
 int		start_expanding(t_data *minishell, char ***dollar_tab,
 			t_list *tmp_head);
@@ -186,7 +193,7 @@ void	heredoc_create(t_data *minishell, char *limiter);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		take_all_files(t_data *minishell, t_list *token);
 int		count_n_allocate_files(t_data *minishell, t_list *token);
-void		load_files_type(t_data *minishell, t_list *token);
+void	load_files_type(t_data *minishell, t_list *token);
 int		char_add_back_tab(char ***original_tab, char *to_add);
 int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
@@ -194,8 +201,8 @@ int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_infile_type(t_data *minishell, t_file *file);
 int		open_outfile_type(t_file *file);
 int		open_all_files(t_data *minishell);
-int open_all_infile(t_data *minishell);
-int open_all_outfile(t_data *minishell);
+int		open_all_infile(t_data *minishell);
+int		open_all_outfile(t_data *minishell);
 
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
@@ -204,10 +211,11 @@ int		open_infile(t_file *file);
 int		open_outfile(t_file *file);
 int		open_append_outfile(t_file *file);
 void	close_all_files(t_file *files);
-void handle_file_hd(t_data *minishell);
+void	handle_file_hd(t_data *minishell);
 
 /* Built-in commands */
 int		export_all_arg(t_data *minishell, t_list *token);
+int		run_list_for_export(t_data *minishell, t_list *tmp);
 int		is_builtin(char *command);
 
 /* built-in export*/
@@ -219,6 +227,8 @@ int		replace_in_tab(char ***env_or_export, char *tmp_var, char **var);
 int		export_in_export(char *var, char **key_export, t_data *minishell);
 int		export_replacement_tab(char ***env_or_export, char **var);
 int		load_right_export(char *var, char **key_export);
+int		load_export_w_equal(char *var, char **key_export);
+
 int		the_big_condition(char ***env_or_export, char *tmp_var, int i);
 
 int		check_export_format(char *var, t_data *minishell);
@@ -229,7 +239,7 @@ void	pwd_cmd(t_builtin *builtins);
 /* built-in env */
 void	env_cmd(char **env);
 /* built-in echo */
-int		echo_cmd(t_list *token, int fd_dest);
+void	echo_cmd(char **args);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
 /* built-in cd */
@@ -237,16 +247,20 @@ void	cd_cmd(char *path);
 
 /* Execution */
 char	*find_path(char *cmd, char **path);
+char	*get_path(t_data *minishell, char ***arg);
 int		redirection_in(t_data *minishell, t_file *files, int std_in);
 int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
+int		do_redir_builtin_one_cmd(t_data *minish, int out);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
-int	execve_error_free(t_data *minish, char **arg, char *path,
+int		execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
 void	handle_builtin(t_data *minish, char **arg, t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
+int		first_part_choose_builtin(t_data *minishell, char **arg, t_list *token);
 void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
+void	child_single_fork(t_data *minish, t_list *token, char *cmd_arg);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
 char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
@@ -254,12 +268,18 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 int		has_path(char *cmd);
 char	*extract_cmd(char *cmd_arg);
 int		check_cmd_value(char *str);
+void	put_back_in_term_n_close(t_data *minish, int out);
 
-void	execve_pipe(t_data *minish, t_list *token);
 int		init_pipe(t_data *minishell);
+int		open_pipe(t_data *minishell);
+int		error_open_pipe(t_data *minishell, int i);
+void	execve_pipe(t_data *minish, t_list *token);
+void	child_process(t_data *minishell, t_list *token, int cmd);
+void	do_the_dup(t_data *minishell, t_list *token, int cmd);
+void	dup_first_cmd(t_data *minishell, t_list *token);
+void	dup_last_cmd(t_data *minishell, t_list *token, int cmd);
 void	wait_all_get_status(t_data *minishell);
 void	close_all_pipes(t_data *minishell);
-void	child_process(t_data *minishell, t_list *token, int cmd);
 void	free_pipe_pid(t_data *minishell);
 
 /**********************************************/

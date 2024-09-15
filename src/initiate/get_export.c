@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:45:57 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 14:50:26 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:57:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@ int	load_export_w_quote(char **export)
 		return (KO);
 	key_export = strjoin_wfree(key_export, value_export);
 	free(value_export);
+	value_export = 0;
 	if (!key_export)
 		return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	free(*export);
+	*export = 0;
 	*export = ft_strdup(key_export);
 	free(key_export);
+	key_export = 0;
+	if (!*export)
+		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	return (OK);
 }
 
@@ -60,6 +65,7 @@ int	load_value_n_key_export(char **key_export, char **value_export,
 	if (!*value_export)
 	{
 		free(*key_export);
+		*key_export = 0;
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), M_KO);
 	}
 	if (put_quote_back(value_export, 34) == KO)

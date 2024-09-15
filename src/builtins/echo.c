@@ -6,42 +6,31 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:29:34 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/25 13:55:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/15 14:42:09 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo_cmd(t_list *token, int fd_dest)
+void	echo_cmd(char **args)
 {
-	t_list	*current;
-	t_token	*current_token;
-	int		n_flag;
+	int	i;
+	int	newline;
 
-	n_flag = 0;
-	current = token;
-	while (current && ft_strcmp(((t_token *)current->content)->str,
-			"echo") != 0)
+	i = 1;
+	newline = 1;
+	if (args[1] && strcmp(args[1], "-n") == 0)
 	{
-		current = current->next;
-		if (!current)
-			return (KO);
+		newline = 0;
+		i = 2;
 	}
-	current = current->next;
-	if (current && ft_strcmp(((t_token *)current->content)->str, "-n") == 0)
+	while (args[i])
 	{
-		n_flag = 1;
-		current = current->next;
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
+			ft_putstr_fd(" ", 1);
+		i++;
 	}
-	while (current && check_operator(((t_token *)current->content)->str) == KO)
-	{
-		current_token = (t_token *)current->content;
-		ft_putstr_fd(current_token->str, fd_dest);
-		current = current->next;
-		if (current && check_operator(((t_token *)current->content)->str) == KO)
-			ft_putstr_fd(" ", fd_dest);
-	}
-	if (n_flag == 0)
-		ft_putstr_fd("\n", fd_dest);
-	return (OK);
+	if (newline)
+		ft_putstr_fd("\n", 1);
 }
