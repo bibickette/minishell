@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 18:20:53 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:50:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	handle_builtin(t_data *minish, char **arg, t_list *token)
 
 int	do_redir_builtin_one_cmd(t_data *minish, int out)
 {
-	if (redirection_out(minish, minish->files, STDOUT_FILENO) != OK)
+	if (open_all_outfile(minish) == KO || redirection_out(minish, minish->files,
+			STDOUT_FILENO) != OK)
 	{
 		minish->last_status = errno;
 		close_all_files(minish->files);
