@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:20:45 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:21:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execve_pipe(t_data *minish, t_list *token)
 {
 	int	i;
 
-	if (init_pipe(minish) == KO)
+	if (open_all_hd_file(minish) == KO || init_pipe(minish) == KO)
 		return ;
 	i = -1;
 	while (++i < minish->nb_cmd)

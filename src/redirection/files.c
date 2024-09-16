@@ -6,21 +6,16 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 18:21:33 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:37:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:23:29 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_infile_type(t_data *minishell, t_file *file)
+int	open_infile_type(t_file *file)
 {
-	if (file->type == INFILE_TYPE || file->type == HD_LIMITER_TYPE)
+	if (file->type == INFILE_TYPE)
 	{
-		if (file->type == HD_LIMITER_TYPE)
-		{
-			heredoc_create(minishell, file->name);
-			file->name = HERE_DOC;
-		}
 		if (open_infile(file) == KO)
 			return (KO);
 	}

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 18:20:58 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:17:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,6 @@ void	prompt(t_list *token, t_data *minishell)
 	}
 }
 
-void	the_execution(t_list *token, t_data *minishell)
-{
-	if (take_all_files(minishell, token) == KO)
-		return ;
-	ft_lstiter(token, print_token);
-	minishell->command_list = command_listing(token);
-	set_entire_command(minishell->command_list);
-	minishell->command = double_tab_command(minishell->command_list);
-	if (minishell->command[1])
-		execve_pipe(minishell, token);
-	else
-		execve_one_cmd(minishell, minishell->command[0], token);
-	handle_file_hd(minishell);
-	free_files_tab(minishell, minishell->files);
-	free_command_list(minishell->command_list, minishell);
-	free(minishell->command);
-}
-
 int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 {
 	if (dupplicate_list(token, &minishell->brut_list) == KO)
@@ -67,4 +49,22 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 	set_token_type(token);
 	reset_cmd_pipe(token);
 	return (OK);
+}
+
+void	the_execution(t_list *token, t_data *minishell)
+{
+	if (take_all_files(minishell, token) == KO)
+		return ;
+	ft_lstiter(token, print_token);
+	minishell->command_list = command_listing(token);
+	set_entire_command(minishell->command_list);
+	minishell->command = double_tab_command(minishell->command_list);
+	if (minishell->command[1])
+		execve_pipe(minishell, token);
+	else
+		execve_one_cmd(minishell, minishell->command[0], token);
+	free_files_tab(minishell, minishell->files);
+	free_command_list(minishell->command_list, minishell);
+	free(minishell->command);
+	handle_file_hd(minishell);
 }

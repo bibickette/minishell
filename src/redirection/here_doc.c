@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:53:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:17:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ le limiter est lelement apres le << , lorsquíl est appelé,
 
 void	handle_file_hd(t_data *minishell)
 {
-	if (minishell->here_doc == KO)
+	if (minishell->here_doc == OK)
 	{
 		if (unlink(HERE_DOC) < 0)
 		{
 			perror(UNLINK_ERR);
 			minishell->last_status = errno;
 		}
-		minishell->here_doc = OK;
+		minishell->here_doc = KO;
 	}
 }

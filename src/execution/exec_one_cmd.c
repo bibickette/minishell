@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/15 15:50:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:25:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 	int		pid;
 	char	**arg;
 
+	if (open_all_hd_file(minish) == KO)
+	{
+		minish->last_status = errno;
+		return (KO);
+	}
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
 		handle_builtin(minish, arg, token);

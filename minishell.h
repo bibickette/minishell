@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/15 14:45:33 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:33:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ int		check_operator(char *str);
 
 /* Commande listing */
 t_list	*command_listing(t_list *token);
+void	actual_content_process(t_list *command_list, t_list *actual,
+			t_token *actual_content, t_command *content);
+void	process_redirection(t_command *content, t_list **actual,
+			t_token **actual_content, int *redir_size);
 void	process_arguments_and_options(t_list **actual, t_token **actual_content,
 			t_command *content);
 void	process_redirection_and_pipe(t_list **actual, t_token **actual_content,
@@ -198,10 +202,11 @@ int		char_add_back_tab(char ***original_tab, char *to_add);
 int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
-int		open_infile_type(t_data *minishell, t_file *file);
+int		open_infile_type(t_file *file);
+int		open_infile_hd_type(t_data *minishell, t_file *file);
 int		open_outfile_type(t_file *file);
-int		open_all_files(t_data *minishell);
 int		open_all_infile(t_data *minishell);
+int		open_all_hd_file(t_data *minishell);
 int		open_all_outfile(t_data *minishell);
 
 int		file_type(t_list *tmp_head);
@@ -239,7 +244,9 @@ void	pwd_cmd(t_builtin *builtins);
 /* built-in env */
 void	env_cmd(char **env);
 /* built-in echo */
-void	echo_cmd(char **args, int fd_out);
+void	echo_cmd(t_list *token, int fd_out);
+int		is_echo_token(t_list *tmp, int fd_out, int *flag);
+void	print_echo_arg(t_list *tmp, int fd_out);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
 /* built-in cd */
@@ -325,6 +332,7 @@ void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
+void	free_n_set_var_null(char **var);
 
 /* temporary */
 void	print_all_files(t_file *files);
