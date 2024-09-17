@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:40:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/14 15:51:41 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:03:49 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*get_prompt(t_data **minishell)
 
 	prompt = NULL;
 	prompt = readline("minishell$ ");
-	// prompt = readline_custom((*minishell)->builtins);
 	if (!prompt)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);

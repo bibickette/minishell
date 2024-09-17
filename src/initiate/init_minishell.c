@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 21:03:33 by phwang            #+#    #+#             */
-/*   Updated: 2024/07/13 16:34:48 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:04:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,5 @@ int	init_minishell(t_data **minishell)
 	if (!(*minishell)->builtins)
 		return (KO);
 	(*minishell)->here_doc = KO;
-	if ((*minishell)->builtins->pwd)
-	{
-		free((*minishell)->builtins->pwd);
-		(*minishell)->builtins->pwd = NULL;
-	}
-	(*minishell)->builtins->pwd = getcwd(NULL, 0);
-	if (!(*minishell)->builtins->pwd)
-		return (perror(PWD_ERR), KO);
 	return (OK);
 }

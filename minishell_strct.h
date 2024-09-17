@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:25:37 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/17 19:10:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ typedef struct s_minishell
 {
 	t_list		*history;
 	t_list		*actual_history;
-	t_list		*command_list;
+
 	char		**command_tab;
 
 	t_list		*token;

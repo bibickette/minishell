@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/16 17:17:16 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/17 20:12:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	the_execution(t_list *token, t_data *minishell)
 		execve_one_cmd(minishell, minishell->command_tab[0], token);
 	else if (minishell->command_tab)
 		execve_pipe(minishell, minishell->command_tab, token);
-	close_all_files(minishell->files);
+	if (minishell->nb_files > 1)
+		close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);
 	free_double_char(&minishell->command_tab);
 	handle_file_hd(minishell);
@@ -81,14 +82,14 @@ int	build_cmd_tab(t_data *minishell, t_list *token)
 	tmp = token;
 	while (tmp)
 	{
+		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+			i++;
 		if (((t_token *)tmp->content)->type == CMD_TYPE
 			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE
 			|| ((t_token *)tmp->content)->type == OPT_TYPE
 			|| ((t_token *)tmp->content)->type == ARG_TYPE)
 			if (put_in_cmd_tab(tmp, &minishell->command_tab, i) == KO)
 				return (KO);
-		if (((t_token *)tmp->content)->type == PIPE_TYPE)
-			i++;
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
@@ -99,6 +100,9 @@ int	build_cmd_tab(t_data *minishell, t_list *token)
 
 int	put_in_cmd_tab(t_list *tmp, char ***cmd_tab, int i)
 {
+	char	*tmp_cmd;
+
+	tmp_cmd = NULL;
 	if (!(*cmd_tab) || !(*cmd_tab)[i])
 	{
 		if (char_add_back_tab(cmd_tab, ((t_token *)tmp->content)->str) == KO)
@@ -106,13 +110,15 @@ int	put_in_cmd_tab(t_list *tmp, char ***cmd_tab, int i)
 	}
 	else if ((*cmd_tab)[i])
 	{
-		(*cmd_tab)[i] = strjoin_wfree((*cmd_tab)[i], " ");
-		if (!cmd_tab[i])
+		tmp_cmd = ft_strjoin((*cmd_tab)[i], " ");
+		if (!tmp_cmd)
 			return (ft_putstr_fd(STRJOIN_ERR, STDOUT_FILENO), KO);
-		(*cmd_tab)[i] = strjoin_wfree((*cmd_tab)[i],
-				((t_token *)tmp->content)->str);
-		if (!(*cmd_tab)[i])
+		free((*cmd_tab)[i]);
+		(*cmd_tab)[i] = NULL;
+		tmp_cmd = strjoin_wfree(tmp_cmd, ((t_token *)tmp->content)->str);
+		if (!tmp_cmd)
 			return (ft_putstr_fd(STRJOIN_ERR, STDOUT_FILENO), KO);
+		(*cmd_tab)[i] = tmp_cmd;
 	}
 	return (OK);
 }

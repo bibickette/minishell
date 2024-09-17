@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 15:46:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/17 20:06:22 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_env(t_data *minishell, char **env)
 {
 	int	ret;
 
-	if (!env || !env[0])
+	if (!env || !env[0] || !env[0][0])
 		ret = no_environment(minishell);
 	else
 		ret = load_env(minishell, env);

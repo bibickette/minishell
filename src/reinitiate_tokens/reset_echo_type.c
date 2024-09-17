@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:00:54 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 18:08:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/17 19:58:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	set_the_reset_echo(t_list *tmp)
 	while (tmp)
 	{
 		if (((t_token *)tmp->content)->type == PIPE_TYPE)
-			return(OK);
+			return (OK);
 		if (is_arg_for_echo(tmp) == OK)
 			((t_token *)tmp->content)->type = ARG_TYPE;
 		if (tmp->next == NULL)
