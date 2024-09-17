@@ -16,7 +16,7 @@ void	execve_pipe(t_data *minish, char **cmd_tab, t_list *token)
 {
 	int	i;
 
-	if (open_all_hd_file(minish) == KO || init_pipe(minish) == KO)
+	if (init_pipe(minish) == KO)
 		return ;
 	i = -1;
 	while (++i < minish->nb_cmd)

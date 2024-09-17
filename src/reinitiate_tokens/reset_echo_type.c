@@ -33,14 +33,14 @@ int	set_the_reset_echo(t_list *tmp)
 		return (OK);
 	tmp = tmp->next;
 	if (set_token_flag_echo(tmp) == KO)
-	{
 		return (KO);
-	}
 	if (tmp->next == NULL)
 		return (OK);
 	tmp = tmp->next;
 	while (tmp)
 	{
+		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+			return(OK);
 		if (is_arg_for_echo(tmp) == OK)
 			((t_token *)tmp->content)->type = ARG_TYPE;
 		if (tmp->next == NULL)

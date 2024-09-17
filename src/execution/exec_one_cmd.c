@@ -17,11 +17,6 @@ int	execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token)
 	int		pid;
 	char	**arg;
 
-	if (open_all_hd_file(minish) == KO)
-	{
-		minish->last_status = errno;
-		return (KO);
-	}
 	arg = ft_split(cmd_arg, ' ');
 	if (is_builtin(arg[0]) == OK)
 		handle_builtin(minish, arg, token);

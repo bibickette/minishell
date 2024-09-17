@@ -55,11 +55,17 @@ void	the_execution(t_list *token, t_data *minishell)
 {
 	if (take_all_files(minishell, token) == KO)
 		return ;
+	if (open_all_hd_file(minishell) == KO)
+	{
+		minishell->last_status = errno;
+		return ;
+	}
 	build_cmd_tab(minishell, token);
-	if (minishell->nb_cmd == 1)
+	if (minishell->nb_cmd == 1 && minishell->command_tab)
 		execve_one_cmd(minishell, minishell->command_tab[0], token);
-	else
+	else if (minishell->command_tab)
 		execve_pipe(minishell, minishell->command_tab, token);
+	close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);
 	free_double_char(&minishell->command_tab);
 	handle_file_hd(minishell);
@@ -67,12 +73,11 @@ void	the_execution(t_list *token, t_data *minishell)
 
 int	build_cmd_tab(t_data *minishell, t_list *token)
 {
-	char	**cmd_tab;
 	int		i;
 	t_list	*tmp;
 
 	i = 0;
-	cmd_tab = NULL;
+	minishell->command_tab = NULL;
 	tmp = token;
 	while (tmp)
 	{

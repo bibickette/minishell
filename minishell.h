@@ -318,7 +318,6 @@ void	free_command_list(t_list *command_list, t_data *minishell);
 void	free_command(t_command *command);
 void	free_lists(t_data *minishell);
 void	free_double_char(char ***array);
-void	handle_error(int error_code, char *prompt);
 void	handle_exit(t_data *minishell, char *prompt);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);

@@ -21,7 +21,8 @@ char	*get_prompt(t_data **minishell)
 	char	*prompt;
 
 	prompt = NULL;
-	prompt = readline_custom((*minishell)->builtins);
+	prompt = readline("minishell$ ");
+	// prompt = readline_custom((*minishell)->builtins);
 	if (!prompt)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
