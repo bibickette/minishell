@@ -37,7 +37,7 @@ void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
 
 int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 {
-	if (minish->command[1])
+	if (minish->command_tab[1])
 	{
 		close_all_pipes(minish);
 		free_pipe_pid(minish);
@@ -45,8 +45,7 @@ int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 	if (minish->nb_files > 0)
 		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
-	free_command_list(minish->command_list, minish);
-	free(minish->command);
+	free_double_char(&minish->command_tab);
 	free_double_char(&arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);

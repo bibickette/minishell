@@ -39,8 +39,8 @@ char	*readline_custom(t_builtin *builtins)
 	}
 	builtins->pwd = getcwd(NULL, 0);
 	if (!builtins->pwd)
-		return (NULL);
-	tmp = ft_strjoin(builtins->pwd, "-> ");
+		return (perror(PWD_ERR), NULL);
+	tmp = ft_strjoin(builtins->pwd, "$ ");
 	if (tmp)
 	{
 		prompt = readline(tmp);

@@ -14,12 +14,6 @@
 
 int	init_pipe(t_data *minishell)
 {
-	int	i;
-
-	i = 0;
-	while (minishell->command[i])
-		i++;
-	minishell->nb_cmd = i;
 	minishell->pid_tab = ft_calloc(minishell->nb_cmd, sizeof(int));
 	if (!minishell->pid_tab)
 		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);

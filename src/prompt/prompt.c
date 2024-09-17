@@ -55,16 +55,59 @@ void	the_execution(t_list *token, t_data *minishell)
 {
 	if (take_all_files(minishell, token) == KO)
 		return ;
-	ft_lstiter(token, print_token);
-	minishell->command_list = command_listing(token);
-	set_entire_command(minishell->command_list);
-	minishell->command = double_tab_command(minishell->command_list);
-	if (minishell->command[1])
-		execve_pipe(minishell, token);
+	build_cmd_tab(minishell, token);
+	if (minishell->nb_cmd == 1)
+		execve_one_cmd(minishell, minishell->command_tab[0], token);
 	else
-		execve_one_cmd(minishell, minishell->command[0], token);
+		execve_pipe(minishell, minishell->command_tab, token);
 	free_files_tab(minishell, minishell->files);
-	free_command_list(minishell->command_list, minishell);
-	free(minishell->command);
+	free_double_char(&minishell->command_tab);
 	handle_file_hd(minishell);
+}
+
+int	build_cmd_tab(t_data *minishell, t_list *token)
+{
+	char	**cmd_tab;
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	cmd_tab = NULL;
+	tmp = token;
+	while (tmp)
+	{
+		if (((t_token *)tmp->content)->type == CMD_TYPE
+			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE
+			|| ((t_token *)tmp->content)->type == OPT_TYPE
+			|| ((t_token *)tmp->content)->type == ARG_TYPE)
+			if (put_in_cmd_tab(tmp, &minishell->command_tab, i) == KO)
+				return (KO);
+		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+			i++;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	minishell->nb_cmd = i + 1;
+	return (OK);
+}
+
+int	put_in_cmd_tab(t_list *tmp, char ***cmd_tab, int i)
+{
+	if (!(*cmd_tab) || !(*cmd_tab)[i])
+	{
+		if (char_add_back_tab(cmd_tab, ((t_token *)tmp->content)->str) == KO)
+			return (KO);
+	}
+	else if ((*cmd_tab)[i])
+	{
+		(*cmd_tab)[i] = strjoin_wfree((*cmd_tab)[i], " ");
+		if (!cmd_tab[i])
+			return (ft_putstr_fd(STRJOIN_ERR, STDOUT_FILENO), KO);
+		(*cmd_tab)[i] = strjoin_wfree((*cmd_tab)[i],
+				((t_token *)tmp->content)->str);
+		if (!(*cmd_tab)[i])
+			return (ft_putstr_fd(STRJOIN_ERR, STDOUT_FILENO), KO);
+	}
+	return (OK);
 }

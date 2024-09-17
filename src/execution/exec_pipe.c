@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	execve_pipe(t_data *minish, t_list *token)
+void	execve_pipe(t_data *minish, char **cmd_tab, t_list *token)
 {
 	int	i;
 
@@ -29,25 +29,25 @@ void	execve_pipe(t_data *minish, t_list *token)
 			return ;
 		}
 		if (minish->pid_tab[i] == 0)
-			child_process(minish, token, i);
+			child_process(minish, cmd_tab, token, i);
 	}
 	close_all_pipes(minish);
 	wait_all_get_status(minish);
 	free_pipe_pid(minish);
 }
 
-void	child_process(t_data *minishell, t_list *token, int cmd)
+void	child_process(t_data *minishell, char **cmd_tab, t_list *token, int cmd)
 {
 	char	**arg;
 	char	*path;
 
 	arg = NULL;
 	path = NULL;
-	if (!minishell->command[cmd][0]
-		|| check_cmd_value(minishell->command[cmd]) == KO)
+	if (!cmd_tab[cmd][0]
+		|| check_cmd_value(cmd_tab[cmd]) == KO)
 		exit(execve_error_free(minishell, arg, path, token));
 	do_the_dup(minishell, token, cmd);
-	path = split_n_path(minishell, minishell->command[cmd], &arg, token);
+	path = split_n_path(minishell, cmd_tab[cmd], &arg, token);
 	if (is_builtin(arg[0]) == OK)
 	{
 		execve_builtin(minishell, arg, token);

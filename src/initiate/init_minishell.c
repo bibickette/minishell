@@ -20,5 +20,14 @@ int	init_minishell(t_data **minishell)
 	(*minishell)->builtins = ft_calloc(1, sizeof(t_builtin));
 	if (!(*minishell)->builtins)
 		return (KO);
+	(*minishell)->here_doc = KO;
+	if ((*minishell)->builtins->pwd)
+	{
+		free((*minishell)->builtins->pwd);
+		(*minishell)->builtins->pwd = NULL;
+	}
+	(*minishell)->builtins->pwd = getcwd(NULL, 0);
+	if (!(*minishell)->builtins->pwd)
+		return (perror(PWD_ERR), KO);
 	return (OK);
 }

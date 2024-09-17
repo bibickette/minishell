@@ -40,6 +40,7 @@
 
 void	the_execution(t_list *token, t_data *minishell);
 int		the_parser_set(t_list *token, t_data *minishell, char *prompt);
+
 /* initiate, get env */
 int		init_minishell(t_data **minishell);
 int		get_env(t_data *minishell, char **env);
@@ -54,7 +55,6 @@ int		load_path(t_data *minishell, int flag);
 char	*trim_end(char *path_env);
 
 /* prompt */
-void	display_prompt(t_data *minishell);
 void	display_intro(void);
 void	print_token(void *content);
 void	print_double_tab(char **tab);
@@ -79,20 +79,9 @@ void	handle_operator(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 int		handle_buffer_overflow(t_list **token);
 int		check_operator(char *str);
 
-/* Commande listing */
-t_list	*command_listing(t_list *token);
-void	actual_content_process(t_list *command_list, t_list *actual,
-			t_token *actual_content, t_command *content);
-void	process_redirection(t_command *content, t_list **actual,
-			t_token **actual_content, int *redir_size);
-void	process_arguments_and_options(t_list **actual, t_token **actual_content,
-			t_command *content);
-void	process_redirection_and_pipe(t_list **actual, t_token **actual_content,
-			t_command *content);
-char	**add_redirection(char **redirections, char *redirection, int *size);
-char	**add_file(char **files, char *file, int *size);
-void	process_command(t_token **actual_content, t_command *content);
-char	**double_tab_command(t_list *command_list);
+/* Command tab */
+int		build_cmd_tab(t_data *minishell, t_list *token);
+int		put_in_cmd_tab(t_list *tmp, char ***cmd_tab, int i);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
@@ -280,8 +269,9 @@ void	put_back_in_term_n_close(t_data *minish, int out);
 int		init_pipe(t_data *minishell);
 int		open_pipe(t_data *minishell);
 int		error_open_pipe(t_data *minishell, int i);
-void	execve_pipe(t_data *minish, t_list *token);
-void	child_process(t_data *minishell, t_list *token, int cmd);
+void	execve_pipe(t_data *minish, char **cmd_tab, t_list *token);
+void	child_process(t_data *minishell, char **cmd_tab, t_list *token,
+			int cmd);
 void	do_the_dup(t_data *minishell, t_list *token, int cmd);
 void	dup_first_cmd(t_data *minishell, t_list *token);
 void	dup_last_cmd(t_data *minishell, t_list *token, int cmd);

@@ -206,7 +206,7 @@ typedef struct s_minishell
 	t_list		*history;
 	t_list		*actual_history;
 	t_list		*command_list;
-	char		**command;
+	char		**command_tab;
 
 	t_list		*token;
 	t_list		*brut_list;

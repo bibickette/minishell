@@ -28,5 +28,5 @@ void	display_intro(void)
 	ft_putstr_fd("\\/      \\/     \\/\n", STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	ft_putstr_fd("            ", STDOUT_FILENO);
-	ft_putstr_fd("Bienvenue dans minishell bebe !\n\n", STDOUT_FILENO);
+	ft_putstr_fd("Bienvenue dans Tiny Shell !\n\n", STDOUT_FILENO);
 }
