@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:29:34 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/16 16:46:14 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/17 17:28:58 by yantoine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	echo_cmd(t_list *token, int fd_out)
 			break ;
 		tmp = tmp->next;
 	}
-	if (flag == 1)
+	if (flag == 0)
 		ft_putstr_fd("\n", fd_out);
 }
 
