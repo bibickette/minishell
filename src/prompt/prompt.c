@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 12:09:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:24:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 	set_index_again(token, minishell->brut_list);
 	if (expand_everything(minishell, token) == KO)
 		return (KO);
-	if (separate_if_needed(minishell, token) == KO)	
+	if (separate_if_needed(minishell, token) == KO)
 		return (KO);
 	if (start_join_token_if_needed(token, prompt, minishell->brut_list) == KO)
 		return (KO);
@@ -62,15 +62,15 @@ void	the_execution(t_list *token, t_data *minishell)
 		return ;
 	}
 	build_cmd_tab(minishell, token);
-	ft_lstiter(token, print_token);
-	// if (minishell->nb_cmd == 1 && minishell->command_tab)
-	// 	execve_one_cmd(minishell, minishell->command_tab[0], token);
-	// else if (minishell->command_tab)
-	// 	execve_pipe(minishell, minishell->command_tab, token);
+	if (minishell->nb_cmd == 1 && minishell->command_tab)
+		execve_one_cmd(minishell, token);
+	else if (minishell->command_tab)
+		execve_pipe(minishell, token);
 	if (minishell->nb_files > 1)
 		close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);
 	free_double_char(&minishell->command_tab);
+	free_double_char(&minishell->cmd_original);
 	handle_file_hd(minishell);
 }
 
@@ -80,12 +80,15 @@ int	build_cmd_tab(t_data *minishell, t_list *token)
 	t_list	*tmp;
 
 	i = 0;
-	minishell->command_tab = NULL;
 	tmp = token;
 	while (tmp)
 	{
 		if (((t_token *)tmp->content)->type == PIPE_TYPE)
 			i++;
+		if (((t_token *)tmp->content)->type == CMD_TYPE
+			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			if (put_in_cmd_tab(tmp, &minishell->cmd_original, i) == KO)
+				return (KO);
 		if (((t_token *)tmp->content)->type == CMD_TYPE
 			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE
 			|| ((t_token *)tmp->content)->type == OPT_TYPE

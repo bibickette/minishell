@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:07:19 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 11:50:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:55:31 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 		}
 	}
 	free_n_set_var_null(key_export);
-	minishell->last_status = 0;
 	return (OK);
 }
 
@@ -105,6 +104,5 @@ int	export_in_env(char *var, t_data *minishell)
 			return (M_KO);
 		}
 	}
-	minishell->last_status = 0;
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 12:52:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:23:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ft_lstclear_custom(t_list **lst, void (*del)(void *));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 void	ft_lstclear_custom_bis(t_list *head);
 void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token);
+int		is_return_value(t_list *node);
+int		set_exit_arg(long int status);
 
 /* tokenization */
 int		process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
@@ -102,9 +104,6 @@ void	stick_next_token(t_list *is_next_token, t_list **tmp_head,
 			t_list **next_tmp);
 
 void	set_index_again(t_list *token, t_list *brut_list);
-
-int		set_entire_command(t_list *command_list);
-int		go_next(t_list **actual, t_command **actual_command);
 
 /* separate token if needed */
 int		has_space(char *str);
@@ -244,24 +243,23 @@ void	cd_cmd(char *path);
 
 /* Execution */
 char	*find_path(char *cmd, char **path);
-char	*get_path(t_data *minishell, char ***arg);
+char	*get_path(t_data *minishell, char ***arg, int cmd);
 int		redirection_in(t_data *minishell, t_file *files, int std_in);
 int		redirection_out(t_data *minishell, t_file *files, int std_out);
 
-int		execve_one_cmd(t_data *minish, char *cmd_arg, t_list *token);
+int		execve_one_cmd(t_data *minish, t_list *token);
 int		do_redir_builtin_one_cmd(t_data *minish, int out);
 void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
 int		execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
-void	handle_builtin(t_data *minish, char **arg, t_list *token);
+void	handle_builtin(t_data *minish, t_list *token);
 int		execve_builtin(t_data *minishell, char **arg, t_list *token);
 int		first_part_choose_builtin(t_data *minishell, char **arg, t_list *token);
-void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg);
-void	child_single_fork(t_data *minish, t_list *token, char *cmd_arg);
+void	do_single_fork(t_data *minish, t_list *token, int *pid);
+void	child_single_fork(t_data *minish, t_list *token);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
 void	close_one_fd(int fd);
-char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
-			t_list *token);
+char	*split_n_path(t_data *minishell, char ***arg, int cmd, t_list *token);
 int		has_path(char *cmd);
 char	*extract_cmd(char *cmd_arg);
 int		check_cmd_value(char *str);
@@ -270,9 +268,8 @@ void	put_back_in_term_n_close(t_data *minish, int out);
 int		init_pipe(t_data *minishell);
 int		open_pipe(t_data *minishell);
 int		error_open_pipe(t_data *minishell, int i);
-void	execve_pipe(t_data *minish, char **cmd_tab, t_list *token);
-void	child_process(t_data *minishell, char **cmd_tab, t_list *token,
-			int cmd);
+void	execve_pipe(t_data *minish, t_list *token);
+void	child_process(t_data *minishell, t_list *token, int cmd);
 void	do_the_dup(t_data *minishell, t_list *token, int cmd);
 void	dup_first_cmd(t_data *minishell, t_list *token);
 void	dup_last_cmd(t_data *minishell, t_list *token, int cmd);
@@ -299,13 +296,6 @@ int		handle_quote(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 char	*ft_strnstr_minish(char *s1, char *s2, size_t len);
 
-t_list	*command_listing(t_list *token);
-void	process_options(t_list **actual, t_token **actual_content,
-			t_command *content);
-char	**add_argument(char **args, char *new_arg, int *size);
-char	**add_option(char **options, char *new_option, int *size);
-void	increment_actual(t_list **actual, t_token **actual_content);
-
 /* check */
 int		check_args(int argc, char **argv);
 int		check_quote_type(char **prompt_loop);
@@ -316,10 +306,10 @@ int		have_twin(char *prompt);
 void	apocalypse(t_data *minishell);
 void	free_builtins(t_builtin *builtins);
 void	free_command_list(t_list *command_list, t_data *minishell);
-void	free_command(t_command *command);
 void	free_lists(t_data *minishell);
 void	free_double_char(char ***array);
 void	handle_exit(t_data *minishell, char *prompt);
+
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
 void	free_n_set_var_null(char **var);

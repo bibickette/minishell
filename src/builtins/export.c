@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:44:45 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:55:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	export_cmd_w_arg(char *var, t_data *minishell)
 		if (ret == KO || ret == M_KO)
 			return (ret);
 	}
+	minishell->last_status = 0;
 	return (OK);
 }
 
@@ -52,9 +53,13 @@ int	check_export_format(char *var, t_data *minishell)
 		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
 	y = -1;
 	while (++y < i)
+	{
 		if (check_more_special_char(var[y]) == KO)
+		{
+			minishell->last_status = 1;
 			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
-	minishell->last_status = 1;
+		}
+	}
 	return (OK);
 }
 

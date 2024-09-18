@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:52:31 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:27:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,21 @@ char	*find_path(char *cmd, char **path)
 	return (NULL);
 }
 
-char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
-		t_list *token)
+char	*split_n_path(t_data *minishell, char ***arg, int cmd, t_list *token)
 {
 	char	*path;
 
-	*arg = ft_split(cmd_arg, ' ');
-	if (!arg)
+	*arg = ft_split(minishell->command_tab[cmd], ' ');
+	if (!*arg)
 	{
 		ft_putstr_fd(SPLIT_ERR, STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	path = get_path(minishell, arg);
+	path = get_path(minishell, arg, cmd);
 	if (!path)
 	{
 		ft_putstr_fd(CMD_NOT_FOUND, STDERR_FILENO);
-		ft_putstr_fd((*arg)[0], STDERR_FILENO);
+		ft_putstr_fd(minishell->cmd_original[cmd], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		execve_error_free(minishell, *arg, path, token);
 		exit(127);
@@ -59,20 +58,20 @@ char	*split_n_path(t_data *minishell, char *cmd_arg, char ***arg,
 	return (path);
 }
 
-char	*get_path(t_data *minishell, char ***arg)
+char	*get_path(t_data *minishell, char ***arg, int cmd)
 {
 	char	*path;
 
 	path = NULL;
-	if (is_builtin((*arg)[0]) == OK)
-		path = ft_strdup((*arg)[0]);
-	else if (has_path((*arg)[0]) == KO)
-		path = find_path(*arg[0], minishell->path);
+	if (is_builtin(minishell->cmd_original[cmd]) == OK)
+		path = ft_strdup(minishell->cmd_original[cmd]);
+	else if (has_path(minishell->cmd_original[cmd]) == KO)
+		path = find_path(minishell->cmd_original[cmd], minishell->path);
 	else
 	{
-		path = ft_strdup((*arg)[0]);
-		free((*arg)[0]);
-		(*arg)[0] = 0;
+		path = ft_strdup(minishell->cmd_original[cmd]);
+		free(*arg[0]);
+		*arg[0] = NULL;
 		*arg[0] = extract_cmd(path);
 	}
 	return (path);

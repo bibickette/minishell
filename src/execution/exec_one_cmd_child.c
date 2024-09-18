@@ -6,13 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:33:28 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:51:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:27:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
+void	do_single_fork(t_data *minish, t_list *token, int *pid)
 {
 	if (*pid == KO)
 	{
@@ -20,20 +20,21 @@ void	do_single_fork(t_data *minish, t_list *token, int *pid, char *cmd_arg)
 		return (ft_putstr_fd(FORK_ERR, STDERR_FILENO));
 	}
 	if (*pid == 0)
-		child_single_fork(minish, token, cmd_arg);
+		child_single_fork(minish, token);
 }
 
-void	child_single_fork(t_data *minish, t_list *token, char *cmd_arg)
+void	child_single_fork(t_data *minish, t_list *token)
 {
 	char	*path;
 	char	**arg;
 
 	arg = NULL;
 	path = NULL;
-	if (open_all_infile(minish) == KO || !cmd_arg || !cmd_arg[0]
-		|| check_cmd_value(cmd_arg) == KO)
+	if (open_all_infile(minish) == KO || !minish->command_tab
+		|| !minish->command_tab[0]
+		|| check_cmd_value(minish->command_tab[0]) == KO)
 		exit(execve_error_free(minish, arg, path, token));
-	path = split_n_path(minish, cmd_arg, &arg, token);
+	path = split_n_path(minish, &arg, 0, token);
 	if (redirection_in(minish, minish->files, STDIN_FILENO) != OK
 		|| open_all_outfile(minish) == KO || redirection_out(minish,
 			minish->files, STDOUT_FILENO) != OK)

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:20:31 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:23:10 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:22:54 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
 		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
 	free_double_char(&minish->command_tab);
+	free_double_char(&minish->cmd_original);
 	free_double_char(&arg);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);
