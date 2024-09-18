@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 23:09:48 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 00:02:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ Malloc in function char_add_back_tab\n"
 /* file errors */
 # define HERE_DOC_MSG "heredoc> "
 # define HERE_DOC ".here_doc"
-# define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
+# define HERE_DOC_ERR "Minishell Error : Here-Document hasn't ended well\n"
 # define INFILE_ERROR_FD "Minishell Error : Couldn't open the infile\n"
 # define OUTFILE_ERROR_FD "Minishell Error : Couldn't open the outfile\n"
 # define FILE_ERR "Minishell Error : Access"

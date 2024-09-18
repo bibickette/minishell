@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 21:48:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 23:56:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	the_execution(t_list *token, t_data *minishell)
 		execve_one_cmd(minishell, token);
 	else if (minishell->command_tab)
 		execve_pipe(minishell, token);
-	if (minishell->nb_files > 1)
+	if (minishell->nb_files > 0)
 		close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);
 	free_double_char(&minishell->command_tab);
