@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:00:16 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:46:34 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:51:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,10 @@ int	lf_spechar_list(t_data *minishell, t_list *token)
 	tmp = token;
 	while (tmp)
 	{
-		if (((t_token *)tmp->content)->quote == N_QUOTE)
+		if (lf_n_quote(tmp, is_echo) == KO)
 		{
-			if (((t_token *)tmp->content)->type == PIPE_TYPE)
-				is_echo = KO;
-			if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
-				&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
-				is_echo = OK;
-			if (is_echo == KO
-				&& check_special_char(((t_token *)tmp->content)->str) == KO)
-			{
-				minishell->last_status = 2;
-				return (KO);
-			}
+			minishell->last_status = 2;
+			return (KO);
 		}
 		if (tmp->next == NULL)
 			break ;
@@ -44,6 +35,22 @@ int	lf_spechar_list(t_data *minishell, t_list *token)
 /*
 cherche les caractères spéciaux dans la liste de tokens sur les tokens unquoted
 */
+
+int	lf_n_quote(t_list *tmp, int is_echo)
+{
+	if (((t_token *)tmp->content)->quote == N_QUOTE)
+	{
+		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+			is_echo = KO;
+		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
+			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
+			is_echo = OK;
+		if (is_echo == KO
+			&& check_special_char(((t_token *)tmp->content)->str) == KO)
+			return (KO);
+	}
+	return (OK);
+}
 
 int	check_special_char(char *prompt)
 {
@@ -77,17 +84,6 @@ int	check_more_special_char(char c)
 		|| c == ';' || c == ':')
 		return (KO);
 	return (OK);
-}
-
-int	has_equal(char *var)
-{
-	int	i;
-
-	i = -1;
-	while (var[++i])
-		if (var[i] == '=')
-			return (OK);
-	return (KO);
 }
 
 int	check_next_token_echo(t_list *token)

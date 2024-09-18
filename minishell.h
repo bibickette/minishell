@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 12:43:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:52:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int		check_every_builtin_n_type(t_list *token);
 int		check_next_token_echo(t_list *token);
 
 int		lf_spechar_list(t_data *minishell, t_list *token);
+int		lf_n_quote(t_list *tmp, int is_echo);
 int		check_special_char(char *prompt);
 int		check_more_special_char(char c);
 
