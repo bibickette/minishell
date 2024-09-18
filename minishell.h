@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 15:23:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:56:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*trim_end(char *path_env);
 void	display_intro(void);
 void	print_token(void *content);
 void	print_double_tab(char **tab);
-char	*readline_custom(t_builtin *builtins);
 
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
@@ -253,8 +252,9 @@ void	execve_error(t_data *minishell, char *path, char **arg, t_list *token);
 int		execve_error_free(t_data *minish, char **arg, char *path,
 			t_list *token);
 void	handle_builtin(t_data *minish, t_list *token);
-int		execve_builtin(t_data *minishell, char **arg, t_list *token);
-int		first_part_choose_builtin(t_data *minishell, char **arg, t_list *token);
+int		execve_builtin(t_data *minishell, char **cmd, t_list *token);
+int		first_part_choose_builtin(t_data *minishell, char **cmd, t_list *token,
+			char **arg);
 void	do_single_fork(t_data *minish, t_list *token, int *pid);
 void	child_single_fork(t_data *minish, t_list *token);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);

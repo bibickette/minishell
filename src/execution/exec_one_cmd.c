@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:27:05 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:56:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handle_builtin(t_data *minish, t_list *token)
 	}
 	if (do_redir_builtin_one_cmd(minish, out) == KO)
 		return ;
-	ret = execve_builtin(minish, minish->command_tab, token);
+	ret = execve_builtin(minish, minish->cmd_original, token);
 	if (minish->nb_files > 0)
 		close_all_files(minish->files);
 	minish->last_status = OK;
