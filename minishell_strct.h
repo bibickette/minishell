@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:26:53 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 23:09:48 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@
 
 # define READ 0
 # define WRITE 1
+
+# define HD_STOP 9998
+# define IN_HD 9999
 
 /* quote type */
 # define N_QUOTE 0
@@ -155,7 +158,7 @@ Builtin doesn't accept option/argument\n"
 Malloc in function char_add_back_tab\n"
 
 /* file errors */
-# define HERE_DOC_MSG "heredoc>"
+# define HERE_DOC_MSG "heredoc> "
 # define HERE_DOC ".here_doc"
 # define HERE_DOC_ERR "\nMinishell Error : Here-Document hasn't ended well\n"
 # define INFILE_ERROR_FD "Minishell Error : Couldn't open the infile\n"
@@ -168,6 +171,7 @@ Malloc in function char_add_back_tab\n"
 /*************************************/
 /*             Structures            */
 /*************************************/
+
 typedef struct s_element
 {
 	int			index;

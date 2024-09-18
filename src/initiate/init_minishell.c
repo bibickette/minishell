@@ -6,11 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 21:03:33 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/17 20:04:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 23:09:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+volatile sig_atomic_t g_signal = 0;
 
 int	init_minishell(t_data **minishell)
 {
@@ -21,5 +23,7 @@ int	init_minishell(t_data **minishell)
 	if (!(*minishell)->builtins)
 		return (KO);
 	(*minishell)->here_doc = KO;
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	return (OK);
 }

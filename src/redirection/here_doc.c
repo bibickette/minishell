@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:04:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 23:12:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	heredoc_create(t_data *minishell, char *limiter)
 		ft_putstr_fd(HERE_DOC_MSG, STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO, 0);
 		if (!line)
+		{
+			close(fd_doc);
+			free_n_set_var_null(&limiter_tmp);
 			return (ft_putstr_fd(HERE_DOC_ERR, STDERR_FILENO));
+		}
 		if (heredoc_next(line, limiter_tmp, fd_doc) == OK)
 			break ;
 		ft_putstr_fd(line, fd_doc);
@@ -46,10 +50,8 @@ int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)
 	if (ft_strncmp(line, limiter_tmp, ft_strlen(line)) == 0)
 	{
 		close(fd_heredoc);
-		free(limiter_tmp);
-		limiter_tmp = 0;
-		free(line);
-		line = 0;
+		free_n_set_var_null(&limiter_tmp);
+		free_n_set_var_null(&line);
 		get_next_line(STDIN_FILENO, 1);
 		return (OK);
 	}

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 15:56:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 22:40:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,8 +284,8 @@ void	free_pipe_pid(t_data *minishell);
 /*************************************/
 
 /* Signal handling */
-void	handle_signals(void);
-void	handle_sigint(int sig);
+void	handle_signals(t_data *minishell);
+void	handle_sigint(int signum);
 
 /* memory */
 void	*ft_realloc(void *ptr, size_t size);

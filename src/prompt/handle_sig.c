@@ -6,23 +6,36 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:21:02 by yantoine          #+#    #+#             */
-/*   Updated: 2024/08/05 13:31:47 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:07:06 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint(int sig)
+extern volatile sig_atomic_t g_signal;
+
+void	handle_sigint(int signum)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_signal = SIGINT;
+	}
 }
 
-void	handle_signals(void)
+void	handle_signals(t_data *minishell)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	if (g_signal == SIGINT)
+	{
+		minishell->last_status = 130;
+		g_signal = 0;
+	}
+	if (g_signal == SIGQUIT)
+	{
+		minishell->last_status = 131;
+		g_signal = 0;
+	}
 }

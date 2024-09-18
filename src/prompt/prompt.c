@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 15:28:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 21:48:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	prompt(t_list *token, t_data *minishell)
 {
 	char	*prompt;
 
-	handle_signals();
 	prompt = NULL;
 	display_intro();
 	while (1)
 	{
 		prompt = get_prompt(&minishell);
+		handle_signals(minishell);
 		if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
 			if (token)
 				if (the_parser_set(token, minishell, prompt) == OK

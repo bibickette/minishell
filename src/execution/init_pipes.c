@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:25:27 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:53:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 21:10:22 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	wait_all_get_status(t_data *minishell)
 	int	i;
 
 	i = -1;
+	get_status_process(minishell, &minishell->last_status,
+		minishell->pid_tab[minishell->nb_cmd]);
 	while (++i < minishell->nb_cmd - 1)
 		waitpid(minishell->pid_tab[i], 0, 0);
-	get_status_process(minishell, &minishell->last_status,
-		minishell->pid_tab[i]);
 }
