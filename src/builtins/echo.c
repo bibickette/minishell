@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:29:34 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/17 17:28:58 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:44:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	is_echo_token(t_list *tmp, int fd_out, int *flag)
 		else
 		{
 			ft_putstr_fd(((t_token *)tmp->content)->str, fd_out);
-			if (tmp->next == NULL)
+			if (tmp->next == NULL
+				|| ((t_token *)tmp->next->content)->type == PIPE_TYPE)
 				return (OK);
 			ft_putstr_fd(" ", fd_out);
 		}
@@ -65,7 +66,8 @@ void	print_echo_arg(t_list *tmp, int fd_out)
 		if (((t_token *)tmp->content)->type == ARG_TYPE)
 		{
 			ft_putstr_fd(((t_token *)tmp->content)->str, fd_out);
-			if (tmp->next == NULL)
+			if (tmp->next == NULL
+				|| ((t_token *)tmp->next->content)->type == PIPE_TYPE)
 				break ;
 			ft_putstr_fd(" ", fd_out);
 		}

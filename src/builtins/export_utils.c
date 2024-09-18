@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:07:19 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:16:29 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 11:50:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 
 	if (load_right_export(var, key_export) == M_KO)
 		return (M_KO);
-	ret = export_replacement_tab(&minishell->builtins->export, key_export);
+	if (!minishell->builtins->export)
+		ret = KO;
+	else
+		ret = export_replacement_tab(&minishell->builtins->export, key_export);
 	if (ret == M_KO)
 	{
-		free(*key_export);
-		*key_export = 0;
+		free_n_set_var_null(key_export);
 		minishell->last_status = 1;
 		return (M_KO);
 	}
@@ -30,13 +32,12 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 	{
 		if (char_add_back_tab(&minishell->builtins->export, *key_export) == KO)
 		{
-			free(*key_export);
+			free_n_set_var_null(key_export);
 			minishell->last_status = 1;
 			return (M_KO);
 		}
 	}
-	free(*key_export);
-	*key_export = 0;
+	free_n_set_var_null(key_export);
 	minishell->last_status = 0;
 	return (OK);
 }
@@ -70,8 +71,7 @@ int	load_export_w_equal(char *var, char **key_export)
 		if (load_value_n_key_export(key_export, &value_export, &var) == KO)
 			return (M_KO);
 		(*key_export) = strjoin_wfree((*key_export), value_export);
-		free(value_export);
-		value_export = 0;
+		free_n_set_var_null(&value_export);
 		if (!(*key_export))
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), M_KO);
 	}
@@ -88,7 +88,10 @@ int	export_in_env(char *var, t_data *minishell)
 {
 	int	ret;
 
-	ret = export_replacement_tab(&minishell->builtins->env, &var);
+	if (!minishell->builtins->env)
+		ret = KO;
+	else
+		ret = export_replacement_tab(&minishell->builtins->env, &var);
 	if (ret == M_KO)
 	{
 		minishell->last_status = 1;

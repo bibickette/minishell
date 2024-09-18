@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/17 20:12:36 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:09:09 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 	set_index_again(token, minishell->brut_list);
 	if (expand_everything(minishell, token) == KO)
 		return (KO);
-	if (separate_if_needed(minishell, token) == KO)
+	if (separate_if_needed(minishell, token) == KO)	
 		return (KO);
 	if (start_join_token_if_needed(token, prompt, minishell->brut_list) == KO)
 		return (KO);
@@ -58,13 +58,15 @@ void	the_execution(t_list *token, t_data *minishell)
 	if (open_all_hd_file(minishell) == KO)
 	{
 		minishell->last_status = errno;
+		free_files_tab(minishell, minishell->files);
 		return ;
 	}
 	build_cmd_tab(minishell, token);
-	if (minishell->nb_cmd == 1 && minishell->command_tab)
-		execve_one_cmd(minishell, minishell->command_tab[0], token);
-	else if (minishell->command_tab)
-		execve_pipe(minishell, minishell->command_tab, token);
+	ft_lstiter(token, print_token);
+	// if (minishell->nb_cmd == 1 && minishell->command_tab)
+	// 	execve_one_cmd(minishell, minishell->command_tab[0], token);
+	// else if (minishell->command_tab)
+	// 	execve_pipe(minishell, minishell->command_tab, token);
 	if (minishell->nb_files > 1)
 		close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);

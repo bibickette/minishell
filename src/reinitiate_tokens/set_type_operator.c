@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:01:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:41:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	reset_cmd_pipe(t_list *head)
 			break ;
 		tmp = tmp->next;
 	}
+	tmp = head;
 }
 
 int	is_arg_for_echo(t_list *tmp)

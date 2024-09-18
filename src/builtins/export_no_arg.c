@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:00:38 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/06 19:00:50 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:44:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	export_cmd_no_arg(char **export)
 {
 	int	i;
 
+	if (!export || !export[0])
+		return ;
 	i = -1;
 	while (export[++i])
 	{

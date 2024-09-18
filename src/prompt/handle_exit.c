@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:08:07 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/17 20:35:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:05:41 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	handle_exit(t_data *minishell, char *prompt)
 {
+	int last_status;
+
+	last_status = minishell->last_status;
 	if (prompt)
 		free(prompt);
 	apocalypse(minishell);
-	exit(0);
+	exit(last_status);
 }
 
 void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token)
@@ -34,14 +37,14 @@ void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token)
 	}
 }
 
-int is_return_value(t_list *node)
-{
-	if (!node)
-		return (KO);
-	if(check_exit_value(((t_token *)node->content)->str) == KO)
-		return (KO);
-	return(OK);
-}
+// int is_return_value(t_list *node)
+// {
+// 	if (!node)
+// 		return (KO);
+// 	if(check_exit_value(((t_token *)node->content)->str) == KO)
+// 		return (KO);
+// 	return(OK);
+// }
 
 // int check_exit_value(char *str)
 // {
