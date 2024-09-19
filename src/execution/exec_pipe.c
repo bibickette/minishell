@@ -6,11 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:28:37 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:16:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:21:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 void	execve_pipe(t_data *minish, t_list *token)
 {
@@ -19,6 +21,7 @@ void	execve_pipe(t_data *minish, t_list *token)
 	if (init_pipe(minish) == KO)
 		return ;
 	i = -1;
+	g_signal = IN_PARENT;
 	while (++i < minish->nb_cmd)
 	{
 		minish->pid_tab[i] = fork();

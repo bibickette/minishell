@@ -6,11 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 23:56:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 03:18:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 void	prompt(t_list *token, t_data *minishell)
 {
@@ -61,11 +63,14 @@ void	the_execution(t_list *token, t_data *minishell)
 		free_files_tab(minishell, minishell->files);
 		return ;
 	}
+	handle_signals(minishell);
 	build_cmd_tab(minishell, token);
+	signal(SIGQUIT, handle_sigquit);
 	if (minishell->nb_cmd == 1 && minishell->command_tab)
 		execve_one_cmd(minishell, token);
 	else if (minishell->command_tab)
 		execve_pipe(minishell, token);
+	signal(SIGQUIT, SIG_IGN);
 	if (minishell->nb_files > 0)
 		close_all_files(minishell->files);
 	free_files_tab(minishell, minishell->files);

@@ -6,11 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:25:27 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 21:10:22 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:59:06 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 int	init_pipe(t_data *minishell)
 {
@@ -93,7 +95,11 @@ void	wait_all_get_status(t_data *minishell)
 
 	i = -1;
 	get_status_process(minishell, &minishell->last_status,
-		minishell->pid_tab[minishell->nb_cmd]);
+		minishell->pid_tab[minishell->nb_cmd - 1]);
 	while (++i < minishell->nb_cmd - 1)
+	{
+		handle_signals(minishell);
 		waitpid(minishell->pid_tab[i], 0, 0);
+	}
+	g_signal = 0;
 }

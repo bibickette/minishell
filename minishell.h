@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 22:40:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 03:30:32 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,15 @@ void	add_to_history(t_data **minishell, char *command);
 /* redirection, file */
 void	heredoc_create(t_data *minishell, char *limiter);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
+int		init_dup_hd(int *std_in, int *std_inb);
+int		init_hd_fd_n_limiter(t_data *minishell, char **limiter_tmp,
+			char *limiter);
+int		dup_db_hd(int to_dup, int std_inb, t_data *minishell);
+int		handle_no_line_hd(t_data *minishell, char *limiter_tmp, int std_in,
+			int std_inb);
+int		heredoc_handler(t_data *minishell, int std_in, int std_inb,
+			char *limiter_tmp);
+
 int		take_all_files(t_data *minishell, t_list *token);
 int		count_n_allocate_files(t_data *minishell, t_list *token);
 void	load_files_type(t_data *minishell, t_list *token);
@@ -286,6 +295,8 @@ void	free_pipe_pid(t_data *minishell);
 /* Signal handling */
 void	handle_signals(t_data *minishell);
 void	handle_sigint(int signum);
+void	handle_sigquit(int signum);
+void	sigint_utils(void);
 
 /* memory */
 void	*ft_realloc(void *ptr, size_t size);

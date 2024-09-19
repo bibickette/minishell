@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 00:02:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 03:28:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@
 # define READ 0
 # define WRITE 1
 
+/* signals */
+# define IN_PARENT 9996
+# define WAS_IN_HD 9997
 # define HD_STOP 9998
 # define IN_HD 9999
 
@@ -220,6 +223,8 @@ typedef struct s_minishell
 	char		**path;
 	int			last_status;
 	int			here_doc;
+
+	int			fd_hd;
 
 }				t_data;
 

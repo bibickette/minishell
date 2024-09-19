@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 23:59:49 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 00:51:38 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	apocalypse(t_data *minishell)
 	if (minishell->path)
 		free_double_char(&(minishell->path));
 	minishell->path = 0;
-	handle_file_hd(minishell);
 	if (minishell)
 		free(minishell);
 	minishell = 0;
