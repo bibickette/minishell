@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/19 14:45:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:56:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*trim_end(char *path_env);
 /* prompt */
 void	display_intro(void);
 void	print_token(void *content);
+void	print_cmd(void *content);
 void	print_double_tab(char **tab);
 
 /* Read and parse command */
@@ -64,6 +65,7 @@ void	prompt(t_list *token, t_data *minishell);
 char	*get_prompt(t_data **minishell);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void *));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
+void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *));
 void	ft_lstclear_custom_bis(t_list *head);
 void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token);
 int		is_return_value(t_list *node);
@@ -83,6 +85,11 @@ int		check_operator(char *str);
 /* Command tab */
 int		build_cmd_tab(t_data *minishell, t_list *token);
 int		put_in_cmd_tab(t_list *tmp, char ***cmd_tab, int i);
+
+int init_cmd_list(t_data *minishell, t_list *token);
+int add_t_cmd_back(t_data *minishell, int index);
+int	fill_cmd_list(t_data *minishell, t_list *token);
+int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,

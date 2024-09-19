@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 15:07:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:16:03 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ typedef struct s_element
 typedef struct s_file
 {
 	int			index;
+	int			index_cmd;
 	char		*name;
 
 	int			type;
@@ -203,6 +204,20 @@ typedef struct s_builtin
 	char		**export;
 }				t_builtin;
 
+typedef struct s_command
+{
+	int			index;
+	int			cmd_type;
+	
+	char		*cmd;
+	char		**cmd_args;
+	
+	int			nb_files;
+	int			*outputs;
+	int			*inputs;
+	
+}				t_cmd;
+
 typedef struct s_minishell
 {
 	t_list		*token;
@@ -216,6 +231,7 @@ typedef struct s_minishell
 	t_file		*files;
 	int			nb_files;
 
+	t_list		*list_cmd;
 	char		**cmd_original;
 	char		**command_tab;
 	int			**pipe_fd;

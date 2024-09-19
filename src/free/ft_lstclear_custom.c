@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_custom.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yantoine <yantoine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 23:46:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/07/05 18:51:01 by yantoine         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:46:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstclear_custom(t_list **lst, void (*del)(void*))
+void	ft_lstclear_custom(t_list **lst, void (*del)(void *))
 {
 	t_list	*tmp;
 	t_token	*token;
@@ -22,6 +22,30 @@ void	ft_lstclear_custom(t_list **lst, void (*del)(void*))
 	{
 		token = (t_token *)tmp->content;
 		del(token->str);
+		tmp = tmp->next;
+	}
+	ft_lstclear_libft(lst, del);
+	free(*lst);
+}
+
+void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *))
+{
+	t_list	*tmp;
+	t_cmd	*cmd;
+
+	tmp = *lst;
+	if(!tmp)
+		return ;
+	while (tmp)
+	{
+		cmd = (t_cmd *)tmp->content;
+		del(cmd->cmd);
+		if (cmd->cmd_args)
+			free_double_char(&cmd->cmd_args);
+		if (cmd->outputs)
+			del(cmd->outputs);
+		if (cmd->inputs)
+			del(cmd->inputs);
 		tmp = tmp->next;
 	}
 	ft_lstclear_libft(lst, del);
