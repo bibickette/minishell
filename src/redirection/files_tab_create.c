@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:53:54 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 15:29:07 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:07:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	load_files_type(t_data *minishell, t_list *token)
 			|| ((t_token *)tmp_head->content)->type == APPEND_FILE_TYPE
 			|| ((t_token *)tmp_head->content)->type == HD_LIMITER_TYPE)
 		{
+			minishell->files[tab].index = tab;
 			minishell->files[tab].is_open = KO;
 			minishell->files[tab++].type = ((t_token *)tmp_head->content)->type;
 		}

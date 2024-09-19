@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:21:02 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/19 03:30:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:10:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,17 @@ void	handle_signals(t_data *minishell)
 
 void	sigint_utils(void)
 {
-	if (!(g_signal == IN_PARENT))
+	if (g_signal == IN_PARENT)
+		write(1, "\n", 1);
+	else if (!(g_signal == IN_PARENT))
 	{
 		if (!(g_signal == WAS_IN_HD))
 		{
-			g_signal = SIGINT;
 			write(1, "\n", 1);
+			g_signal = SIGINT;
 		}
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-	else
-	{
-		write(1, "\n", 1);
-		rl_redisplay();
-		g_signal = SIGINT;
 	}
 }

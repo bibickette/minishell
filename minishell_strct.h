@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 03:28:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:07:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,9 @@ typedef struct s_element
 
 typedef struct s_file
 {
+	int			index;
 	char		*name;
+
 	int			type;
 	int			fd;
 	int			is_open;

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:28:28 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:28:57 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:04:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	build_cmd_tab(t_data *minishell, t_list *token)
 	while (tmp)
 	{
 		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+		{
+			if(!(minishell->cmd_original[i]))
+				char_add_back_tab(&minishell->cmd_original, "");
 			i++;
+		}
 		if (((t_token *)tmp->content)->type == CMD_TYPE
 			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
 			if (put_in_cmd_tab(tmp, &minishell->cmd_original, i) == KO)

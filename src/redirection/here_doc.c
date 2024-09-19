@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 03:32:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 14:47:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern volatile sig_atomic_t	g_signal;
 
-void	heredoc_create(t_data *minishell, char *limiter)
+int	heredoc_create(t_data *minishell, char *limiter)
 {
 	char	*limiter_tmp;
 	int		std_in;
@@ -23,12 +23,13 @@ void	heredoc_create(t_data *minishell, char *limiter)
 	limiter_tmp = NULL;
 	if (init_dup_hd(&std_in, &std_inb) == KO || init_hd_fd_n_limiter(minishell,
 			&limiter_tmp, limiter) == KO)
-		return ;
+		return (KO);
 	while (1)
 	{
 		if (heredoc_handler(minishell, std_in, std_inb, limiter_tmp) == KO)
-			break ;
+			return(KO) ;
 	}
+	return(OK);
 }
 
 /*

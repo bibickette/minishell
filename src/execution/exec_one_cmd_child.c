@@ -6,14 +6,17 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:33:28 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:27:12 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/19 14:36:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern volatile sig_atomic_t	g_signal;
+
 void	do_single_fork(t_data *minish, t_list *token, int *pid)
 {
+	g_signal = IN_PARENT;
 	if (*pid == KO)
 	{
 		minish->last_status = errno;
