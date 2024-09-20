@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 21:33:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:51:00 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int		count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 			int *nb_tab);
 int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_infile_type(t_file *file);
-int		open_infile_hd_type(t_data *minishell, t_file *file);
+int		open_infile_hd_type(t_file *file);
 int		open_outfile_type(t_file *file);
 int		open_all_infile(t_data *minishell, t_cmd *cmd);
 int		open_all_hd_file(t_data *minishell, t_cmd *cmd);

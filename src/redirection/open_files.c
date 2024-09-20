@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:36:12 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 21:41:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:51:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_all_hd_file(t_data *minishell, t_cmd *cmd)
 	{
 		if (minishell->files[i].index_cmd == cmd->index)
 		{
-			if (open_infile_hd_type(minishell, &minishell->files[i]) == KO)
+			if (open_infile_hd_type(&minishell->files[i]) == KO)
 			{
 				minishell->last_status = errno;
 				return (KO);
@@ -71,7 +71,7 @@ int	open_all_hd_file(t_data *minishell, t_cmd *cmd)
 	return (OK);
 }
 
-int	open_infile_hd_type(t_data *minishell, t_file *file)
+int	open_infile_hd_type(t_file *file)
 {
 	if (file->type == HD_LIMITER_TYPE)
 	{
