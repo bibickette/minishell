@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 21:40:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:38:25 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,21 @@ extern volatile sig_atomic_t	g_signal;
 
 void	prompt(t_list *token, t_data *minishell)
 {
-	char	*prompt;
-
-	prompt = NULL;
 	display_intro();
 	while (1)
 	{
-		prompt = get_prompt(&minishell);
+		get_prompt(&minishell);
 		handle_signals(minishell);
-		if (ft_strlen(prompt) > 0 && tokenize(prompt, &token) != KO)
+		if (ft_strlen(minishell->prompt) > 0 && tokenize(minishell->prompt,
+				&token) != KO)
 			if (token)
-				if (the_parser_set(token, minishell, prompt) == OK
+				if (the_parser_set(token, minishell, minishell->prompt) == OK
 					&& lf_spechar_list(minishell, token) == OK
 					&& check_token_operator_order(token, minishell) == OK)
 					the_execution(token, minishell);
 		ft_lstclear_custom(&token, free);
 		ft_lstclear_custom(&minishell->brut_list, free);
-		free(prompt);
+		free(minishell->prompt);
 	}
 }
 
@@ -47,7 +45,6 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 		return (KO);
 	if (start_join_token_if_needed(token, prompt, minishell->brut_list) == KO)
 		return (KO);
-	first_token_is_exit(prompt, minishell, token);
 	set_token_type(token);
 	reset_cmd_pipe(token);
 	return (OK);

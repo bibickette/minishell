@@ -6,59 +6,48 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:08:07 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/18 14:38:04 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:38:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_exit(t_data *minishell, char *prompt)
+void	handle_exit(t_data *minishell)
 {
 	int	last_status;
 
 	last_status = minishell->last_status;
-	if (prompt)
-		free(prompt);
 	apocalypse(minishell);
 	exit(last_status);
 }
 
-void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token)
+void	exit_cmd(t_list *token, t_cmd *cmd, t_data *minishell)
 {
-	if (!token)
-		return ;
-	if (ft_strcmp(((t_token *)token->content)->str, "exit") == 0)
+	if (cmd->cmd_args[1] && is_return_value(cmd->cmd_args[1]) == KO)
 	{
-		if (is_return_value(token->next) == KO)
-		{
-			minishell->last_status = 2;
-			ft_putstr_fd(EXIT_ERR, STDERR_FILENO);
-		}
-		else if (token->next)
-			minishell->last_status = \
-			set_exit_arg(ft_atoi(((t_token *)token->next->content)->str));
-		ft_lstclear_custom(&token, free);
-		ft_lstclear_custom(&minishell->brut_list, free);
-		handle_exit(minishell, prompt);
+		minishell->last_status = 2;
+		ft_putstr_fd(EXIT_ERR, STDERR_FILENO);
 	}
+	else if (cmd->cmd_args[1])
+		minishell->last_status = set_exit_arg(ft_atoi(cmd->cmd_args[1]));
+	ft_lstclear_custom(&token, free);
+	ft_lstclear_custom(&minishell->brut_list, free);
+	handle_exit(minishell);
 }
 
-int	is_return_value(t_list *node)
+int	is_return_value(char *str)
 {
 	int	i;
 
-	if (!node)
-		return (OK);
-	i = -1;
-	if ((((t_token *)node->content)->str[0] == '+'
-			|| ((t_token *)node->content)->str[0] == '-')
-		&& ((t_token *)node->content)->str[1] == '\0')
+	if (!str)
 		return (KO);
-	else if ((((t_token *)node->content)->str[0] == '+'
-			|| ((t_token *)node->content)->str[0] == '-'))
+	i = -1;
+	if ((str[0] == '+' || str[0] == '-') && str[1] == '\0')
+		return (KO);
+	else if (str[0] == '+' || str[0] == '-')
 		i++;
-	while (((t_token *)node->content)->str[++i])
-		if (ft_isdigit(((t_token *)node->content)->str[i]) == 0)
+	while (str[++i])
+		if (ft_isdigit(str[i]) == 0)
 			return (KO);
 	return (OK);
 }

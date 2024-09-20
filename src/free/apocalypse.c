@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:45:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:32:02 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	apocalypse(t_data *minishell)
 	get_next_line(STDIN_FILENO, 1);
 	free_builtins(minishell->builtins);
 	free_lists(minishell);
+	if (minishell->prompt)
+		free(minishell->prompt);
+	minishell->prompt = 0;
 	if (minishell->path)
 		free_double_char(&(minishell->path));
 	minishell->path = 0;
@@ -49,6 +52,10 @@ void	free_lists(t_data *minishell)
 	minishell->token = 0;
 	if (minishell->history)
 		clear__history(&minishell);
+	if (minishell->list_cmd)
+		ft_lstclear_custom_cmd(&minishell->list_cmd, free);
+	if (minishell->brut_list)
+		ft_lstclear_custom(&minishell->brut_list, free);
 	minishell->history = 0;
 }
 

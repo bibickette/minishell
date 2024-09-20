@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 21:40:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:35:44 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execve_one_cmd(t_data *minish, t_list *token)
 
 	cmd = (t_cmd *)minish->list_cmd->content;
 	if (is_builtin(cmd->cmd) == OK)
-		handle_builtin(minish);
+		handle_builtin(minish, token);
 	else
 	{
 		pid = fork();
@@ -29,11 +29,13 @@ int	execve_one_cmd(t_data *minish, t_list *token)
 	return (OK);
 }
 
-void	handle_builtin(t_data *minish)
+void	handle_builtin(t_data *minish, t_list *token)
 {
 	int	ret;
 	int	out;
 
+	if (ft_strcmp(((t_cmd *)minish->list_cmd->content)->cmd, "exit") == 0)
+		exit_cmd(token, ((t_cmd *)minish->list_cmd->content), minish);
 	out = dup(STDOUT_FILENO);
 	if (out < 0)
 	{

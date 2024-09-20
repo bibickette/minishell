@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 21:51:00 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:38:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	print_double_tab(char **tab);
 
 /* Read and parse command */
 void	prompt(t_list *token, t_data *minishell);
-char	*get_prompt(t_data **minishell);
+void	get_prompt(t_data **minishell);
 void	ft_lstclear_custom(t_list **lst, void (*del)(void *));
 t_list	*ft_lstnew_custom(char buffer[BSIZE]);
 void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *));
 void	ft_lstclear_custom_bis(t_list *head);
-void	first_token_is_exit(char *prompt, t_data *minishell, t_list *token);
-int		is_return_value(t_list *node);
+void	exit_cmd(t_list *token, t_cmd *cmd, t_data *minishell);
+int		is_return_value(char *str);
 int		set_exit_arg(long int status);
 
 /* tokenization */
@@ -263,7 +263,7 @@ int		do_redir_builtin_one_cmd(t_data *minish, int out);
 void	execve_error(t_data *minishell, char *path, t_list *token);
 int		execve_error_free(t_data *minish, char *path, t_list *token);
 
-void	handle_builtin(t_data *minish);
+void	handle_builtin(t_data *minish, t_list *token);
 int		execve_builtin(t_data *minishell, t_cmd *cmd);
 int		first_part_choose_builtin(t_data *minishell, t_cmd *cmd);
 void	do_single_fork(t_data *minish, t_list *token, t_cmd *cmd, int *pid);
@@ -320,7 +320,7 @@ void	apocalypse(t_data *minishell);
 void	free_builtins(t_builtin *builtins);
 void	free_lists(t_data *minishell);
 void	free_double_char(char ***array);
-void	handle_exit(t_data *minishell, char *prompt);
+void	handle_exit(t_data *minishell);
 
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);

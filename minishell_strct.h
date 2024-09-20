@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 17:01:26 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 22:38:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ typedef struct s_command
 
 typedef struct s_minishell
 {
+	char		*prompt;
 	t_list		*token;
 	t_list		*brut_list;
 
