@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:10:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:57:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:30:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	check_export_format(char *var, t_data *minishell)
 	if (i == -1)
 		i = ft_strlen(var);
 	if (var[0] == '=' || (var[0] >= '0' && var[0] <= '9'))
-		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
+		return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
 	y = -1;
 	while (++y < i)
 	{
 		if (check_more_special_char(var[y]) == KO)
 		{
 			minishell->last_status = 1;
-			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), M_KO);
+			return (ft_putstr_fd(EXPORT_ERR, STDERR_FILENO), KO);
 		}
 	}
 	return (OK);

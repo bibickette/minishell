@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:36:12 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 21:04:38 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:41:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,13 @@ int	open_infile_hd_type(t_data *minishell, t_file *file)
 {
 	if (file->type == HD_LIMITER_TYPE)
 	{
-		// heredoc_create(minishell, file->name);
-		// free(file->name);
-		// file->name = ft_strdup(HERE_DOC);
 		if (open_infile(file) == KO)
 			return (KO);
 	}
 	return (OK);
 }
 
-void here_doc_create_all(t_data *minishell)
+void	here_doc_create_all(t_data *minishell)
 {
 	int	i;
 

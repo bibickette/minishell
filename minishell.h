@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 21:05:15 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:33:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int		set_exit_arg(long int status);
 
 /* tokenization */
 int		process_char(char **prompt_loop, t_list **token, char *buffer, int *i);
-void	print_command(void *content);
 void	make_theim_increment(char **prompt_loop, char *buffer, int *i);
 int		tokenize(char *prompt, t_list **token);
 void	add_token(t_list **token, char buffer[BSIZE]);
@@ -250,7 +249,7 @@ void	echo_cmd(char **cmd_arg, int fd_out);
 /* built-in unset*/
 void	unset_cmd(t_builtin *builtins, char *var);
 /* built-in cd */
-void	cd_cmd(char *path);
+int		cd_cmd(char *path);
 
 /* Execution */
 char	*find_path(char *cmd, char **path);

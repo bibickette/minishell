@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:42:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:33:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	execve_builtin(t_data *minishell, t_cmd *cmd)
 			i++;
 		if (i > 2)
 			return (ft_putstr_fd(TOO_MANY_ARG, STDERR_FILENO), KO);
-		cd_cmd(cmd->cmd_args[1]);
+		if (cd_cmd(cmd->cmd_args[1]) == KO)
+			return (KO);
 	}
 	else if (ft_strcmp(cmd->cmd, "echo") == 0)
 		echo_cmd(cmd->cmd_args, STDOUT_FILENO);

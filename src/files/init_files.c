@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:53:11 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 20:06:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:41:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list)
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	}
 	if (((t_token *)tmp->content)->type == ARG_TYPE
-		|| ((t_token *)tmp->content)->type == OPT_TYPE)
+		|| ((t_token *)tmp->content)->type == OPT_TYPE || \
+		((t_token *)tmp->content)->type == NO_TYPE)
 	{
 		if (char_add_back_tab(&((t_cmd *)tmp_cmd_list->content)->cmd_args,
 				((t_token *)tmp->content)->str) == KO)
 			return (KO);
 	}
-	if (((t_token *)tmp->content)->type == INFILE_TYPE
-		|| ((t_token *)tmp->content)->type == OUTFILE_TYPE
-		|| ((t_token *)tmp->content)->type == APPEND_FILE_TYPE)
+	if (is_not_hd(tmp) == OK)
 		((t_cmd *)tmp_cmd_list->content)->nb_files++;
 	return (OK);
 }

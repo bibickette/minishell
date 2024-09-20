@@ -6,31 +6,31 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 11:55:32 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/13 12:52:26 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:40:36 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_env_vars(char *old_pwd, char *new_pwd)
+static int	update_env_vars(char *old_pwd, char *new_pwd)
 {
 	if (setenv("OLDPWD", old_pwd, 1) != 0)
 	{
 		perror("setenv");
 		free(old_pwd);
 		free(new_pwd);
-		return ;
+		return (KO);
 	}
 	if (setenv("PWD", new_pwd, 1) != 0)
 	{
 		perror("setenv");
 		free(old_pwd);
 		free(new_pwd);
-		return ;
+		return (KO);
 	}
 	free(old_pwd);
 	free(new_pwd);
-	return ;
+	return (OK);
 }
 
 static char	*get_old_pwd(void)
@@ -73,7 +73,7 @@ static int	handle_special_char(char **new_path, char **old_pwd, char **path)
 	return (0);
 }
 
-void	cd_cmd(char *path)
+int	cd_cmd(char *path)
 {
 	char	*old_pwd;
 	char	*new_path;
@@ -81,22 +81,23 @@ void	cd_cmd(char *path)
 
 	old_pwd = get_old_pwd();
 	if (!old_pwd)
-		return ;
+		return (KO);
 	new_path = path;
 	if (handle_special_char(&new_path, &old_pwd, &path) == 1)
-		return ;
+		return (KO);
 	if (chdir(new_path) != 0)
 	{
 		perror("cd");
-		free(old_pwd);
-		return ;
+		return (free(old_pwd), KO);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
 		perror("getcwd");
 		free(old_pwd);
-		return ;
+		return (KO);
 	}
-	update_env_vars(old_pwd, new_pwd);
+	if (update_env_vars(old_pwd, new_pwd) == KO)
+		return (KO);
+	return (OK);
 }

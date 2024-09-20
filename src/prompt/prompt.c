@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 21:02:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:40:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,6 @@ void	the_execution(t_list *token, t_data *minishell)
 {
 	if (take_all_hd_files(minishell, token) == KO)
 		return ;
-	// if (open_all_hd_file(minishell) == KO)
-	// {
-	// 	minishell->last_status = errno;
-	// 	free_files_tab(minishell, minishell->files);
-	// 	return ;
-	// }
 	here_doc_create_all(minishell);
 	init_cmd_list(minishell, token);
 	handle_signals(minishell);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 17:54:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:42:03 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,17 @@ int	check_every_builtin_n_type(t_list *token)
 
 int	check_every_condition(t_list *tmp)
 {
-	if ((ft_strncmp(((t_token *)tmp->content)->str, "||", 2) == 0)
-		|| (check_operator(((t_token *)tmp->content)->str) == OK
-			&& tmp->next == NULL) || (((t_token *)tmp->content)->str[0] == '|'
-			&& ((t_token *)tmp->next->content)->str[0] == '|')
-		|| (check_operator(((t_token *)tmp->content)->str) == OK
-			&& check_operator(((t_token *)tmp->next->content)->str) == OK
-			&& ((t_token *)tmp->content)->str[0] != '|')
-		|| (((t_token *)tmp->content)->index == 0
-			&& ((t_token *)tmp->content)->type == PIPE_TYPE))
+	if (((t_token *)tmp->content)->quote == N_QUOTE
+		&& ((ft_strncmp(((t_token *)tmp->content)->str, "||", 2) == 0)
+			|| (check_operator(((t_token *)tmp->content)->str) == OK
+				&& tmp->next == NULL)
+			|| (((t_token *)tmp->content)->str[0] == '|'
+				&& ((t_token *)tmp->next->content)->str[0] == '|')
+			|| (check_operator(((t_token *)tmp->content)->str) == OK
+				&& check_operator(((t_token *)tmp->next->content)->str) == OK
+				&& ((t_token *)tmp->content)->str[0] != '|')
+			|| (((t_token *)tmp->content)->index == 0
+				&& ((t_token *)tmp->content)->type == PIPE_TYPE)))
 		return (ft_putstr_fd(SYNTAX_ERR, STDERR_FILENO), KO);
 	return (OK);
 }
