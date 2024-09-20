@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 19:48:26 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 21:05:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		check_operator(char *str);
 
 /* Command tab */
 int		init_cmd_list(t_data *minishell, t_list *token);
-int set_node(t_list *tmp, t_data *minishell, int *i);
+int		set_node(t_list *tmp, t_data *minishell, int *i);
 int		add_t_cmd_back(t_data *minishell, int index);
 int		fill_cmd_list(t_data *minishell, t_list *tmp);
 int		fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list);
@@ -187,6 +187,7 @@ void	add_to_history(t_data **minishell, char *command);
 
 /* redirection, file */
 int		heredoc_create(t_data *minishell, char *limiter);
+void	here_doc_create_all(t_data *minishell);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		init_dup_hd(int *std_in, int *std_inb);
 int		init_hd_fd_n_limiter(t_data *minishell, char **limiter_tmp,
@@ -208,7 +209,7 @@ int		open_infile_type(t_file *file);
 int		open_infile_hd_type(t_data *minishell, t_file *file);
 int		open_outfile_type(t_file *file);
 int		open_all_infile(t_data *minishell, t_cmd *cmd);
-int		open_all_hd_file(t_data *minishell);
+int		open_all_hd_file(t_data *minishell, t_cmd *cmd);
 int		open_all_outfile(t_data *minishell, t_cmd *cmd);
 
 int		file_type(t_list *tmp_head);
@@ -280,10 +281,10 @@ int		init_pipe(t_data *minishell);
 int		open_pipe(t_data *minishell);
 int		error_open_pipe(t_data *minishell, int i);
 void	execve_pipe(t_data *minish, t_list *token);
-void	child_process(t_data *minishell, t_list *token, int cmd);
-void	do_the_dup(t_data *minishell, t_list *token, int cmd);
-void	dup_first_cmd(t_data *minishell, t_list *token);
-void	dup_last_cmd(t_data *minishell, t_list *token, int cmd);
+void	child_process(t_data *minishell, t_list *token, t_cmd *cmd);
+void	do_the_dup(t_data *minishell, t_list *token, t_cmd *cmd);
+void	dup_first_cmd(t_data *minishell, t_list *token, t_cmd *cmd);
+void	dup_last_cmd(t_data *minishell, t_list *token, t_cmd *cmd);
 void	wait_all_get_status(t_data *minishell);
 void	close_all_pipes(t_data *minishell);
 void	free_pipe_pid(t_data *minishell);

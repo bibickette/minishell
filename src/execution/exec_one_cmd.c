@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:43:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 20:26:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int	execve_one_cmd(t_data *minish, t_list *token)
 {
 	int		pid;
-	t_list	*cmd_list;
+	t_cmd	*cmd;
 
-	cmd_list = minish->list_cmd;
-	if (is_builtin(((t_cmd *)cmd_list->content)->cmd) == OK)
+	cmd = (t_cmd *)minish->list_cmd->content;
+	if (is_builtin(cmd->cmd) == OK)
 		handle_builtin(minish);
 	else
 	{
 		pid = fork();
-		do_single_fork(minish, token, (t_cmd *)cmd_list->content, &pid);
+		do_single_fork(minish, token, cmd, &pid);
 		return (get_status_process(minish, &minish->last_status, pid));
 	}
 	return (OK);

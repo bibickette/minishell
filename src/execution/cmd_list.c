@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:48:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:48:40 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 20:00:22 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	set_node(t_list *tmp, t_data *minishell, int *i)
 	{
 		if (((t_token *)tmp->content)->type == PIPE_TYPE)
 		{
-			i++;
-			if (add_t_cmd_back(minishell, i) == KO)
+			(*i)++;
+			if (add_t_cmd_back(minishell, *i) == KO)
 			{
 				minishell->last_status = 1;
 				return (KO);

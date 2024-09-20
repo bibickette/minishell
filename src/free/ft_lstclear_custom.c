@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 23:46:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 19:43:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 20:15:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *))
 	{
 		cmd = (t_cmd *)tmp->content;
 		del(cmd->cmd);
+		cmd->cmd = 0;
 		if (cmd->cmd_args)
 			free_double_char(&cmd->cmd_args);
 		if (cmd->nb_files > 0)

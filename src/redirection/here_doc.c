@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:41:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 20:41:21 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	heredoc_create(t_data *minishell, char *limiter)
 	limiter_tmp = NULL;
 	if (init_dup_hd(&std_in, &std_inb) == KO || init_hd_fd_n_limiter(minishell,
 			&limiter_tmp, limiter) == KO)
+		return (KO);
+	if (dup_db_hd(std_in, std_inb, minishell) == KO)
 		return (KO);
 	while (1)
 	{
@@ -46,8 +48,6 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 	line = NULL;
 	g_signal = IN_HD;
 	line = readline(HERE_DOC_MSG);
-	if (dup_db_hd(std_in, std_inb, minishell) == KO)
-		return (KO);
 	if (g_signal == HD_STOP)
 		if (handle_no_line_hd(minishell, limiter_tmp, std_in, std_inb) == KO)
 			return (KO);

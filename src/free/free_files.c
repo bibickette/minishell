@@ -6,12 +6,11 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:45:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:45:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 20:15:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	free_files_tab(t_data *minishell, t_file *files)
 {
