@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 18:53:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:42:41 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	execve_builtin(t_data *minishell, t_cmd *cmd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (first_part_choose_builtin(minishell, cmd) == KO)
@@ -73,4 +73,3 @@ int	export_all_arg(t_data *minishell, char **cmd_arg)
 	}
 	return (OK);
 }
-

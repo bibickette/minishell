@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:08:22 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:21:28 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:42:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ char	*split_n_path(t_data *minishell, t_cmd *cmd, t_list *token)
 {
 	char	*path;
 
-	// *arg = ft_split(minishell->command_tab[cmd], ' ');
-	// if (!*arg)
-	// {
-	// 	ft_putstr_fd(SPLIT_ERR, STDERR_FILENO);
-	// 	exit(EXIT_FAILURE);
-	// }
 	path = get_path(minishell, cmd);
 	if (!path)
 	{

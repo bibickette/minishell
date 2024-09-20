@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:53:11 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 16:55:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:42:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list)
 	if (((t_token *)tmp->content)->type == CMD_TYPE
 		|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
 	{
-		((t_cmd *)tmp_cmd_list->content)->cmd_type = ((t_token *)tmp->content)->type;
+		((t_cmd *)tmp_cmd_list->content)->cmd_type = \
+		((t_token *)tmp->content)->type;
 		if (char_add_back_tab(&((t_cmd *)tmp_cmd_list->content)->cmd_args,
 				((t_token *)tmp->content)->str) == KO)
 			return (KO);
-		((t_cmd *)tmp_cmd_list->content)->cmd = ft_strdup(((t_token *)tmp->content)->str);
+		((t_cmd *)tmp_cmd_list->content)->cmd = \
+		ft_strdup(((t_token *)tmp->content)->str);
 		if (!((t_cmd *)tmp_cmd_list->content)->cmd)
 			return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	}
@@ -78,8 +80,10 @@ int	set_file(t_list *cmd_list, t_list *tmp, int *i)
 	((t_cmd *)cmd_list->content)->files[*i].index = *i;
 	((t_cmd *)cmd_list->content)->files[*i].index_cmd = KO;
 	((t_cmd *)cmd_list->content)->files[*i].is_open = KO;
-	((t_cmd *)cmd_list->content)->files[*i].type = ((t_token *)tmp->content)->type;
-	((t_cmd *)cmd_list->content)->files[*i].name = ft_strdup(((t_token *)tmp->content)->str);
+	((t_cmd *)cmd_list->content)->files[*i].type = \
+	((t_token *)tmp->content)->type;
+	((t_cmd *)cmd_list->content)->files[*i].name = \
+	ft_strdup(((t_token *)tmp->content)->str);
 	if (!((t_cmd *)cmd_list->content)->files[*i].name)
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
 	(*i)++;
@@ -91,8 +95,8 @@ int	init_files(t_list *cmd_list)
 	if (!((t_cmd *)cmd_list->content)->files
 		&& ((t_cmd *)cmd_list->content)->nb_files > 0)
 	{
-		((t_cmd *)cmd_list->content)->files = ft_calloc(((t_cmd *)cmd_list->content)->nb_files
-				+ 1, sizeof(t_file));
+		((t_cmd *)cmd_list->content)->files = \
+		ft_calloc(((t_cmd *)cmd_list->content)->nb_files + 1, sizeof(t_file));
 		if (!((t_cmd *)cmd_list->content)->files)
 			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
 	}

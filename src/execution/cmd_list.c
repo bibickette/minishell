@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:48:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 18:09:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:48:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,11 @@ int	init_cmd_list(t_data *minishell, t_list *token)
 	tmp = token;
 	if (add_t_cmd_back(minishell, i) == KO)
 		return (KO);
-	while (tmp)
-	{
-		if (((t_token *)tmp->content)->type == PIPE_TYPE)
-		{
-			i++;
-			if (add_t_cmd_back(minishell, i) == KO)
-			{
-				minishell->last_status = 1;
-				return (KO);
-			}
-		}
-		tmp = tmp->next;
-	}
+	if (set_node(tmp, minishell, &i) == KO)
+		return (KO);
 	minishell->nb_cmd = i + 1;
 	tmp = token;
-	if(fill_cmd_list(minishell, tmp) == KO)
+	if (fill_cmd_list(minishell, tmp) == KO)
 		return (KO);
 	tmp = token;
 	return (fill_cmd_files_list(minishell, tmp));
@@ -72,6 +61,24 @@ int	fill_cmd_list(t_data *minishell, t_list *tmp)
 			return (KO);
 		if (((t_token *)tmp->content)->type == PIPE_TYPE)
 			tmp_cmd_list = tmp_cmd_list->next;
+		tmp = tmp->next;
+	}
+	return (OK);
+}
+
+int	set_node(t_list *tmp, t_data *minishell, int *i)
+{
+	while (tmp)
+	{
+		if (((t_token *)tmp->content)->type == PIPE_TYPE)
+		{
+			i++;
+			if (add_t_cmd_back(minishell, i) == KO)
+			{
+				minishell->last_status = 1;
+				return (KO);
+			}
+		}
 		tmp = tmp->next;
 	}
 	return (OK);

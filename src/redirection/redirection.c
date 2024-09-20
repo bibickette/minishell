@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 22:05:44 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:20:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:41:01 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	redirection_in(t_data *minishell, t_file *files, t_cmd *cmd, int std_in)
 	i = -1;
 	while (files[++i].name)
 	{
-			if (files[i].fd != KO)
-			{
-				if (dup2(files[i].fd, std_in) < 0)
-					return (perror(DUP_ERR), errno);
-			}
+		if (files[i].fd != KO)
+		{
+			if (dup2(files[i].fd, std_in) < 0)
+				return (perror(DUP_ERR), errno);
+		}
 	}
 	i = -1;
 	while (cmd->files[++i].name)

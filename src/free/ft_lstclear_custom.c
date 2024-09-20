@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 23:46:08 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 15:28:31 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:43:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *))
 	t_cmd	*cmd;
 
 	tmp = *lst;
-	if(!tmp)
+	if (!tmp)
 		return ;
 	while (tmp)
 	{
@@ -48,4 +48,5 @@ void	ft_lstclear_custom_cmd(t_list **lst, void (*del)(void *))
 	}
 	ft_lstclear_libft(lst, del);
 	free(*lst);
+	*lst = 0;
 }

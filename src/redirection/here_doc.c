@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 17:56:59 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:41:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	heredoc_create(t_data *minishell, char *limiter)
 	while (1)
 	{
 		if (heredoc_handler(minishell, std_in, std_inb, limiter_tmp) == KO)
-			return(KO) ;
+			return (KO);
 	}
-	return(OK);
+	return (OK);
 }
 
 /*

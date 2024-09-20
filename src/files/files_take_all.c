@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:20:00 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 17:56:09 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:34 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	count_n_allocate_files(t_data *minishell, t_list *token)
 	{
 		if (file_type(tmp_head) == OK)
 		{
-			char_add_back_tab(&dico_files, ((t_token *)tmp_head->content)->str);
+			char_add_back_tab(&dico_files, \
+			((t_token *)tmp_head->content)->str);
 			minishell->nb_hd_files++;
 		}
 		if (tmp_head->next == NULL)
@@ -55,7 +56,8 @@ int	load_file_tab(t_data *minishell, char **dico_files)
 {
 	int	i;
 
-	minishell->files = ft_calloc(minishell->nb_hd_files + 1, sizeof(t_file));
+	minishell->files = \
+	ft_calloc(minishell->nb_hd_files + 1, sizeof(t_file));
 	if (!minishell->files)
 	{
 		free_double_char(&dico_files);
@@ -79,21 +81,22 @@ void	load_files_type(t_data *minishell, t_list *token)
 {
 	t_list	*tmp_head;
 	int		tab;
-	int index_cmd;
+	int		index_cmd;
 
 	index_cmd = 0;
 	tab = 0;
 	tmp_head = token;
 	while (tmp_head)
 	{
-		if(((t_token *)tmp_head->content)->type == PIPE_TYPE)
+		if (((t_token *)tmp_head->content)->type == PIPE_TYPE)
 			index_cmd++;
 		if (file_type(tmp_head) == OK)
 		{
 			minishell->files[tab].index = tab;
 			minishell->files[tab].index_cmd = index_cmd;
 			minishell->files[tab].is_open = KO;
-			minishell->files[tab++].type = ((t_token *)tmp_head->content)->type;
+			minishell->files[tab++].type = \
+			((t_token *)tmp_head->content)->type;
 		}
 		if (tmp_head->next == NULL)
 			break ;

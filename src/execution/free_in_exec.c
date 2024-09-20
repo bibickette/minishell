@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:20:31 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 19:12:54 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:43:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	free_pipe_pid(t_data *minishell)
 	minishell->pipe_fd = 0;
 }
 
-void	execve_error(t_data *minishell, char *path,  t_list *token)
+void	execve_error(t_data *minishell, char *path, t_list *token)
 {
-	execve_error_free(minishell,  path, token);
+	execve_error_free(minishell, path, token);
 	perror(EXECVE_ERR);
 	exit(errno);
 }
@@ -45,7 +45,6 @@ int	execve_error_free(t_data *minish, char *path, t_list *token)
 	if (minish->nb_hd_files > 0)
 		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
-	// free_double_char(&arg);
 	ft_lstclear_custom_cmd(&minish->list_cmd, free);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);

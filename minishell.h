@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 19:23:43 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:48:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,16 @@ int		handle_buffer_overflow(t_list **token);
 int		check_operator(char *str);
 
 /* Command tab */
-int init_cmd_list(t_data *minishell, t_list *token);
-int add_t_cmd_back(t_data *minishell, int index);
-int	fill_cmd_list(t_data *minishell, t_list *tmp);
-int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list);
-int	fill_cmd_files_list(t_data *minishell, t_list *tmp);
-int	init_files(t_list *cmd_list);
-int set_file(t_list *cmd_list, t_list *tmp, int *i);
+int		init_cmd_list(t_data *minishell, t_list *token);
+int set_node(t_list *tmp, t_data *minishell, int *i);
+int		add_t_cmd_back(t_data *minishell, int index);
+int		fill_cmd_list(t_data *minishell, t_list *tmp);
+int		fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list);
+int		fill_cmd_files_list(t_data *minishell, t_list *tmp);
+int		init_files(t_list *cmd_list);
+int		set_file(t_list *cmd_list, t_list *tmp, int *i);
 
-int	is_not_hd(t_list *tmp);
+int		is_not_hd(t_list *tmp);
 
 /* put args stucked together */
 int		join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
@@ -185,7 +186,7 @@ void	add_to_history(t_data **minishell, char *command);
 /*************************************/
 
 /* redirection, file */
-int	heredoc_create(t_data *minishell, char *limiter);
+int		heredoc_create(t_data *minishell, char *limiter);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		init_dup_hd(int *std_in, int *std_inb);
 int		init_hd_fd_n_limiter(t_data *minishell, char **limiter_tmp,
@@ -206,9 +207,9 @@ int		no_original_tab(char ***original_tab, char *to_add, char ***new_tab);
 int		open_infile_type(t_file *file);
 int		open_infile_hd_type(t_data *minishell, t_file *file);
 int		open_outfile_type(t_file *file);
-int	open_all_infile(t_data *minishell, t_cmd *cmd);
+int		open_all_infile(t_data *minishell, t_cmd *cmd);
 int		open_all_hd_file(t_data *minishell);
-int	open_all_outfile(t_data *minishell, t_cmd *cmd);
+int		open_all_outfile(t_data *minishell, t_cmd *cmd);
 
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
@@ -220,7 +221,7 @@ void	close_all_files(t_file *files);
 void	handle_file_hd(t_data *minishell);
 
 /* Built-in commands */
-int	export_all_arg(t_data *minishell, char **cmd_arg);
+int		export_all_arg(t_data *minishell, char **cmd_arg);
 int		is_builtin(char *command);
 
 /* built-in export*/
@@ -253,17 +254,18 @@ void	cd_cmd(char *path);
 /* Execution */
 char	*find_path(char *cmd, char **path);
 char	*get_path(t_data *minishell, t_cmd *cmd);
-int	redirection_in(t_data *minishell, t_file *files, t_cmd *cmd, int std_in);
-int	redirection_out(t_cmd *cmd, t_file *files, int std_out);
+int		redirection_in(t_data *minishell, t_file *files, t_cmd *cmd,
+			int std_in);
+int		redirection_out(t_cmd *cmd, t_file *files, int std_out);
 
 int		execve_one_cmd(t_data *minish, t_list *token);
 int		do_redir_builtin_one_cmd(t_data *minish, int out);
 void	execve_error(t_data *minishell, char *path, t_list *token);
-int	execve_error_free(t_data *minish, char *path, t_list *token);
+int		execve_error_free(t_data *minish, char *path, t_list *token);
 
 void	handle_builtin(t_data *minish);
-int	execve_builtin(t_data *minishell, t_cmd *cmd);
-int	first_part_choose_builtin(t_data *minishell, t_cmd *cmd);
+int		execve_builtin(t_data *minishell, t_cmd *cmd);
+int		first_part_choose_builtin(t_data *minishell, t_cmd *cmd);
 void	do_single_fork(t_data *minish, t_list *token, t_cmd *cmd, int *pid);
 void	child_single_fork(t_data *minish, t_list *token, t_cmd *cmd);
 int		get_status_process(t_data *minishell, int *status, pid_t pid);
