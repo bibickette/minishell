@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:20:31 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 17:04:11 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:12:54 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,24 @@ void	free_pipe_pid(t_data *minishell)
 	minishell->pipe_fd = 0;
 }
 
-void	execve_error(t_data *minishell, char *path, char **arg, t_list *token)
+void	execve_error(t_data *minishell, char *path,  t_list *token)
 {
-	execve_error_free(minishell, arg, path, token);
+	execve_error_free(minishell,  path, token);
 	perror(EXECVE_ERR);
 	exit(errno);
 }
 
-int	execve_error_free(t_data *minish, char **arg, char *path, t_list *token)
+int	execve_error_free(t_data *minish, char *path, t_list *token)
 {
-	if (minish->command_tab[1])
+	if (minish->nb_cmd > 1)
 	{
 		close_all_pipes(minish);
 		free_pipe_pid(minish);
 	}
-	if (minish->nb_files > 0)
+	if (minish->nb_hd_files > 0)
 		close_all_files(minish->files);
 	free_files_tab(minish, minish->files);
-	free_double_char(&minish->command_tab);
-	free_double_char(&minish->cmd_original);
-	free_double_char(&arg);
+	// free_double_char(&arg);
 	ft_lstclear_custom_cmd(&minish->list_cmd, free);
 	ft_lstclear_custom(&token, free);
 	ft_lstclear_custom(&minish->brut_list, free);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 14:08:00 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:24:47 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 int	execve_one_cmd(t_data *minish, t_list *token)
 {
-	int	pid;
+	int		pid;
+	t_list	*cmd_list;
 
-	if (is_builtin(minish->cmd_original[0]) == OK)
-		handle_builtin(minish, token);
+	cmd_list = minish->list_cmd;
+	if (is_builtin(((t_cmd *)cmd_list->content)->cmd) == OK)
+		handle_builtin(minish);
 	else
 	{
 		pid = fork();
-		do_single_fork(minish, token, &pid);
+		do_single_fork(minish, token, (t_cmd *)cmd_list->content, &pid);
 		return (get_status_process(minish, &minish->last_status, pid));
 	}
 	return (OK);
 }
 
-void	handle_builtin(t_data *minish, t_list *token)
+void	handle_builtin(t_data *minish)
 {
 	int	ret;
 	int	out;
@@ -41,9 +43,9 @@ void	handle_builtin(t_data *minish, t_list *token)
 	}
 	if (do_redir_builtin_one_cmd(minish, out) == KO)
 		return ;
-	ret = execve_builtin(minish, minish->cmd_original, token);
-	if (minish->nb_files > 0)
-		close_all_files(minish->files);
+	ret = execve_builtin(minish, (t_cmd *)minish->list_cmd->content);
+	if (((t_cmd *)minish->list_cmd->content)->nb_files > 0)
+		close_all_files(((t_cmd *)minish->list_cmd->content)->files);
 	minish->last_status = OK;
 	if (ret == KO || ret == M_KO)
 		minish->last_status = 1;
@@ -52,11 +54,12 @@ void	handle_builtin(t_data *minish, t_list *token)
 
 int	do_redir_builtin_one_cmd(t_data *minish, int out)
 {
-	if (open_all_outfile(minish) == KO || redirection_out(minish, minish->files,
+	if (open_all_outfile(minish, (t_cmd *)minish->list_cmd->content) == KO
+		|| redirection_out(((t_cmd *)minish->list_cmd->content), ((t_cmd *)minish->list_cmd->content)->files,
 			STDOUT_FILENO) != OK)
 	{
 		minish->last_status = errno;
-		close_all_files(minish->files);
+		close_all_files(((t_cmd *)minish->list_cmd->content)->files);
 		if (close(out) < 0)
 		{
 			perror(CLOSE_ERR);

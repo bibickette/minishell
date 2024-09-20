@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 14:37:00 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/17 20:03:18 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:39:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_double_tab(char **tab)
 		return ;
 	while (tab[i])
 	{
-		ft_putstr_fd("command tab : ", 1);
+		ft_putstr_fd("	command tab : ", 1);
 		ft_putstr_fd(tab[i], 1);
 		ft_putstr_fd("\n", 1);
 		i++;

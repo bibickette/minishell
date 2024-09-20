@@ -6,102 +6,71 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 15:56:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 18:53:08 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execve_builtin(t_data *minishell, char **cmd, t_list *token)
+int	execve_builtin(t_data *minishell, t_cmd *cmd)
 {
 	int		i;
-	char	**arg;
 
 	i = 0;
-	arg = NULL;
-	arg = ft_split(minishell->command_tab[0], ' ');
-	if (!arg)
-		return (ft_putstr_fd(SPLIT_ERR, STDERR_FILENO), KO);
-	if (first_part_choose_builtin(minishell, cmd, token, arg) == KO)
+	if (first_part_choose_builtin(minishell, cmd) == KO)
 		return (KO);
-	if (ft_strcmp(cmd[0], "cd") == 0)
+	if (ft_strcmp(cmd->cmd, "cd") == 0)
 	{
-		while (arg[i])
+		while (cmd->cmd_args[i])
 			i++;
 		if (i > 2)
 			return (ft_putstr_fd(TOO_MANY_ARG, STDERR_FILENO), KO);
-		cd_cmd(arg[1]);
+		cd_cmd(cmd->cmd_args[1]);
 	}
-	else if (ft_strcmp(cmd[0], "echo") == 0)
-		echo_cmd(token, STDOUT_FILENO);
-	else if (ft_strcmp(cmd[0], "history") == 0)
+	else if (ft_strcmp(cmd->cmd, "echo") == 0)
+		echo_cmd(cmd->cmd_args, STDOUT_FILENO);
+	else if (ft_strcmp(cmd->cmd, "history") == 0)
 		display_history(minishell);
-	free_double_char(&arg);
 	return (OK);
 }
 
-int	first_part_choose_builtin(t_data *minishell, char **cmd, t_list *token,
-		char **arg)
+int	first_part_choose_builtin(t_data *minishell, t_cmd *cmd)
 {
 	int	i;
 
 	i = -1;
-	if (ft_strcmp(cmd[0], "pwd") == 0)
+	if (ft_strcmp(cmd->cmd, "pwd") == 0)
 		pwd_cmd(minishell->builtins);
-	else if (ft_strcmp(cmd[0], "env") == 0)
+	else if (ft_strcmp(cmd->cmd, "env") == 0)
 		env_cmd(minishell->builtins->env);
-	else if (ft_strcmp(cmd[0], "export") == 0)
+	else if (ft_strcmp(cmd->cmd, "export") == 0)
 	{
-		if (!arg[1])
+		if (!cmd->cmd_args[1])
 			export_cmd_no_arg(minishell->builtins->export);
-		else if (export_all_arg(minishell, token) == KO)
-			return (free_double_char(&arg), KO);
+		else if (export_all_arg(minishell, cmd->cmd_args) == KO)
+			return (KO);
 	}
-	else if (ft_strcmp(cmd[0], "unset") == 0)
+	else if (ft_strcmp(cmd->cmd, "unset") == 0)
 	{
-		if (!arg[1])
+		if (!cmd->cmd_args[1])
 			return (ft_putstr_fd(NOT_ENOUGH_ARG, STDERR_FILENO), KO);
 		else
-			while (arg[++i])
-				unset_cmd(minishell->builtins, arg[i]);
+			while (cmd->cmd_args[++i])
+				unset_cmd(minishell->builtins, cmd->cmd_args[i]);
 	}
 	return (OK);
 }
 
-int	export_all_arg(t_data *minishell, t_list *token)
+int	export_all_arg(t_data *minishell, char **cmd_arg)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = token;
-	while (tmp)
+	i = -1;
+	while (cmd_arg[++i])
 	{
-		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
-			&& ft_strcmp(((t_token *)tmp->content)->str, "export") == 0)
-			return (run_list_for_export(minishell, tmp));
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
+		if (export_cmd_w_arg(cmd_arg[i], minishell) == KO)
+			return (KO);
 	}
 	return (OK);
 }
 
-int	run_list_for_export(t_data *minishell, t_list *tmp)
-{
-	if (tmp->next == NULL)
-		return (OK);
-	tmp = tmp->next;
-	while (tmp)
-	{
-		if (((t_token *)tmp->content)->type == CMD_TYPE
-			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
-			return (OK);
-		else if (((t_token *)tmp->content)->type == ARG_TYPE)
-			if (export_cmd_w_arg(((t_token *)tmp->content)->str,
-					minishell) == KO)
-				return (KO);
-		if (tmp->next == NULL)
-			return (OK);
-		tmp = tmp->next;
-	}
-	return (OK);
-}

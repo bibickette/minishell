@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:18:02 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:41:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:54:43 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,6 @@ void	reset_cmd_pipe(t_list *head)
 		tmp = tmp->next;
 	}
 	tmp = head;
-}
-
-int	is_arg_for_echo(t_list *tmp)
-{
-	if (((t_token *)tmp->content)->type != ARG_TYPE
-		&& ((t_token *)tmp->content)->type != INFILE_TYPE
-		&& ((t_token *)tmp->content)->type != OUTFILE_TYPE
-		&& ((t_token *)tmp->content)->type != HD_LIMITER_TYPE
-		&& ((t_token *)tmp->content)->type != APPEND_FILE_TYPE
-		&& ((t_token *)tmp->content)->type != IN_REDIR_TYPE
-		&& ((t_token *)tmp->content)->type != OUT_REDIR_TYPE
-		&& ((t_token *)tmp->content)->type != HERE_DOC_TYPE
-		&& ((t_token *)tmp->content)->type != HD_APPEND_TYPE)
-		return (OK);
-	return (KO);
 }
 
 void	reset_cmd_pipe_type(t_list *current, int *cmd_on_pipe, int *on_pipe_nb)

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 17:16:03 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:01:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,14 +208,13 @@ typedef struct s_command
 {
 	int			index;
 	int			cmd_type;
-	
+
 	char		*cmd;
 	char		**cmd_args;
-	
+
 	int			nb_files;
-	int			*outputs;
-	int			*inputs;
-	
+	t_file		*files;
+
 }				t_cmd;
 
 typedef struct s_minishell
@@ -229,11 +228,9 @@ typedef struct s_minishell
 	t_list		*actual_history;
 
 	t_file		*files;
-	int			nb_files;
+	int			nb_hd_files;
 
 	t_list		*list_cmd;
-	char		**cmd_original;
-	char		**command_tab;
 	int			**pipe_fd;
 	int			*pid_tab;
 	int			nb_cmd;

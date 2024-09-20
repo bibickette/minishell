@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 00:47:36 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:44:00 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:54:11 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int	check_token_operator_order(t_list *token, t_data *minishell)
 	t_list	*tmp;
 
 	tmp = token;
-	if (reset_arg_if_echo(token) == KO)
-	{
-		minishell->last_status = 1;
-		return (KO);
-	}
 	reset_every_first_cmd(tmp);
 	if (check_builtin(token) == KO || check_every_builtin_n_type(token) == KO)
 	{
@@ -38,12 +33,6 @@ int	check_builtin(t_list *token)
 	tmp = token;
 	while (tmp)
 	{
-		if ((((t_token *)tmp->content)->type == BUILTIN_TYPE)
-			&& ft_strcmp(((t_token *)tmp->content)->str, "echo") == 0)
-		{
-			if (check_next_token_echo(tmp) == KO)
-				return (KO);
-		}
 		if (check_every_condition(tmp) == KO
 			|| check_builtin_condition(tmp) == KO)
 			return (KO);

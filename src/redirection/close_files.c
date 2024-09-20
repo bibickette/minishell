@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:29:53 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/13 18:44:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:56:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,3 @@ void	close_one_fd(int fd)
 			perror(CLOSE_ERR);
 }
 
-void	print_all_files(t_file *files)
-{
-	int	i;
-
-	i = -1;
-	if (!files)
-		return ;
-	while (files[++i].name)
-	{
-		printf("file name : %s\n", files[i].name);
-		printf("file type : %d\n", files[i].type);
-		printf("file is open : %d\n", files[i].is_open);
-		printf("file fd open : %d\n", files[i].fd);
-	}
-}
