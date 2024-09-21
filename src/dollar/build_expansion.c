@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 01:13:50 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/16 16:53:48 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 14:47:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	build_unique_dollar(t_data *minishell, char **dollar,
 }
 
 int	build_expand_n_replace(char **str_expanded, char ***expanded_exported,
-		t_list *tmp_head)
+		char **str)
 {
 	int	y;
 
@@ -43,10 +43,10 @@ int	build_expand_n_replace(char **str_expanded, char ***expanded_exported,
 	free_double_char(expanded_exported);
 	if ((*str_expanded)[ft_strlen((*str_expanded)) - 1] == ' ')
 		(*str_expanded)[ft_strlen((*str_expanded)) - 1] = '\0';
-	free(((t_token *)tmp_head->content)->str);
-	((t_token *)tmp_head->content)->str = NULL;
-	((t_token *)tmp_head->content)->str = ft_strdup((*str_expanded));
-	if (!((t_token *)tmp_head->content)->str)
+	free(*str);
+	*str = NULL;
+	*str = ft_strdup((*str_expanded));
+	if (!*str)
 	{
 		free_n_set_var_null(str_expanded);
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);

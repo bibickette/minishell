@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/21 14:11:35 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 14:48:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int		expand_everything(t_data *minishell, t_list *token);
 int		trim_token(t_list *tmp_head);
 int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);
 int		start_expanding(t_data *minishell, char ***dollar_tab,
-			t_list *tmp_head);
+			char **str);
 int		set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 			char ***expanded_exported);
 int		build_unique_dollar(t_data *minishell, char **dollar,
@@ -168,9 +168,9 @@ int		first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 int		add_doll_first_tab(t_data *minishell, char ***dollar_tab);
 int		add_doll_all_tab(t_data *minishell, char ***dollar_tab,
 			char *expanded_exported);
-int		do_the_expansion(t_data *minishel, char **dollar_tab);
+int		do_the_expansion(t_data *minishell, char **dollar_tab);
 int		build_expand_n_replace(char **str_expanded, char ***expanded_exported,
-			t_list *tmp_head);
+			char **str);
 int		has_dollar(char *var);
 int		has_multiple_dollar(char *var);
 

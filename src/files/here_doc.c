@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 13:37:30 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 15:47:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	heredoc_create(t_data *minishell, char *limiter)
 	int		std_inb;
 
 	limiter_tmp = NULL;
-	if (init_dup_hd(&std_in, &std_inb) == KO || init_hd_fd_n_limiter(minishell,
-			&limiter_tmp, limiter) == KO)
+	if (init_dup_hd(&std_in, &std_inb) == KO || \
+		init_hd_fd_n_limiter(minishell, &limiter_tmp, limiter) == KO)
 		return (KO);
 	if (dup_db_hd(std_in, std_inb, minishell) == KO)
 		return (KO);
@@ -44,6 +44,7 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 		char *limiter_tmp)
 {
 	char	*line;
+	char	**dollar_tab;
 
 	line = NULL;
 	g_signal = IN_HD;
@@ -62,8 +63,10 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 		close_one_fd(std_inb);
 		return (KO);
 	}
+	start_expanding(minishell, &dollar_tab, &line);
 	ft_putstr_fd(line, minishell->fd_hd);
 	ft_putstr_fd("\n", minishell->fd_hd);
+	free_n_set_var_null(&line);
 	return (OK);
 }
 

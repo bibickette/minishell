@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 13:40:22 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 15:47:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	expand_everything(t_data *minishell, t_list *token)
 	{
 		if (right_condition_for_expand(tmp_head, str_token_before) == OK)
 			if (has_dollar(((t_token *)tmp_head->content)->str) == OK)
-				if (start_expanding(minishell, &dollar_tab, tmp_head) == KO)
+				if (start_expanding(minishell, &dollar_tab,
+						&((t_token *)tmp_head->content)->str) == KO)
 					return (KO);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
 			if (trim_token(tmp_head) == KO)
@@ -64,12 +65,12 @@ int	right_condition_for_expand(t_list *tmp_head, char *str_token_before)
 	return (KO);
 }
 
-int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
+int	start_expanding(t_data *minishell, char ***dollar_tab, char **str)
 {
 	char	*str_expanded;
 	char	**expanded_exported;
 
-	str_expanded = ft_strdup(((t_token *)tmp_head->content)->str);
+	str_expanded = ft_strdup(*str);
 	if (!str_expanded)
 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 	expanded_exported = ft_split(str_expanded, ' ');
@@ -86,7 +87,7 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, t_list *tmp_head)
 		str_expanded = 0;
 		return (KO);
 	}
-	build_expand_n_replace(&str_expanded, &expanded_exported, tmp_head);
+	build_expand_n_replace(&str_expanded, &expanded_exported, str);
 	return (OK);
 }
 
