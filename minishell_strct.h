@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 22:38:12 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 13:51:41 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ Builtin doesn't accept option/argument\n"
 # define ROOT_ENV "/etc/environment"
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"
 # define ERR_ENV "Minishell Error : Couldn't get the environment\n"
+# define ERR_SHLVL "Minishell Error : Couldn't get the shell level\n"
 
 /* malloc errors */
 # define MALLOC_ERR "Minishell Error : Malloc\n"

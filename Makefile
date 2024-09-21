@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2024/09/20 23:11:30 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/21 14:14:35 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = -L./LIBFT -lft
 CC = cc
 
 INCLUDE = -I. -I./LIBFT
-CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDE)
+CFLAGS = -Wall -Wextra -g3 $(INCLUDE)
 
 # Source directories
 SRC_DIR = src
@@ -37,7 +37,8 @@ TOKENIZE_DIR = $(SRC_DIR)/tokenize
 UTILS_DIR = $(SRC_DIR)/utils
 
 # List all source files manually
-SRC = $(BUILTINS_DIR)/export_utils.c \
+SRC = $(SRC_DIR)/main.c \
+	  $(BUILTINS_DIR)/export_utils.c \
       $(BUILTINS_DIR)/cd.c \
       $(BUILTINS_DIR)/add_to_history.c \
       $(BUILTINS_DIR)/unset.c \
@@ -62,8 +63,11 @@ SRC = $(BUILTINS_DIR)/export_utils.c \
       $(EXECUTION_DIR)/exec_one_cmd.c \
       $(EXECUTION_DIR)/exec_builtin.c \
       $(EXECUTION_DIR)/cmd_list.c \
-      $(FILES_DIR)/init_files.c \
       $(FILES_DIR)/files_take_all.c \
+      $(FILES_DIR)/files.c \
+      $(FILES_DIR)/here_doc_utils.c \
+      $(FILES_DIR)/here_doc.c \
+      $(FILES_DIR)/init_files.c \
       $(FREE_DIR)/ft_lstclear_custom.c \
       $(FREE_DIR)/apocalypse.c \
       $(FREE_DIR)/free_double_char.c \
@@ -73,20 +77,17 @@ SRC = $(BUILTINS_DIR)/export_utils.c \
       $(FREE_DIR)/ft_lst_new_custom.c \
       $(FREE_DIR)/free_command.c \
       $(INITIATE_DIR)/init_minishell.c \
+	  $(INITIATE_DIR)/shlvl.c \
       $(INITIATE_DIR)/get_env.c \
       $(INITIATE_DIR)/get_export.c \
-      $(SRC_DIR)/main.c \
       $(PROMPT_DIR)/check_args.c \
       $(PROMPT_DIR)/display_intro.c \
       $(PROMPT_DIR)/handle_sig.c \
       $(PROMPT_DIR)/get_prompt.c \
       $(PROMPT_DIR)/handle_exit.c \
       $(PROMPT_DIR)/prompt.c \
-      $(REDIRECTION_DIR)/files.c \
       $(REDIRECTION_DIR)/redirection.c \
       $(REDIRECTION_DIR)/open_files.c \
-      $(REDIRECTION_DIR)/here_doc_utils.c \
-      $(REDIRECTION_DIR)/here_doc.c \
       $(REDIRECTION_DIR)/close_files.c \
       $(REINITIATE_DIR)/join_tokens_if_needed.c \
       $(REINITIATE_DIR)/check_token_order.c \
@@ -130,7 +131,6 @@ COLOR_GREEN = \e[0;35m
 COLOR_BLUE = \e[0;35m
 
 .PHONY: all clean fclean re
-
 
 all: $(NAME)
 

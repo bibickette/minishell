@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 20:41:21 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 13:37:30 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 	}
 	ft_putstr_fd(line, minishell->fd_hd);
 	ft_putstr_fd("\n", minishell->fd_hd);
-	free_n_set_var_null(&line);
 	return (OK);
 }
 

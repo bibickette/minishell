@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 14:42:47 by phwang            #+#    #+#              #
-#    Updated: 2024/06/17 17:35:01 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/21 13:38:02 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	
 #create the lib with the objects
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@echo "$(COLOR_BLUE)\nCompiling Printf lib...$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)\nCompiling Printf...$(COLOR_RESET)"
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(COLOR_GREEN)Printf complete !$(COLOR_RESET)        "
 #cleaning the objects files

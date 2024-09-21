@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 22:38:08 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/21 14:11:35 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		the_parser_set(t_list *token, t_data *minishell, char *prompt);
 int		init_minishell(t_data **minishell);
 int		get_env(t_data *minishell, char **env);
 int		no_environment(t_data *minishell);
+int		handle_shell_level(t_data *minishell);
 int		load_env(t_data *minishell, char **env);
 int		load_export_tab(t_data *minishell, char **env);
 int		load_export_w_quote(char **export);
