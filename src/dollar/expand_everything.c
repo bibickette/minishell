@@ -110,9 +110,6 @@ int	set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 					&(*expanded_exported)[y]))
 				return (KO);
 		}
-		(*expanded_exported)[y] = strjoin_wfree((*expanded_exported)[y], " ");
-		if (!(*expanded_exported)[y])
-			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	}
 	return (OK);
 }
