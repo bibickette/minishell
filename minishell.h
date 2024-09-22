@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/21 14:48:42 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/22 14:07:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,7 @@ char	*expansion_no_surround(char *var, t_data *minishell);
 int		expand_everything(t_data *minishell, t_list *token);
 int		trim_token(t_list *tmp_head);
 int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);
-int		start_expanding(t_data *minishell, char ***dollar_tab,
-			char **str);
+int		start_expanding(t_data *minishell, char ***dollar_tab, char **str);
 int		set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 			char ***expanded_exported);
 int		build_unique_dollar(t_data *minishell, char **dollar,
@@ -327,6 +326,11 @@ void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
 void	free_files_tab_cmd(t_cmd *cmd, t_file *files);
 void	free_n_set_var_null(char **var);
+
+int		create_tab(char ***tab, char *str, int *index, int word_nb);
+char	**split_w_space(char *s);
+int		is_white_space(char c);
+int		countwords_wsp(const char *str);
 
 /* temporary */
 void	print_all_files(t_file *files);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:15:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/08/29 16:31:56 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/22 14:10:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
+int					ft_is_white_space(char c);
 
 int					ft_toupper(int c);
 int					ft_tolower(int c);

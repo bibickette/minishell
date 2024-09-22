@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2024/09/21 14:14:35 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/22 14:12:42 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = -L./LIBFT -lft
 CC = cc
 
 INCLUDE = -I. -I./LIBFT
-CFLAGS = -Wall -Wextra -g3 $(INCLUDE)
+CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDE)
 
 # Source directories
 SRC_DIR = src
@@ -49,6 +49,7 @@ SRC = $(SRC_DIR)/main.c \
       $(BUILTINS_DIR)/echo.c \
       $(BUILTINS_DIR)/display_history.c \
       $(BUILTINS_DIR)/env.c \
+	  $(DOLLAR_DIR)/split_w_space.c \
       $(DOLLAR_DIR)/build_expansion.c \
       $(DOLLAR_DIR)/handle_multiple_dollar.c \
       $(DOLLAR_DIR)/dollar_expansion.c \

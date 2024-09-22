@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 15:47:46 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/22 14:08:21 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,16 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, char **str)
 	str_expanded = ft_strdup(*str);
 	if (!str_expanded)
 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
-	expanded_exported = ft_split(str_expanded, ' ');
+	expanded_exported = split_w_space(str_expanded);
 	if (!expanded_exported)
 	{
-		free(str_expanded);
-		str_expanded = 0;
+		free_n_set_var_null(&str_expanded);
 		return (ft_putstr_fd(EXPORT_MALLOC_ERR, STDERR_FILENO), KO);
 	}
 	if (set_dollar_n_expand(minishell, dollar_tab, &expanded_exported) == KO)
 	{
 		free_double_char(&expanded_exported);
-		free(str_expanded);
-		str_expanded = 0;
-		return (KO);
+		return (free_n_set_var_null(&str_expanded), KO);
 	}
 	build_expand_n_replace(&str_expanded, &expanded_exported, str);
 	return (OK);

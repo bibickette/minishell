@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/15 13:04:16 by phwang            #+#    #+#              #
-#    Updated: 2024/08/29 16:32:00 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/22 14:10:46 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC =  \
 	get_next_line_utils02.c \
 	get_next_line_utils.c \
 	get_next_line.c \
+	ft_is_white_space \
 	ft_isprint.c \
 	ft_isdigit.c \
 	ft_isascii.c \
