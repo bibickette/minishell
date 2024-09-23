@@ -76,14 +76,11 @@ void	close_all_pipes(t_data *minishell)
 		if (close(minishell->pipe_fd[i][WRITE]) < 0)
 		{
 			perror(CLOSE_ERR);
-			printf("pipe_fd[%d][WRITE] = %d\n", i,
-				minishell->pipe_fd[i][WRITE]);
 			minishell->last_status = errno;
 		}
 		if (close(minishell->pipe_fd[i][READ]) < 0)
 		{
 			perror(CLOSE_ERR);
-			printf("pipe_fd[%d][READ] = %d\n", i, minishell->pipe_fd[i][READ]);
 			minishell->last_status = errno;
 		}
 	}

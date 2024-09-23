@@ -37,6 +37,8 @@ void	reset_cmd_pipe(t_list *head)
 	tmp = head;
 	while (tmp)
 	{
+		if (is_cd(tmp) == OK)
+			return ;
 		reset_cmd_pipe_type(tmp, &cmd_on_pipe, &on_pipe_nb);
 		if (tmp->next == NULL)
 			break ;

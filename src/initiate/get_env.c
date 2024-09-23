@@ -16,7 +16,10 @@ int	get_env(t_data *minishell, char **env)
 {
 	int	ret;
 
-	if (!env || !env[0] || !env[0][0])
+	// int i = -1;
+	// while (env[++i])
+	// 	printf("env[%d] => %s\n", i, env[i]);
+	if (!env || !env[0])
 		ret = no_environment(minishell);
 	else
 		ret = load_env(minishell, env);
