@@ -189,8 +189,6 @@ int		heredoc_create(t_data *minishell, char *limiter);
 void	here_doc_create_all(t_data *minishell);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		init_dup_hd(int *std_in, int *std_inb);
-int		init_hd_fd_n_limiter(t_data *minishell, char **limiter_tmp,
-			char *limiter);
 int		dup_db_hd(int to_dup, int std_inb, t_data *minishell);
 int		handle_no_line_hd(t_data *minishell, char *limiter_tmp, int std_in,
 			int std_inb);

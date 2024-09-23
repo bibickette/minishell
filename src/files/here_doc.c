@@ -16,19 +16,20 @@ extern volatile sig_atomic_t	g_signal;
 
 int	heredoc_create(t_data *minishell, char *limiter)
 {
-	char	*limiter_tmp;
 	int		std_in;
 	int		std_inb;
 
-	limiter_tmp = NULL;
-	if (init_dup_hd(&std_in, &std_inb) == KO || \
-		init_hd_fd_n_limiter(minishell, &limiter_tmp, limiter) == KO)
+	if (init_dup_hd(&std_in, &std_inb) == KO)
 		return (KO);
+	minishell->fd_hd = open(HERE_DOC, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (minishell->fd_hd == -1)
+		return (ft_putstr_fd(INFILE_ERROR_FD, STDERR_FILENO), KO);
+	minishell->here_doc = OK;
 	if (dup_db_hd(std_in, std_inb, minishell) == KO)
 		return (KO);
 	while (1)
 	{
-		if (heredoc_handler(minishell, std_in, std_inb, limiter_tmp) == KO)
+		if (heredoc_handler(minishell, std_in, std_inb, limiter) == KO)
 			return (KO);
 	}
 	return (OK);
@@ -72,11 +73,10 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 
 int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)
 {
-	if (ft_strncmp(line, limiter_tmp, ft_strlen(line)) == 0)
+	if (ft_strcmp(line, limiter_tmp) == 0)
 	{
 		close_one_fd(STDIN_FILENO);
 		close_one_fd(fd_heredoc);
-		free_n_set_var_null(&limiter_tmp);
 		free_n_set_var_null(&line);
 		g_signal = 0;
 		return (OK);

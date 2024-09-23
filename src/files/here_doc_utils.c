@@ -14,18 +14,6 @@
 
 extern volatile sig_atomic_t	g_signal;
 
-int	init_hd_fd_n_limiter(t_data *minishell, char **limiter_tmp, char *limiter)
-{
-	minishell->fd_hd = open(HERE_DOC, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (minishell->fd_hd == -1)
-		return (ft_putstr_fd(INFILE_ERROR_FD, STDERR_FILENO), KO);
-	minishell->here_doc = OK;
-	*limiter_tmp = ft_strjoin(limiter, "\n");
-	if (!(*limiter_tmp))
-		return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
-	return (OK);
-}
-
 int	init_dup_hd(int *std_in, int *std_inb)
 {
 	*std_in = dup(STDIN_FILENO);
