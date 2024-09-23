@@ -42,7 +42,7 @@ le limiter est lelement apres le << , lorsquil est appelé,
 */
 
 int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
-		char *limiter_tmp)
+		char *limiter)
 {
 	char	*line;
 	char	**dollar_tab;
@@ -50,25 +50,25 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 	line = NULL;
 	g_signal = IN_HD;
 	line = readline(HERE_DOC_MSG);
+	if (!line)
+	{
+		close_one_fd(minishell->fd_hd);
+		return (close_one_fd(std_inb), close_one_fd(std_in), KO);
+	}
 	if (g_signal == HD_STOP)
-		if (handle_no_line_hd(minishell, limiter_tmp, std_in, std_inb) == KO)
+		if (handle_no_line_hd(minishell, limiter, std_in, std_inb) == KO)
 			return (KO);
-	if (line[0] && heredoc_next(line, limiter_tmp, minishell->fd_hd) == OK)
+	if (line[0] && heredoc_next(line, limiter, minishell->fd_hd) == OK)
 	{
 		close_one_fd(std_in);
 		if (dup2(std_inb, STDIN_FILENO) < 0)
-		{
-			close_one_fd(std_inb);
-			return (perror(DUP_ERR), KO);
-		}
-		close_one_fd(std_inb);
-		return (KO);
+			return (close_one_fd(std_inb), perror(DUP_ERR), KO);
+		return (close_one_fd(std_inb), KO);
 	}
 	start_expanding(minishell, &dollar_tab, &line);
 	ft_putstr_fd(line, minishell->fd_hd);
 	ft_putstr_fd("\n", minishell->fd_hd);
-	free_n_set_var_null(&line);
-	return (OK);
+	return (free_n_set_var_null(&line), OK);
 }
 
 int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)

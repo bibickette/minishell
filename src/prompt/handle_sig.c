@@ -14,6 +14,15 @@
 
 extern volatile sig_atomic_t	g_signal;
 
+void	handle_signals(t_data *minishell)
+{
+	if ((g_signal == SIGINT || g_signal == WAS_IN_HD || g_signal == IN_HD
+			|| (!(g_signal == IN_PARENT))) && g_signal != 0)
+		minishell->last_status = 130;
+	if (g_signal == SIGQUIT)
+		minishell->last_status = 131;
+}
+
 void	handle_sigquit(int signum)
 {
 	if (signum == SIGQUIT)
@@ -37,15 +46,6 @@ void	handle_sigint(int signum)
 		}
 		sigint_utils();
 	}
-}
-
-void	handle_signals(t_data *minishell)
-{
-	if ((g_signal == SIGINT || g_signal == WAS_IN_HD || g_signal == IN_HD
-			|| (!(g_signal == IN_PARENT))) && g_signal != 0)
-		minishell->last_status = 130;
-	if (g_signal == SIGQUIT)
-		minishell->last_status = 131;
 }
 
 void	sigint_utils(void)
