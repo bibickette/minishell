@@ -41,7 +41,8 @@ int	build_expand_n_replace(char **str_expanded, char ***expanded_exported,
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
 	}
 	free_double_char(expanded_exported);
-	if ((*str_expanded)[ft_strlen((*str_expanded)) - 1] == ' ')
+	if ((*str_expanded)[0] != '\0' && (*str_expanded)[ft_strlen((*str_expanded))
+		- 1] == ' ')
 		(*str_expanded)[ft_strlen((*str_expanded)) - 1] = '\0';
 	free(*str);
 	*str = NULL;

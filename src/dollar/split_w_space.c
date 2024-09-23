@@ -59,7 +59,7 @@ static void	count_len(char *str, int *index, int *len)
 	}
 	else
 	{
-		while (ft_is_white_space(str[(*index)]) == 0)
+		while (ft_is_white_space(str[(*index)]) == 0 && str[(*index)])
 		{
 			(*index)++;
 			(*len)++;
