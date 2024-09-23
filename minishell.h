@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/22 14:07:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/23 22:15:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,9 @@ int		open_all_outfile(t_data *minishell, t_cmd *cmd);
 
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
-
+int		has_infile(t_data *minishell, t_cmd *cmd);
+int	has_outfile(t_cmd *cmd);
+t_cmd	*get_cmd_by_index(t_data *minishell, int index);
 int		open_infile(t_file *file);
 int		open_outfile(t_file *file);
 int		open_append_outfile(t_file *file);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 22:38:25 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/23 21:35:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	the_execution(t_list *token, t_data *minishell)
 	here_doc_create_all(minishell);
 	init_cmd_list(minishell, token);
 	handle_signals(minishell);
+	// ft_lstiter(minishell->list_cmd, print_cmd);
 	signal(SIGQUIT, handle_sigquit);
+	// has_infile(minishell, (t_cmd *)minishell->list_cmd->content);
 	if (minishell->nb_cmd == 1)
 		execve_one_cmd(minishell, token);
 	else if (minishell->nb_cmd > 1)
