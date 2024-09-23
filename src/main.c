@@ -25,10 +25,15 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	*minishell;
 
+	if (!isatty(STDOUT_FILENO))
+	{
+		ft_putstr_fd(ISATTY_ERR, STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (check_args(argc, argv) != 0)
 		return (1);
 	if (init_minishell(&minishell) == KO || get_env(minishell, env) == KO)
 		return (apocalypse(minishell), 1);
 	prompt(minishell->token, minishell);
-	return (0);
+	return (EXIT_SUCCESS);
 }

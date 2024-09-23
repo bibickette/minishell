@@ -109,16 +109,14 @@
 
 # define HANDLE_ERROR "Minishell Error Code :"
 # define STRNSTR_ERR "Minishell Error : Can't find anything in ft_strnstr\n"
-
+# define ISATTY_ERR "Minishell Error : Can't redirect the minishell"
 /* builtins error */
 # define PWD_ERR "Minishell Error - PWD"
 # define EXPORT_ERR "Minishell Error - EXPORT : Wrong Format\n"
 # define EXPORT_MALLOC_ERR "Minishell Error : Malloc in builtin Export\n"
-# define DOLLAR_EXPANSION_ERR \
-	"Minishell Error : \
+# define DOLLAR_EXPANSION_ERR "Minishell Error : \
 Malloc in function Dollar Expansion\n"
-# define EXPAND_MALLOC_ERR \
-	"Minishell Error : \
+# define EXPAND_MALLOC_ERR "Minishell Error : \
 Malloc in function Expand Everything\n"
 # define NOT_ENOUGH_ARG "Minishell Error - UNSET : Not enough arguments\n"
 # define ECHO_ERR "Minishell Error - ECHO : Invalid option\n"
@@ -130,8 +128,7 @@ Malloc in function Expand Everything\n"
 # define SPECIAL_CHAR_ERR "Minishell Error : Special character unquoted\n"
 # define BUFFER_ERR "Minishell Error : Buffer overflow\n"
 # define SYNTAX_ERR "Minishell Error : Syntax error\n"
-# define BUILTIN_SYNTAX_ERR \
-	"Minishell Error : \
+# define BUILTIN_SYNTAX_ERR "Minishell Error : \
 Builtin doesn't accept option/argument\n"
 
 /* process */
@@ -157,8 +154,7 @@ Builtin doesn't accept option/argument\n"
 # define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
 # define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
 # define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
-# define ADD_BACK_TAB_ERR \
-	"Minishell Error : \
+# define ADD_BACK_TAB_ERR "Minishell Error : \
 Malloc in function char_add_back_tab\n"
 
 /* file errors */
