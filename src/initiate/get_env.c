@@ -16,9 +16,6 @@ int	get_env(t_data *minishell, char **env)
 {
 	int	ret;
 
-	// int i = -1;
-	// while (env[++i])
-	// 	printf("env[%d] => %s\n", i, env[i]);
 	if (!env || !env[0])
 		ret = no_environment(minishell);
 	else
@@ -39,7 +36,7 @@ int	no_environment(t_data *minishell)
 	close(env_fd);
 	if (!path_env)
 		return (ft_putstr_fd(ERR_ENV, STDERR_FILENO), KO);
-	return (load_path(minishell, 0));
+	return (load_path(minishell, 0, path_env));
 }
 
 int	load_env(t_data *minishell, char **env)
@@ -57,12 +54,11 @@ int	load_env(t_data *minishell, char **env)
 	if (handle_shell_level(minishell) == KO || load_export_tab(minishell,
 			env) == KO)
 		return (KO);
-	return (load_path(minishell, 1));
+	return (load_path(minishell, 1, NULL));
 }
 
-int	load_path(t_data *minishell, int flag)
+int	load_path(t_data *minishell, int flag, char *path_env)
 {
-	char	*path_env;
 	int		i;
 
 	if (flag == 1)

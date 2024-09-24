@@ -52,7 +52,7 @@ int		load_export_w_quote(char **export);
 int		load_value_n_key_export(char **key_export, char **value_export,
 			char **export);
 
-int		load_path(t_data *minishell, int flag);
+int		load_path(t_data *minishell, int flag, char *path_env);
 char	*trim_end(char *path_env);
 
 /* prompt */

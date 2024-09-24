@@ -51,6 +51,8 @@ void	reset_every_first_cmd(t_list *tmp)
 	cmd = KO;
 	while (tmp)
 	{
+		if(((t_token *)tmp->content)->type == WORD_TYPE)
+			((t_token *)tmp->content)->type = CMD_TYPE;
 		if (((t_token *)tmp->content)->type == CMD_TYPE
 			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)
 			cmd = OK;

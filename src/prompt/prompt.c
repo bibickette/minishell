@@ -57,6 +57,7 @@ void	the_execution(t_list *token, t_data *minishell)
 	here_doc_create_all(minishell);
 	init_cmd_list(minishell, token);
 	handle_signals(minishell);
+	// ft_lstiter(token, print_token);
 	// ft_lstiter(minishell->list_cmd, print_cmd);
 	signal(SIGQUIT, handle_sigquit);
 	// has_infile(minishell, (t_cmd *)minishell->list_cmd->content);
