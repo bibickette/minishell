@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 03:32:14 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/19 14:48:25 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/24 22:04:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,15 @@ int	dup_db_hd(int to_dup, int std_inb, t_data *minishell)
 	return (OK);
 }
 
-int	handle_no_line_hd(t_data *minishell, char *limiter_tmp, int std_in,
+int	handle_no_line_hd(t_data *minishell, int std_in,
 		int std_inb)
 {
 	close_one_fd(minishell->fd_hd);
-	free_n_set_var_null(&limiter_tmp);
 	close_one_fd(std_in);
 	if (dup_db_hd(std_inb, std_in, minishell) == KO)
 		return (KO);
 	close_one_fd(std_inb);
 	if (g_signal == HD_STOP)
-	{
 		g_signal = WAS_IN_HD;
-		return (KO);
-	}
-	return (ft_putstr_fd(HERE_DOC_ERR, STDERR_FILENO), KO);
+	return (KO);
 }

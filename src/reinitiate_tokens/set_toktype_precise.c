@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:13:30 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:34:25 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 00:04:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	reset_every_first_cmd(t_list *tmp)
 	cmd = KO;
 	while (tmp)
 	{
-		if(((t_token *)tmp->content)->type == WORD_TYPE)
+		if (((t_token *)tmp->content)->type == WORD_TYPE)
 			((t_token *)tmp->content)->type = CMD_TYPE;
 		if (((t_token *)tmp->content)->type == CMD_TYPE
 			|| ((t_token *)tmp->content)->type == BUILTIN_TYPE)

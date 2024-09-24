@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 14:40:10 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/20 22:27:23 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/24 21:57:28 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_prompt(t_data **minishell)
 	(*minishell)->prompt = readline("\x1b[35mTinyShell$ \x1b[0m");
 	if (!(*minishell)->prompt)
 	{
-		(*minishell)->last_status = 1;
+		handle_signals(*minishell);
 		handle_exit(*minishell);
 	}
 	if (ft_strlen((*minishell)->prompt) != 0)

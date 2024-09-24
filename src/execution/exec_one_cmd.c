@@ -6,11 +6,13 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:09:07 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 22:35:44 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/24 21:59:41 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 int	execve_one_cmd(t_data *minish, t_list *token)
 {
@@ -18,10 +20,13 @@ int	execve_one_cmd(t_data *minish, t_list *token)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)minish->list_cmd->content;
+	if (!cmd->cmd)
+		return (OK);
 	if (is_builtin(cmd->cmd) == OK)
 		handle_builtin(minish, token);
 	else
 	{
+		g_signal = IN_PARENT;
 		pid = fork();
 		do_single_fork(minish, token, cmd, &pid);
 		return (get_status_process(minish, &minish->last_status, pid));
@@ -48,7 +53,7 @@ void	handle_builtin(t_data *minish, t_list *token)
 	ret = execve_builtin(minish, (t_cmd *)minish->list_cmd->content);
 	if (((t_cmd *)minish->list_cmd->content)->nb_files > 0)
 		close_all_files(((t_cmd *)minish->list_cmd->content)->files);
-	minish->last_status = OK;
+	minish->last_status = 0;
 	if (ret == KO || ret == M_KO)
 		minish->last_status = 1;
 	put_back_in_term_n_close(minish, out);

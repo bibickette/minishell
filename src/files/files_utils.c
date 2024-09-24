@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   files_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 21:55:56 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/24 22:34:27 by phwang           ###   ########.fr       */
+/*   Created: 2024/09/25 00:09:08 by phwang            #+#    #+#             */
+/*   Updated: 2024/09/25 00:09:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_cmd(t_data *minishell, char *var)
+int	has_infile(t_data *minishell, t_cmd *cmd)
 {
 	int	i;
 
 	i = -1;
-	if (ft_strcmp(var, "PATH") == 0)
+	while (++i < minishell->nb_hd_files)
 	{
-		free_double_char(&minishell->path);
-		minishell->path = NULL;
+		if (minishell->files[i].index_cmd == cmd->index)
+			return (OK);
 	}
-	while (minishell->builtins->env[++i])
-		if (the_big_condition(&minishell->builtins->env, var, i) == OK)
-			minishell->builtins->env[i][0] = '\0';
 	i = -1;
-	while (minishell->builtins->export[++i])
-		if (the_big_condition(&minishell->builtins->export, var, i) == OK)
-			minishell->builtins->export[i][0] = '\0';
+	while (++i < cmd->nb_files)
+		if (cmd->files[i].type == INFILE_TYPE)
+			return (OK);
+	return (KO);
+}
+
+int	has_outfile(t_cmd *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (++i < cmd->nb_files)
+		if (cmd->files[i].type == OUTFILE_TYPE
+			|| cmd->files[i].type == APPEND_FILE_TYPE)
+			return (OK);
+	return (KO);
 }

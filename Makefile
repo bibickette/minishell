@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2024/09/22 14:12:42 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/25 00:11:33 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRC = $(SRC_DIR)/main.c \
       $(EXECUTION_DIR)/cmd_list.c \
       $(FILES_DIR)/files_take_all.c \
       $(FILES_DIR)/files.c \
+	  $(FILES_DIR)/files_utils.c \
       $(FILES_DIR)/here_doc_utils.c \
       $(FILES_DIR)/here_doc.c \
       $(FILES_DIR)/init_files.c \

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:15:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 22:32:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/24 22:07:13 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_lstclear_custom_bis(t_list *head)
 	{
 		tmp = head->next;
 		if (head->content)
-			free_n_set_var_null(head->content);
+			free_set_null(head->content);
 		free(head);
 		head = 0;
 		head = tmp;

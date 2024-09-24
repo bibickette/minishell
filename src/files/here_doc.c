@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 23:19:41 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 15:47:39 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 00:03:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ extern volatile sig_atomic_t	g_signal;
 
 int	heredoc_create(t_data *minishell, char *limiter)
 {
-	int		std_in;
-	int		std_inb;
+	int	std_in;
+	int	std_inb;
 
 	if (init_dup_hd(&std_in, &std_inb) == KO)
 		return (KO);
@@ -29,6 +29,7 @@ int	heredoc_create(t_data *minishell, char *limiter)
 		return (KO);
 	while (1)
 	{
+		g_signal = IN_HD;
 		if (heredoc_handler(minishell, std_in, std_inb, limiter) == KO)
 			return (KO);
 	}
@@ -41,23 +42,23 @@ le limiter est lelement apres le << , lorsquil est appelé,
 	ca met fin au here_doc
 */
 
-int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
-		char *limiter)
+int	heredoc_handler(t_data *minishell, int std_in, int std_inb, char *limiter)
 {
 	char	*line;
 	char	**dollar_tab;
 
 	line = NULL;
-	g_signal = IN_HD;
 	line = readline(HERE_DOC_MSG);
+	if (g_signal == HD_STOP)
+		if (handle_no_line_hd(minishell, std_in, std_inb) == KO)
+			return (KO);
 	if (!line)
 	{
+		minishell->last_status = 1;
 		close_one_fd(minishell->fd_hd);
+		ft_putstr_fd(HERE_DOC_ERR, STDERR_FILENO);
 		return (close_one_fd(std_inb), close_one_fd(std_in), KO);
 	}
-	if (g_signal == HD_STOP)
-		if (handle_no_line_hd(minishell, limiter, std_in, std_inb) == KO)
-			return (KO);
 	if (line[0] && heredoc_next(line, limiter, minishell->fd_hd) == OK)
 	{
 		close_one_fd(std_in);
@@ -67,8 +68,7 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb,
 	}
 	start_expanding(minishell, &dollar_tab, &line);
 	ft_putstr_fd(line, minishell->fd_hd);
-	ft_putstr_fd("\n", minishell->fd_hd);
-	return (free_n_set_var_null(&line), OK);
+	return (ft_putstr_fd("\n", minishell->fd_hd), free_set_null(&line), OK);
 }
 
 int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)
@@ -77,7 +77,7 @@ int	heredoc_next(char *line, char *limiter_tmp, int fd_heredoc)
 	{
 		close_one_fd(STDIN_FILENO);
 		close_one_fd(fd_heredoc);
-		free_n_set_var_null(&line);
+		free_set_null(&line);
 		g_signal = 0;
 		return (OK);
 	}

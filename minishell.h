@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/23 22:15:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 00:02:19 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		init_minishell(t_data **minishell);
 int		get_env(t_data *minishell, char **env);
 int		no_environment(t_data *minishell);
 int		handle_shell_level(t_data *minishell);
+int		lf_for_char(char **str, char c);
 int		load_env(t_data *minishell, char **env);
 int		load_export_tab(t_data *minishell, char **env);
 int		load_export_w_quote(char **export);
@@ -53,6 +54,9 @@ int		load_value_n_key_export(char **key_export, char **value_export,
 			char **export);
 
 int		load_path(t_data *minishell, int flag, char *path_env);
+int		load_value(t_data *minishell, char *var, char **to_value,
+			char *cmd_export);
+int		is_valgrind_env(char **env);
 char	*trim_end(char *path_env);
 
 /* prompt */
@@ -190,8 +194,7 @@ void	here_doc_create_all(t_data *minishell);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		init_dup_hd(int *std_in, int *std_inb);
 int		dup_db_hd(int to_dup, int std_inb, t_data *minishell);
-int		handle_no_line_hd(t_data *minishell, char *limiter_tmp, int std_in,
-			int std_inb);
+int		handle_no_line_hd(t_data *minishell, int std_in, int std_inb);
 int		heredoc_handler(t_data *minishell, int std_in, int std_inb,
 			char *limiter_tmp);
 
@@ -212,7 +215,7 @@ int		open_all_outfile(t_data *minishell, t_cmd *cmd);
 int		file_type(t_list *tmp_head);
 int		load_file_tab(t_data *minishell, char **dico_files);
 int		has_infile(t_data *minishell, t_cmd *cmd);
-int	has_outfile(t_cmd *cmd);
+int		has_outfile(t_cmd *cmd);
 t_cmd	*get_cmd_by_index(t_data *minishell, int index);
 int		open_infile(t_file *file);
 int		open_outfile(t_file *file);
@@ -247,7 +250,7 @@ void	env_cmd(char **env);
 /* built-in echo */
 void	echo_cmd(char **cmd_arg, int fd_out);
 /* built-in unset*/
-void	unset_cmd(t_builtin *builtins, char *var);
+void	unset_cmd(t_data *minishell, char *var);
 /* built-in cd */
 int		cd_cmd(char *path);
 
@@ -310,7 +313,7 @@ void	handle_space(char **prompt_loop, t_list **token, char buffer[BSIZE]);
 char	*ft_strnstr_minish(char *s1, char *s2, size_t len);
 
 /* check */
-int		check_args(int argc, char **argv);
+void	check_args(int argc, char **argv);
 int		check_quote_type(char **prompt_loop);
 int		ft_strcmp(const char *s1, const char *s2);
 int		have_twin(char *prompt);
@@ -325,7 +328,7 @@ void	handle_exit(t_data *minishell);
 void	free_token(void *token);
 void	free_files_tab(t_data *minishell, t_file *files);
 void	free_files_tab_cmd(t_cmd *cmd, t_file *files);
-void	free_n_set_var_null(char **var);
+void	free_set_null(char **var);
 
 int		create_tab(char ***tab, char *str, int *index, int word_nb);
 char	**split_w_space(char *s);

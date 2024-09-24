@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 22:34:58 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 00:05:52 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	first_part_choose_builtin(t_data *minishell, t_cmd *cmd)
 			return (ft_putstr_fd(NOT_ENOUGH_ARG, STDERR_FILENO), KO);
 		else
 			while (cmd->cmd_args[++i])
-				unset_cmd(minishell->builtins, cmd->cmd_args[i]);
+				unset_cmd(minishell, cmd->cmd_args[i]);
 	}
 	return (OK);
 }
@@ -66,9 +66,16 @@ int	export_all_arg(t_data *minishell, char **cmd_arg)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (cmd_arg[++i])
 	{
+		if (cmd_arg[i] && ft_strncmp(cmd_arg[i], "PATH=",
+				ft_strlen("PATH=")) == 0)
+		{
+			if (minishell->path)
+				free_double_char(&minishell->path);
+			load_path(minishell, 2, cmd_arg[i]);
+		}
 		if (export_cmd_w_arg(cmd_arg[i], minishell) == KO)
 			return (KO);
 	}

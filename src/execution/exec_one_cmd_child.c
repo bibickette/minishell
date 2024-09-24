@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:33:28 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 22:33:32 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/24 21:45:12 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ extern volatile sig_atomic_t	g_signal;
 
 void	do_single_fork(t_data *minish, t_list *token, t_cmd *cmd, int *pid)
 {
-	g_signal = IN_PARENT;
 	if (*pid == KO)
 	{
 		minish->last_status = errno;
