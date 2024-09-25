@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/25 00:08:10 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:52:26 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,8 @@ int	load_path(t_data *minishell, int flag, char *path_env)
 	char	*path_from_env;
 
 	path_from_env = NULL;
-	if (flag != 0)
-		if (load_value(minishell, "PATH=", &path_from_env, path_env) == KO)
-			return (KO);
-	if (flag == 2 && has_path(path_from_env) == KO)
-	{
-		char_add_back_tab(&minishell->path, path_from_env);
-		return (free_set_null(&path_from_env), OK);
-	}
+	if (load_path_from_flag(minishell, flag, &path_from_env, path_env) == KO)
+		return (KO);
 	if (flag != 0)
 		minishell->path = ft_split(trim_end(ft_strchr(path_from_env, '/')),
 				':');
@@ -92,67 +86,17 @@ int	load_path(t_data *minishell, int flag, char *path_env)
 	return (OK);
 }
 
-char	*trim_end(char *path_env)
+int	load_path_from_flag(t_data *minishell, int flag, char **path_from_env,
+		char *path_env)
 {
-	int	len;
-
-	if (!path_env)
-		return (NULL);
-	len = ft_strlen(path_env);
-	if (path_env[len - 2] == 34)
-		path_env[len - 2] = '\0';
-	return (path_env);
-}
-
-int	lf_for_char(char **str, char c)
-{
-	int	i;
-
-	i = -1;
-	while ((*str)[++i])
-		if ((*str)[i] == c)
-			return (OK);
-	return (KO);
-}
-
-int	load_value(t_data *minishell, char *var, char **to_value, char *cmd_export)
-{
-	int	i;
-
-	i = -1;
-	if (cmd_export)
+	if (flag != 0)
+		if (load_value(minishell, "PATH=", path_from_env, path_env) == KO)
+			return (KO);
+	if (flag == 2 && has_path(*path_from_env) == KO)
 	{
-		if (ft_strncmp(cmd_export, var, ft_strlen(var)) == 0)
-		{
-			*to_value = ft_strdup(cmd_export + ft_strlen(var));
-			if (!*to_value)
-				return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-			return (OK);
-		}
+		if (char_add_back_tab(&minishell->path, *path_from_env) == KO)
+			return (KO);
+		return (free_set_null(path_from_env), OK);
 	}
-	while (minishell->builtins->env[++i])
-	{
-		if (ft_strncmp(minishell->builtins->env[i], var, ft_strlen(var)) == 0)
-		{
-			*to_value = ft_strdup(minishell->builtins->env[i] + ft_strlen(var));
-			if (!*to_value)
-				return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
-			return (OK);
-		}
-	}
-	return (KO);
-}
-
-int	is_valgrind_env(char **env)
-{
-	int	i;
-
-	i = -1;
-	while (env[++i])
-	{
-		if (ft_strnstr(env[i], "valgrind", ft_strlen(env[i]))
-		&& i <= 1)
-			return (OK);
-	}
-	return (KO);
+	return (OK);
 }

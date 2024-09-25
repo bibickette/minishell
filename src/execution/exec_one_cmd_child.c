@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:33:28 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/24 21:45:12 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:42:15 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	child_single_fork(t_data *minish, t_list *token, t_cmd *cmd)
 	char	*path;
 
 	path = NULL;
+	if (!cmd->cmd || !cmd->cmd[0])
+	{
+		execve_error_free(minish, path, token);
+		exit(EXIT_SUCCESS);
+	}
 	if (open_all_infile(minish, cmd) == KO || !cmd->cmd || !cmd->cmd[0]
 		|| check_cmd_value(cmd->cmd) == KO)
 		exit(execve_error_free(minish, path, token));

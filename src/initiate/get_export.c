@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:45:57 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 16:57:33 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:41:59 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	load_value_n_key_export(char **key_export, char **value_export,
 	while ((*key_export)[++y])
 		if ((*key_export)[y] == '=')
 			break ;
-	(*key_export)[++y] = '\0';
+	if ((size_t)y != ft_strlen(*key_export))
+		(*key_export)[++y] = '\0';
 	*value_export = ft_strdup(*export + y);
 	if (!*value_export)
 	{
@@ -75,4 +76,29 @@ int	load_value_n_key_export(char **key_export, char **value_export,
 		return (M_KO);
 	}
 	return (OK);
+}
+
+char	*trim_end(char *path_env)
+{
+	int	len;
+
+	if (!path_env)
+		return (NULL);
+	len = ft_strlen(path_env);
+	if (path_env[len - 2] == 34)
+		path_env[len - 2] = '\0';
+	return (path_env);
+}
+
+int	is_valgrind_env(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (ft_strnstr(env[i], "valgrind", ft_strlen(env[i])) && i <= 1)
+			return (OK);
+	}
+	return (KO);
 }

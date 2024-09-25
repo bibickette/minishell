@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:55:56 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/24 22:34:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:17:58 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	unset_cmd(t_data *minishell, char *var)
 	{
 		free_double_char(&minishell->path);
 		minishell->path = NULL;
+		char_add_back_tab(&minishell->path, "./");
 	}
 	while (minishell->builtins->env[++i])
 		if (the_big_condition(&minishell->builtins->env, var, i) == OK)

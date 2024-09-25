@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:00:38 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/18 12:44:19 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:18:16 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	export_cmd_no_arg(char **export)
 	{
 		if (ft_strcmp(export[i], "") != 0)
 		{
-			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd("export ", STDOUT_FILENO);
 			ft_putstr_fd(export[i], STDOUT_FILENO);
 			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
