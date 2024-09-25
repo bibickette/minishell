@@ -150,7 +150,8 @@ int	is_valgrind_env(char **env)
 	i = -1;
 	while (env[++i])
 	{
-		if (ft_strnstr(env[i], "valgrind", ft_strlen(env[i])))
+		if (ft_strnstr(env[i], "valgrind", ft_strlen(env[i]))
+		&& i <= 1)
 			return (OK);
 	}
 	return (KO);

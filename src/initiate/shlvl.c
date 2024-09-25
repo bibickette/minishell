@@ -19,13 +19,14 @@ int	handle_shell_level(t_data *minishell)
 	char	*shlvl;
 
 	shlvl = NULL;
-	load_value(minishell, "SHLVL", &shlvl, NULL);
+	load_value(minishell, "SHLVL=", &shlvl, NULL);
 	if (!shlvl)
 		return (ft_putstr_fd(ERR_SHLVL, STDERR_FILENO), KO);
 	shell_level = ft_atoi(shlvl);
 	full_shlvl = ft_strdup("SHLVL=");
 	if (!full_shlvl)
 		return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), KO);
+	free_set_null(&shlvl);
 	shlvl = ft_itoa(++shell_level);
 	if (!shlvl)
 	{
