@@ -197,6 +197,7 @@ int		dup_db_hd(int to_dup, int std_inb, t_data *minishell);
 int		handle_no_line_hd(t_data *minishell, int std_in, int std_inb);
 int		heredoc_handler(t_data *minishell, int std_in, int std_inb,
 			char *limiter_tmp);
+void	retrieve_norm(t_data *minishell);
 
 int		take_all_hd_files(t_data *minishell, t_list *token);
 int		count_n_allocate_files(t_data *minishell, t_list *token);

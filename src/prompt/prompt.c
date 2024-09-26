@@ -63,7 +63,8 @@ void	the_execution(t_list *token, t_data *minishell)
 	else if (minishell->nb_cmd > 1)
 		execve_pipe(minishell, token);
 	signal(SIGQUIT, SIG_IGN);
-	g_signal = 0;
+	if (!(g_signal == WAS_IN_HD))
+		g_signal = 0;
 	if (minishell->nb_hd_files > 0)
 		close_all_files(minishell->files);
 	ft_lstclear_custom_cmd(&minishell->list_cmd, free);

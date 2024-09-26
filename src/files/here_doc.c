@@ -54,10 +54,9 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb, char *limiter)
 			return (KO);
 	if (!line)
 	{
-		minishell->last_status = 1;
-		close_one_fd(minishell->fd_hd);
-		ft_putstr_fd(HERE_DOC_ERR, STDERR_FILENO);
-		return (close_one_fd(std_inb), close_one_fd(std_in), KO);
+		retrieve_norm(minishell);
+		return (ft_putstr_fd(HERE_DOC_ERR, STDERR_FILENO),
+			close_one_fd(std_inb), close_one_fd(std_in), KO);
 	}
 	if (line[0] && heredoc_next(line, limiter, minishell->fd_hd) == OK)
 	{
@@ -66,7 +65,8 @@ int	heredoc_handler(t_data *minishell, int std_in, int std_inb, char *limiter)
 			return (close_one_fd(std_inb), perror(DUP_ERR), KO);
 		return (close_one_fd(std_inb), KO);
 	}
-	start_expanding(minishell, &dollar_tab, &line);
+	if (!line)
+		start_expanding(minishell, &dollar_tab, &line);
 	ft_putstr_fd(line, minishell->fd_hd);
 	return (ft_putstr_fd("\n", minishell->fd_hd), free_set_null(&line), OK);
 }
@@ -95,4 +95,11 @@ void	handle_file_hd(t_data *minishell)
 		}
 		minishell->here_doc = KO;
 	}
+}
+
+void	retrieve_norm(t_data *minishell)
+{
+	g_signal = CTRL_D;
+	minishell->last_status = 0;
+	close_one_fd(minishell->fd_hd);
 }

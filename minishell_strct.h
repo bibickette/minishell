@@ -64,6 +64,7 @@
 # define WRITE 1
 
 /* signals */
+# define CTRL_D 9995
 # define IN_PARENT 9996
 # define WAS_IN_HD 9997
 # define HD_STOP 9998
