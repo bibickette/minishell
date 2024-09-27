@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:25:24 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/10 20:34:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/27 17:08:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	join_token_if_needed(t_list *token, char *prompt, t_list *brut_list,
 		}
 		else if (line_economy(n_p, ((t_token *)t_b->content)->str) == OK)
 		{
+			// printf("line : %s\n", n_p);
 			if (join_token_in_lists(token, brut_list, &t_b) == KO)
 				return (KO);
 			*t_pt = prompt;

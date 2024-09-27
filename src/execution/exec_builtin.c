@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 22:17:04 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/25 00:05:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/27 16:48:37 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	export_all_arg(t_data *minishell, char **cmd_arg)
 		if (cmd_arg[i] && ft_strncmp(cmd_arg[i], "PATH=",
 				ft_strlen("PATH=")) == 0)
 		{
+			unset_cmd(minishell, "PATH");
 			if (minishell->path)
 				free_double_char(&minishell->path);
 			load_path(minishell, 2, cmd_arg[i]);

@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/25 00:03:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/27 16:54:17 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 		return (KO);
 	if (separate_if_needed(minishell, token) == KO)
 		return (KO);
+	ft_lstiter(token, print_token);
+	ft_lstiter(minishell->brut_list, print_token);
 	if (start_join_token_if_needed(token, prompt, minishell->brut_list) == KO)
 		return (KO);
 	set_token_type(token);
@@ -57,12 +59,12 @@ void	the_execution(t_list *token, t_data *minishell)
 	here_doc_create_all(minishell);
 	init_cmd_list(minishell, token);
 	handle_signals(minishell);
-	signal(SIGQUIT, handle_sigquit);
-	if (minishell->nb_cmd == 1)
-		execve_one_cmd(minishell, token);
-	else if (minishell->nb_cmd > 1)
-		execve_pipe(minishell, token);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, handle_sigquit);
+	// if (minishell->nb_cmd == 1)
+	// 	execve_one_cmd(minishell, token);
+	// else if (minishell->nb_cmd > 1)
+	// 	execve_pipe(minishell, token);
+	// signal(SIGQUIT, SIG_IGN);
 	if (!(g_signal == WAS_IN_HD))
 		g_signal = 0;
 	if (minishell->nb_hd_files > 0)
