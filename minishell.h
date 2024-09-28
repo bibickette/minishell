@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/25 20:50:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/28 18:39:38 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 			int quote_type);
 char	*expansion_no_surround(char *var, t_data *minishell);
+int		ft_strchr_custom(char *s, char c);
 
 /* expand dollar  everything */
 int		expand_everything(t_data *minishell, t_list *token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 15:47:51 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/28 19:10:55 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,19 @@ char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 char	*expansion_no_surround(char *var, t_data *minishell)
 {
 	char	*expanded;
+	char	*new_expanded;
+	char	*stash;
 	int		i;
 
+	stash = NULL;
 	expanded = NULL;
 	i = -1;
+	if (ft_strchr_custom(var, 39) != -1)
+	{
+		stash = ft_strchr(var, 39);
+		stash = ft_strdup(stash);
+		var = ft_substr(var, 0, ft_strchr_custom(var, 39));
+	}
 	while (minishell->builtins->env[++i])
 	{
 		if (ft_strncmp(minishell->builtins->env[i], var, ft_strlen(var)) == 0
@@ -74,6 +83,14 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 					+ 1);
 			if (!expanded)
 				return (ft_putstr_fd(STRDUP_ERR, STDERR_FILENO), NULL);
+			if (stash != NULL)
+			{
+				new_expanded = ft_strjoin(expanded, stash);
+				free(stash);
+				free(expanded);
+				printf("new_expanded: %s\n", new_expanded);
+				return (new_expanded);
+			}
 			return (expanded);
 		}
 	}
