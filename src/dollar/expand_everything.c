@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:30:48 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/24 22:07:13 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 16:33:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	expand_everything(t_data *minishell, t_list *token)
 						&((t_token *)tmp_head->content)->str) == KO)
 					return (KO);
 		if (((t_token *)tmp_head->content)->quote == N_QUOTE)
-			if (trim_token(tmp_head) == KO)
+			if (trim_token(tmp_head) == M_KO)
 				return (KO);
 		if (tmp_head->next == NULL)
 			break ;
@@ -50,11 +50,12 @@ int	trim_token(t_list *tmp_head)
 		free(((t_token *)tmp_head->content)->str);
 		((t_token *)tmp_head->content)->str = NULL;
 		((t_token *)tmp_head->content)->str = ft_strtrim(tmp, " ");
-		free(tmp);
-		tmp = NULL;
+		free_set_null(&tmp);
+		if (!((t_token *)tmp_head->content)->str)
+			return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), M_KO);
 		return (OK);
 	}
-	return (KO);
+	return (OK);
 }
 
 int	right_condition_for_expand(t_list *tmp_head, char *str_token_before)
@@ -84,7 +85,8 @@ int	start_expanding(t_data *minishell, char ***dollar_tab, char **str)
 		free_double_char(&expanded_exported);
 		return (free_set_null(&str_expanded), KO);
 	}
-	build_expand_n_replace(&str_expanded, &expanded_exported, str);
+	if (build_expand_n_replace(&str_expanded, &expanded_exported, str) == KO)
+		return (KO);
 	return (OK);
 }
 
@@ -107,7 +109,7 @@ int	set_dollar_n_expand(t_data *minishell, char ***dollar_tab,
 		else if (has_dollar((*expanded_exported)[y]) == OK)
 		{
 			if (handle_multiple_dollar(minishell, dollar_tab,
-					&(*expanded_exported)[y]))
+					&(*expanded_exported)[y]) == KO)
 				return (KO);
 		}
 	}

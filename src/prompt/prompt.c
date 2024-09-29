@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/27 16:54:17 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 16:31:51 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 	if (dupplicate_list(token, &minishell->brut_list) == KO)
 		return (KO);
 	set_index_again(token, minishell->brut_list);
+	// ft_lstiter(token, print_token);
 	if (expand_everything(minishell, token) == KO)
 		return (KO);
 	if (separate_if_needed(minishell, token) == KO)
 		return (KO);
-	ft_lstiter(token, print_token);
-	ft_lstiter(minishell->brut_list, print_token);
+	// printf("----------------`\n");
+	// ft_lstiter(token, print_token);
+	// ft_lstiter(minishell->brut_list, print_token);
 	if (start_join_token_if_needed(token, prompt, minishell->brut_list) == KO)
 		return (KO);
+	// ft_lstiter(token, print_token);
 	set_token_type(token);
 	reset_cmd_pipe(token);
 	return (OK);
