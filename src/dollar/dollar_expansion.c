@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:13:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/28 19:10:55 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/29 18:15:05 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char	*expansion_no_surround(char *var, t_data *minishell)
 				new_expanded = ft_strjoin(expanded, stash);
 				free(stash);
 				free(expanded);
+				free(var);
 				printf("new_expanded: %s\n", new_expanded);
 				return (new_expanded);
 			}
