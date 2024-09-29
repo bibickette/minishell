@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:13:30 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/25 00:04:14 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 17:01:39 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	set_builtin_type(t_token *current)
 	if (is_builtin(current->str) == OK)
 	{
 		current->type = BUILTIN_TYPE;
-		if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0)
+		if (ft_strncmp(current->str, "echo", ft_strlen(current->str)) == 0
+			|| ft_strncmp(current->str, "exit", ft_strlen(current->str)) == 0)
 			current->builtin_type = BUILT_W_OPT;
 		else if ((ft_strncmp(current->str, "env",
 					ft_strlen(current->str)) == 0))

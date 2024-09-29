@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:43:29 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/27 16:47:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:13:56 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,8 @@ int	load_path(t_data *minishell, int flag, char *path_env)
 		return (OK);
 	else if (ret == M_KO)
 		return (KO);
-	if (flag != 0)
-		minishell->path = ft_split(trim_end(ft_strchr(path_from_env, '/')),
-				':');
-	else
-		minishell->path = ft_split(trim_end(ft_strchr(path_env, '/')), ':');
-	if (!minishell->path)
-		return (ft_putstr_fd(MALLOC_ERR, STDERR_FILENO), KO);
+	if (load_right_split(minishell, flag, path_from_env, path_env) == KO)
+		return (KO);
 	i = -1;
 	if (path_from_env)
 		free_set_null(&path_from_env);
@@ -86,21 +81,6 @@ int	load_path(t_data *minishell, int flag, char *path_env)
 		minishell->path[i] = strjoin_wfree(minishell->path[i], "/");
 		if (!minishell->path[i])
 			return (ft_putstr_fd(STRJOIN_ERR, STDERR_FILENO), KO);
-	}
-	return (OK);
-}
-
-int	load_path_from_flag(t_data *minishell, int flag, char **path_from_env,
-		char *path_env)
-{
-	if (flag != 0)
-		if (load_value(minishell, "PATH=", path_from_env, path_env) == KO)
-			return (M_KO);
-	if (flag == 2 && has_path(*path_from_env) == KO)
-	{
-		if (char_add_back_tab(&minishell->path, *path_from_env) == KO)
-			return (M_KO);
-		return (free_set_null(path_from_env), KO);
 	}
 	return (OK);
 }

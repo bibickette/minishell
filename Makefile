@@ -6,7 +6,7 @@
 #    By: phwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2024/09/25 00:11:33 by phwang           ###   ########.fr        #
+#    Updated: 2024/09/29 18:12:32 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ UTILS_DIR = $(SRC_DIR)/utils
 # List all source files manually
 SRC = $(SRC_DIR)/main.c \
 	  $(BUILTINS_DIR)/export_utils.c \
+	  $(BUILTINS_DIR)/exit.c \
       $(BUILTINS_DIR)/cd.c \
       $(BUILTINS_DIR)/add_to_history.c \
       $(BUILTINS_DIR)/unset.c \
@@ -81,6 +82,7 @@ SRC = $(SRC_DIR)/main.c \
       $(INITIATE_DIR)/init_minishell.c \
 	  $(INITIATE_DIR)/shlvl.c \
       $(INITIATE_DIR)/get_env.c \
+	  $(INITIATE_DIR)/get_env_utils.c \
       $(INITIATE_DIR)/get_export.c \
       $(PROMPT_DIR)/check_args.c \
       $(PROMPT_DIR)/display_intro.c \

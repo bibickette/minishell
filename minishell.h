@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/25 20:50:47 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:11:45 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int		get_env(t_data *minishell, char **env);
 int		no_environment(t_data *minishell);
 int		handle_shell_level(t_data *minishell);
 int		load_env(t_data *minishell, char **env);
+int		load_right_split(t_data *minishell, int flag, char *path_from_env,
+			char *path_env);
 int		load_export_tab(t_data *minishell, char **env);
 int		load_export_w_quote(char **export);
 int		load_value_n_key_export(char **key_export, char **value_export,
@@ -75,6 +77,7 @@ void	ft_lstclear_custom_bis(t_list *head);
 void	exit_cmd(t_list *token, t_cmd *cmd, t_data *minishell);
 int		is_return_value(char *str);
 int		set_exit_arg(long int status);
+int		is_smaller_than_longmin(char *str);
 
 /* tokenization */
 int		process_char(char **prompt_loop, t_list **token, char *buffer, int *i);

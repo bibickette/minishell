@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:15:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/22 14:10:27 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:07:05 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char				*ft_strnstr(const char *big, const char *little,
 char				*ft_strrchr(const char *s, int c);
 
 long int			ft_atoi(const char *nptr);
+long long int		ft_atol(const char *nptr);
 void				ft_bzero(void *s, size_t n);
 
 char				*ft_strdup(const char *s);
