@@ -6,7 +6,7 @@
 /*   By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/28 18:39:38 by hexplor          ###   ########.fr       */
+/*   Updated: 2024/09/29 18:45:09 by hexplor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,10 @@ char	*expansion_no_surround(char *var, t_data *minishell);
 int		ft_strchr_custom(char *s, char c);
 
 /* expand dollar  everything */
+char	*custom_return(char **var, char **stash, \
+						char **new_expanded, char **expanded);
+void	the_bypass(char **var, char **stash, \
+						char **new_expanded, char **expanded);
 int		expand_everything(t_data *minishell, t_list *token);
 int		trim_token(t_list *tmp_head);
 int		right_condition_for_expand(t_list *tmp_head, char *str_token_before);

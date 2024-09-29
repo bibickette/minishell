@@ -6,7 +6,7 @@
 #    By: hexplor <hexplor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2024/09/28 18:46:02 by hexplor          ###   ########.fr        #
+#    Updated: 2024/09/29 18:46:07 by hexplor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC = $(SRC_DIR)/main.c \
       $(DOLLAR_DIR)/dollar_expansion.c \
       $(DOLLAR_DIR)/expand_everything.c \
 	  $(DOLLAR_DIR)/ft_strchr_custom.c \
+	  $(DOLLAR_DIR)/the_bypass_single_quote.c \
       $(EXECUTION_DIR)/dup_pipes.c \
       $(EXECUTION_DIR)/get_status_process.c \
       $(EXECUTION_DIR)/exec_pipe.c \
