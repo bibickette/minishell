@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 16:36:24 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/29 18:09:02 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:28:24 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	exit_cmd(t_list *token, t_cmd *cmd, t_data *minishell)
 {
-	if (cmd->cmd_args[2] && is_return_value(cmd->cmd_args[1]) == OK)
+	int	cmd_size;
+
+	cmd_size = 0;
+	while (cmd->cmd_args[cmd_size])
+		cmd_size++;
+	if (cmd_size > 2 && cmd->cmd_args[1]
+		&& is_return_value(cmd->cmd_args[1]) == OK)
 	{
 		minishell->last_status = 1;
-		printf("genre la\n");
 		return (ft_putstr_fd(TOO_MANY_ARG, STDERR_FILENO));
 	}
 	if (cmd->cmd_args[1] && is_return_value(cmd->cmd_args[1]) == KO)

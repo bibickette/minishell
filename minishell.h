@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/29 21:40:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:33:10 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@
 /*         Prompt functions          */
 /*************************************/
 
-void	the_execution(t_list *token, t_data *minishell);
 int		the_parser_set(t_list *token, t_data *minishell, char *prompt);
+void	the_preparation(t_list *token, t_data *minishell);
+void	the_execution(t_list *token, t_data *minishell);
 
 /* initiate, get env */
 int		init_minishell(t_data **minishell);
@@ -194,7 +195,7 @@ void	add_to_history(t_data **minishell, char *command);
 
 /* redirection, file */
 int		heredoc_create(t_data *minishell, char *limiter);
-void	here_doc_create_all(t_data *minishell);
+int		here_doc_create_all(t_data *minishell);
 int		heredoc_next(char *line, char *limiter_tmp, int fd_heredoc);
 int		init_dup_hd(int *std_in, int *std_inb);
 int		dup_db_hd(int to_dup, int std_inb, t_data *minishell);

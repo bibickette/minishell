@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:33:52 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/29 18:14:48 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:33:18 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	prompt(t_list *token, t_data *minishell)
 			if (token)
 				if (the_parser_set(token, minishell, minishell->prompt) == OK
 					&& check_token_operator_order(token, minishell) == OK)
-					the_execution(token, minishell);
+					the_preparation(token, minishell);
 		ft_lstclear_custom(&token, free);
 		ft_lstclear_custom(&minishell->brut_list, free);
 		free(minishell->prompt);
@@ -49,19 +49,24 @@ int	the_parser_set(t_list *token, t_data *minishell, char *prompt)
 	return (OK);
 }
 
-void	the_execution(t_list *token, t_data *minishell)
+void	the_preparation(t_list *token, t_data *minishell)
 {
+	int	do_nothing;
+	int	ret;
+
+	do_nothing = 0;
 	if (take_all_hd_files(minishell, token) == KO)
 		return ;
-	here_doc_create_all(minishell);
+	ret = here_doc_create_all(minishell);
+	if (ret == M_KO)
+		return (free_files_tab(minishell, minishell->files));
+	else if (ret == OK)
+		if (g_signal == WAS_IN_HD)
+			do_nothing = 1;
 	init_cmd_list(minishell, token);
 	handle_signals(minishell);
-	signal(SIGQUIT, handle_sigquit);
-	if (minishell->nb_cmd == 1)
-		execve_one_cmd(minishell, token);
-	else if (minishell->nb_cmd > 1)
-		execve_pipe(minishell, token);
-	signal(SIGQUIT, SIG_IGN);
+	if (do_nothing == 0)
+		the_execution(token, minishell);
 	if (!(g_signal == WAS_IN_HD))
 		g_signal = 0;
 	if (minishell->nb_hd_files > 0)
@@ -69,4 +74,14 @@ void	the_execution(t_list *token, t_data *minishell)
 	ft_lstclear_custom_cmd(&minishell->list_cmd, free);
 	free_files_tab(minishell, minishell->files);
 	handle_file_hd(minishell);
+}
+
+void	the_execution(t_list *token, t_data *minishell)
+{
+	signal(SIGQUIT, handle_sigquit);
+	if (minishell->nb_cmd == 1)
+		execve_one_cmd(minishell, token);
+	else if (minishell->nb_cmd > 1)
+		execve_pipe(minishell, token);
+	signal(SIGQUIT, SIG_IGN);
 }

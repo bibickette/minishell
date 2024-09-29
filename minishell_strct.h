@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/21 13:51:41 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:28:46 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ Malloc in function Dollar Expansion\n"
 Malloc in function Expand Everything\n"
 # define NOT_ENOUGH_ARG "Minishell Error - UNSET : Not enough arguments\n"
 # define ECHO_ERR "Minishell Error - ECHO : Invalid option\n"
-# define TOO_MANY_ARG "Minishell Error - CD : Too many arguments\n"
+# define TOO_MANY_ARG "Minishell Error : Too many arguments\n"
 # define EXIT_ERR "Minishell Error - EXIT : Need numerical argument\n"
 
 /* parsing error */
