@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/29 18:11:45 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 21:40:55 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ char	*dollar_expansion(char *var, int quote_type, t_data *minishell);
 char	*create_expansion_dollar(t_data *minishell, char *var, char *expanded,
 			int quote_type);
 char	*expansion_no_surround(char *var, t_data *minishell);
+char	*keep_next_of_var(char **var);
 
 /* expand dollar  everything */
 int		expand_everything(t_data *minishell, t_list *token);

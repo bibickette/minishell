@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:56:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/14 17:15:20 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:42:57 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 	(*dollar_tab) = ft_split((*expanded_exported), '$');
 	if (!(*dollar_tab))
 		return (ft_putstr_fd(SPLIT_ERR, STDERR_FILENO), KO);
+	if ((*expanded_exported)[ft_strlen(*expanded_exported) - 1] == '$')
+		if (char_add_back_tab(dollar_tab, "") == KO)
+			return (KO);
 	if (!(*dollar_tab)[0])
 	{
 		free((*expanded_exported));

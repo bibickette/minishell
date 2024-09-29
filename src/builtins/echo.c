@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:29:34 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/29 18:19:52 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 21:41:07 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	echo_cmd(char **cmd_arg, int fd_out)
 {
-	int		flag;
-	int		i;
+	int	flag;
+	int	i;
 
-	flag = 0 ;
+	flag = 0;
 	i = 0;
-	while(cmd_arg[++i])
+	while (cmd_arg[++i])
 	{
-		if(is_echo_flag(cmd_arg[i]) == OK)
+		if (is_echo_flag(cmd_arg[i]) == OK)
 			flag = 1;
 		else
-			break;
+			break ;
 	}
 	while (cmd_arg[i])
 	{

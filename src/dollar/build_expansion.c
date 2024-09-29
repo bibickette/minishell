@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 01:13:50 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/29 16:11:55 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 21:40:42 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,30 @@ void	free_set_null(char **var)
 {
 	free(*var);
 	*var = NULL;
+}
+
+int	has_multiple_dollar(char *var)
+{
+	int	i;
+	int	dollar;
+
+	i = -1;
+	dollar = 0;
+	while (var[++i])
+		if (var[i] == '$')
+			dollar++;
+	if (dollar > 1)
+		return (OK);
+	return (KO);
+}
+
+int	has_dollar(char *var)
+{
+	int	i;
+
+	i = -1;
+	while (var[++i])
+		if (var[i] == '$')
+			return (OK);
+	return (KO);
 }
