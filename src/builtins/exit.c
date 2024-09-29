@@ -6,7 +6,7 @@
 /*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 16:36:24 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/29 22:28:24 by phwang           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:38:40 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	is_return_value(char *str)
 	return (OK);
 }
 
-int	set_exit_arg(long int status)
+long long int	set_exit_arg(long long int status)
 {
 	if (status > 255 || status < 0)
 		status = status % 256;
