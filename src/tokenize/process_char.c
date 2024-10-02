@@ -31,7 +31,7 @@ int	process_char(char **prompt_loop, t_list **token, char *buffer, int *i)
 		handle_operator(prompt_loop, token, buffer);
 		*i = 0;
 	}
-	else if (**prompt_loop == ' ')
+	else if (**prompt_loop == ' ' || **prompt_loop == '\t')
 	{
 		handle_space(prompt_loop, token, buffer);
 		*i = 0;
