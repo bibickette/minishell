@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:45:57 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/25 20:41:59 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:32:33 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	load_export_tab(t_data *minishell, char **env)
 
 	i = -1;
 	while (env[++i])
-		if (char_add_back_tab(&minishell->builtins->export, env[i]) == KO)
+		if (char_add_back_tab(&minishell->builtins->export, env[i]) == false)
 			return (ft_putstr_fd(ADD_BACK_TAB_ERR, STDERR_FILENO), KO);
 	i = -1;
 	while (minishell->builtins->export[++i])

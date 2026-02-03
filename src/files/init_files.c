@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:53:11 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/20 21:41:30 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:32:14 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list)
 		((t_cmd *)tmp_cmd_list->content)->cmd_type = \
 		((t_token *)tmp->content)->type;
 		if (char_add_back_tab(&((t_cmd *)tmp_cmd_list->content)->cmd_args,
-				((t_token *)tmp->content)->str) == KO)
+				((t_token *)tmp->content)->str) == false)
 			return (KO);
 		((t_cmd *)tmp_cmd_list->content)->cmd = \
 		ft_strdup(((t_token *)tmp->content)->str);
@@ -32,7 +32,7 @@ int	fill_cmd_node(t_list *tmp, t_list *tmp_cmd_list)
 		((t_token *)tmp->content)->type == NO_TYPE)
 	{
 		if (char_add_back_tab(&((t_cmd *)tmp_cmd_list->content)->cmd_args,
-				((t_token *)tmp->content)->str) == KO)
+				((t_token *)tmp->content)->str) == false)
 			return (KO);
 	}
 	if (is_not_hd(tmp) == OK)

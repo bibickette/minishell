@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_multiple_dollar.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:56:03 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/29 18:42:57 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:31:59 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	first_step_multiple_dollar(t_data *minishell, char ***dollar_tab,
 	if (!(*dollar_tab))
 		return (ft_putstr_fd(SPLIT_ERR, STDERR_FILENO), KO);
 	if ((*expanded_exported)[ft_strlen(*expanded_exported) - 1] == '$')
-		if (char_add_back_tab(dollar_tab, "") == KO)
+		if (char_add_back_tab(dollar_tab, "") == false)
 			return (KO);
 	if (!(*dollar_tab)[0])
 	{

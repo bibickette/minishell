@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:44 by yantoine          #+#    #+#             */
-/*   Updated: 2024/09/29 22:39:04 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:31:20 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,6 @@ void			retrieve_norm(t_data *minishell);
 int				take_all_hd_files(t_data *minishell, t_list *token);
 int				count_n_allocate_files(t_data *minishell, t_list *token);
 void			load_files_type(t_data *minishell, t_list *token);
-int				char_add_back_tab(char ***original_tab, char *to_add);
 int				count_n_copy_original_tab(char ***original_tab, char ***new_tab,
 					int *nb_tab);
 int				no_original_tab(char ***original_tab, char *to_add,

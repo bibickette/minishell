@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 18:12:09 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/29 18:13:33 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:32:27 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	load_path_from_flag(t_data *minishell, int flag, char **path_from_env,
 			return (M_KO);
 	if (flag == 2 && has_path(*path_from_env) == KO)
 	{
-		if (char_add_back_tab(&minishell->path, *path_from_env) == KO)
+		if (char_add_back_tab(&minishell->path, *path_from_env) == false)
 			return (M_KO);
 		return (free_set_null(path_from_env), KO);
 	}

@@ -6,7 +6,7 @@
 #    By: phwang <phwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/20 22:44:43 by phwang            #+#    #+#              #
-#    Updated: 2026/01/27 18:23:49 by phwang           ###   ########.fr        #
+#    Updated: 2026/02/03 18:33:05 by phwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,6 @@ SRC = $(SRC_DIR)/main.c \
       $(TOKENIZE_DIR)/handle_space.c \
       $(TOKENIZE_DIR)/add_token.c \
       $(UTILS_DIR)/ft_realloc.c \
-      $(UTILS_DIR)/char_add_back_tab.c \
       $(UTILS_DIR)/print.c \
       $(UTILS_DIR)/double_tab_print.c \
       $(UTILS_DIR)/ft_strcmp.c

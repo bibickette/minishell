@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 19:07:19 by phwang            #+#    #+#             */
-/*   Updated: 2024/09/24 22:07:13 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:31:50 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	export_in_export(char *var, char **key_export, t_data *minishell)
 	}
 	else if (ret == KO)
 	{
-		if (char_add_back_tab(&minishell->builtins->export, *key_export) == KO)
+		if (char_add_back_tab(&minishell->builtins->export, *key_export) == false)
 		{
 			free_set_null(key_export);
 			minishell->last_status = 1;
@@ -98,7 +98,7 @@ int	export_in_env(char *var, t_data *minishell)
 	}
 	else if (ret == KO)
 	{
-		if (char_add_back_tab(&minishell->builtins->env, var) == KO)
+		if (char_add_back_tab(&minishell->builtins->env, var) == false)
 		{
 			minishell->last_status = 1;
 			return (M_KO);

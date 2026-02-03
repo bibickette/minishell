@@ -6,7 +6,7 @@
 /*   By: phwang <phwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 22:50:40 by phwang            #+#    #+#             */
-/*   Updated: 2026/01/27 18:11:24 by phwang           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:31:10 by phwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,6 @@ Builtin doesn't accept option/argument\n"
 # define ERR_PATH "Minishell Error : Couldn't get the path\n"
 # define ERR_ENV "Minishell Error : Couldn't get the environment\n"
 # define ERR_SHLVL "Minishell Error : Couldn't get the shell level\n"
-
-/* malloc errors */
-# define MALLOC_ERR "Minishell Error : Malloc\n"
-# define SPLIT_ERR "Minishell Error : Malloc Split\n"
-# define STRJOIN_ERR "Minishell Error : Malloc Strjoin\n"
-# define STRDUP_ERR "Minishell Error : Malloc Strdup\n"
-# define LSTNEW_ERR "Minishell Error : Malloc Lstnew\n"
-# define ADD_BACK_TAB_ERR "Minishell Error : \
-Malloc in function char_add_back_tab\n"
 
 /* file errors */
 # define HERE_DOC_MSG "heredoc> "
