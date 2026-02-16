@@ -101,7 +101,7 @@ Understanding and implementing [pipex](https://github.com/bibickette/pipex) is e
 ## How to use `minishell`
 
 *Note : the `minishell` project works on its own and uses the [libft](https://github.com/bibickette/libft) library. Since the library is added as a submodule, you need to clone the repository with it.*
-1. Clone `minishell` in a folder first  : `git clone --recurse-submodules git@github.com:bibickette/minishell.git`
+1. Clone `minishell` in a folder first  : `git clone --recurse-submodules https://github.com:bibickette/minishell.git`
 2. Go to the `minishell` folder then compile it : `cd minishell && make`
 3. Run `./minishell` without any argument
 4. You can now type any commands like in a normal shell : `echo  "hello world ! " | cat -e`
